@@ -18,6 +18,17 @@ class AddressBook():
         self.entries = []
 
     """
+    Returns the entry at 'index', without removing it
+
+    Args:
+        index: int, index of entry to retrieve
+    Returns:
+        AddressBookEntry, entry at that index
+    """
+    def getEntry(self, index):
+        return self.entries[index]
+
+    """
     Removes AddressBookEntry at 'index'
 
     Args:
@@ -77,4 +88,9 @@ class AddressBook():
             f.write(str(entry) + "\n")
         f.close()
 
+    """
+    Iterator for AddressBook defined as an iterator over the AddressBookEntry list
+    """
+    def __iter__(self):
+        return self.entries.__iter__()
 

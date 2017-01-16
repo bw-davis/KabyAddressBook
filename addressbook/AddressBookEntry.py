@@ -19,12 +19,12 @@ class AddressBookEntry():
     Initializer of the AddressBookEntry that fills the mandatory fields
 
     Args:
-        fn: str, first name
-        ln: str, last name
-        addr: str, address
-        cs: str, city and state
+        fn:      str, first name
+        ln:      str, last name
+        addr:    str, address
+        cs:      str, city and state
         zipcode: str, zipcode
-        email: str, email
+        email:   str, email
     """
     def __init__(self, fn, ln, addr, cs, zipcode, email):
         attrs = {"FirstName": fn,
@@ -61,7 +61,11 @@ class AddressBookEntry():
     """
     Defines the Python built-in function 'str'
 
-    Behavior is defined 
+    Behavior defined as printing out the address neatly.
+    For example, 
+    "John Doe
+     123 Sunny Lane
+     Portland, MN 04101"
     """
     def __str__(self):
         return "{} {}\n{}\n{} {}\n{}".format(self.attrs["FirstName"],
