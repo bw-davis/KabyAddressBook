@@ -1,6 +1,8 @@
 from tkinter import *
 import tkinter as tk 
 from tkinter import ttk
+import tkinter.filedialog 
+from tkinter import *
 
 contacts=[["First name", "Last name", "Address", "State", "Zip", "Email", "Phone Number"]];
 
@@ -43,12 +45,41 @@ class KabyAddrapp(tk.Tk):
         self.contacts.append(contact)
 
 
+def importFile():
+        print("dosomething");
+        importFileName=tkinter.filedialog.askopenfilename()
+        print (importFileName)
+
+def exportFile():
+        print("dosomething");
+        importFileName=tkinter.filedialog.askopenfilename()
+        print (exportFileName)
+
+def openAddressBook():
+        print("dosomething");
+        AddressbookName=tkinter.filedialog.askopenfilename()
+        print (AddressbookName)
+
+def save():
+        print("dosomething");
+        #FileName=tkinter.filedialog.askopenfilename()
+        #FileName=tk.filedialog.asksaveasfilename(filetypes=[("Python源文件",".py")])
+        #print (FileName)
+        print("savefile")
+
+def saveAs():
+        print("dosomething");
+        #FileName=tkinter.filedialog.askopenfilename()
+        FileName=tk.filedialog.asksaveasfilename(filetypes=[("text",".txt")])
+        print (FileName)
 
 def donothing():
-    print("donothing");
+        print("donothing");
 
 def NewContact():
-    print("donothing");
+        print("donothing");
+
+
 
 
 #class dropDown(tk.Frame):
@@ -119,11 +150,11 @@ class StartPage(tk.Frame):
         filemenu = Menu(menubar, tearoff=0);
         menubar.add_cascade(label="File", menu=filemenu);
         filemenu.add_command(label="New", command=donothing);
-        filemenu.add_command(label="Open", command=donothing);
-        filemenu.add_command(label="Save", command=donothing);
-        filemenu.add_command(label="Save as", command=donothing);
-        filemenu.add_command(label="Import", command=donothing);
-        filemenu.add_command(label="Export", command=donothing);
+        filemenu.add_command(label="Open", command=openAddressBook);
+        filemenu.add_command(label="Save", command=save);
+        filemenu.add_command(label="Save as", command=saveAs);
+        filemenu.add_command(label="Import", command=importFile);
+        filemenu.add_command(label="Export", command=exportFile);
         filemenu.add_separator();
         filemenu.add_command(label="Exit", command=quit);
 
@@ -133,8 +164,9 @@ class StartPage(tk.Frame):
         menubar.add_cascade(label="Edit", menu=editmenu);
         editmenu.add_command(label="Undo", command=donothing);
 
-        menubar.add_command(label="Add", command=lambda: controller.show_frame(PageOne));
-
+        addmenu=Menu(menubar, tearoff=0);
+        menubar.add_cascade(label="Add", menu=addmenu);
+        addmenu.add_command(label="Add", command=lambda: controller.show_frame(PageOne));
 
         #Main frame
         #mainframe=tk.Frame(root, padding="5 20 10 10");
@@ -179,7 +211,6 @@ class PageOne(tk.Frame):
         tk.Frame.__init__(self, parent)
         self.parent=parent;
         self.controller = controller;
-
         new_contact =[]
 
 
@@ -194,6 +225,7 @@ class PageOne(tk.Frame):
         #Collect first name from user.
         tk.Label(self, text="first name").grid(column=2, row=2, sticky=(W, E))
         first_name=ttk.Entry(self, width=7, textvariable=fname);
+        first_name.delete(0, END)
         first_name.grid(column=2, row=3, sticky=(W, E));
         #new_contact.append(fname);
 
@@ -217,7 +249,6 @@ class PageOne(tk.Frame):
         #new_contact.append(address);
         
 
-
         #Collect state from user
         tk.Label(self, text="State").grid(column=3, row=6, sticky=(W, E))
         st=ttk.Entry(self, width=7, textvariable=state);
@@ -238,13 +269,12 @@ class PageOne(tk.Frame):
         #new_contact.append(phone);
 
 
-
-
-        ttk.Button(self, text="submit", command=lambda: self.add_contact(first_name.get(), last_name.get(), address.get(), state.get(), zipC.get(), em.get(), phone.get())).grid(column=2, row=12);
+        ttk.Button(self, text="submit", command=lambda: self.add_contact(first_name.get(), last_name.get(), address.get(), state.get(), zipC.get(), em.get(), phone.get())).grid(column=2, row=12),;
         ttk.Button(self, text="cancle", command=lambda: controller.show_frame(StartPage)).grid(column=3, row=12);
 
         for child in self.winfo_children(): child.grid_configure(padx=5, pady=5);
-
+    def cleanUp():
+        first_name.insert(0, END)
 
 
     def add_contact(self, fname, lname, address, state, zipC, email, phone):
@@ -256,6 +286,7 @@ class PageOne(tk.Frame):
         self.controller.show_frame(StartPage);
         #self.parent.contacts.append(contact);
         #self.controller.show_frame(StartPage);
+        cleanUp();
 
 
 
