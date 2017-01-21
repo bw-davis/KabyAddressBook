@@ -1,0 +1,17 @@
+4
+Alex Owen
+120 Sunny Lane
+Eugene, OR 97404
+alex@gmail.com
+Claudia Caramelli
+150 North Pole
+Old Nashville, TN 38139
+claudia@yahoo.com
+John Doe
+123 Daywood Drive
+Portland, MN 04101
+john@gmail.com
+fname lname
+addr
+state zip
+email

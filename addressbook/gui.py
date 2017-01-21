@@ -5,7 +5,7 @@ from AddressBook import *
 
 contacts=["First name", "Last name", "Address", "State", "Zip", "Email", "Phone Number"];
 book = AddressBook()
-book.importFromFile("ExampleAddressBook.txt")
+book.importFromFile("SavedAddressBook.txt")
 
 class KabyAddrapp(tk.Tk):
 
@@ -175,18 +175,6 @@ class StartPage(tk.Frame):
         menubar.add_command(label="Add", command=lambda: controller.show_frame(PageOne));
 
 
-        #Main frame
-        #mainframe=tk.Frame(root, padding="5 20 10 10");
-        #mainframe.grid(column=0, row=0, sticky=(N, W, E, S));
-
-        #tk.Label(self, text="First Name").grid(column=2, row=2, padx=10, pady=5);
-        #tk.Label(self, text="Last Name").grid(column=3, row=2, padx=10, pady=5);
-        #tk.Label(self, text="Address").grid(column=4, row=2, padx=10, pady=5);
-        #tk.Label(self, text="State").grid(column=5, row=2, padx=10, pady=5);
-        #tk.Label(self, text="Zip").grid(column=6, row=2, padx=10, pady=5);
-        #tk.Label(self, text="Email").grid(column=7, row=2, padx=10, pady=5);
-        #tk.Label(self, text="Phone Number").grid(column=8, row=2, padx=10, pady=5);
-
         tk.Label(self, textvariable=fname).grid(column=2, row=3, padx=10, pady=5);
         tk.Label(self, textvariable=lname).grid(column=3, row=3, padx=10, pady=5);
         tk.Label(self, textvariable=address).grid(column=4, row=3, padx=10, pady=5);
@@ -208,8 +196,10 @@ class StartPage(tk.Frame):
         
         t = SimpleTable(self);
         t.grid(row=1, column=0, columnspan=8, padx=20);
-        #t.add_contact(contacts);
         t.print_contacts(contacts);
+
+
+        
 
 
 class PageOne(tk.Frame):
@@ -291,12 +281,16 @@ class PageOne(tk.Frame):
 
 
     def add_contact(self, fname, lname, address, state, zipC, email, phone):
-        new_contact=[fname, lname, address, state, zipC, email, phone];
+        #
+        #entry = AddressBookEntry("John", "Doe", "123 Daywood Drive", "Portland, MN", "04101", "john@gmail.com")
+        #new_contact=[fname, lname, address, state, zipC, email, phone];
         #print(new_contact);
-        contacts.append(new_contact);
-        #self.controller.refresh(StartPage);
+        #
+        new_contact=AddressBookEntry(fname, lname, address, state, zipC, email); 
+        book.addEntry(new_contact);
         self.controller.refresh_frame(StartPage);
         self.controller.show_frame(StartPage);
+        book.exportToFile("SavedAddressBook.txt")
         #self.parent.contacts.append(contact);
         #self.controller.show_frame(StartPage);
 
