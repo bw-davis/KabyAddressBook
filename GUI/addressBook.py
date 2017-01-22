@@ -2,7 +2,7 @@ from tkinter import *
 import tkinter as tk 
 from tkinter import ttk
 import tkinter.filedialog 
-from tkinter import *
+
 
 contacts=[["First name", "Last name", "Address", "State", "Zip", "Email", "Phone Number"]];
 

@@ -1,6 +1,7 @@
 from tkinter import *
 import tkinter as tk 
 from tkinter import ttk
+import tkinter.filedialog 
 from AddressBook import *
 
 contacts=["First name", "Last name", "Address", "State", "Zip", "Email", "Phone Number"];
@@ -58,6 +59,34 @@ def donothing():
 
 def NewContact():
     print("donothing");
+
+def importFile():
+        print("dosomething");
+        importFileName=tkinter.filedialog.askopenfilename()
+        print (importFileName)
+
+def exportFile():
+        print("dosomething");
+        importFileName=tkinter.filedialog.askopenfilename()
+        print (exportFileName)
+
+def openAddressBook():
+        print("dosomething");
+        AddressbookName=tkinter.filedialog.askopenfilename()
+        print (AddressbookName)
+
+def save():
+        print("dosomething");
+        #FileName=tkinter.filedialog.askopenfilename()
+        #FileName=tk.filedialog.asksaveasfilename(filetypes=[("Python源文件",".py")])
+        #print (FileName)
+        print("savefile")
+
+def saveAs():
+        print("dosomething");
+        #FileName=tkinter.filedialog.askopenfilename()
+        FileName=tk.filedialog.asksaveasfilename(filetypes=[("text",".txt")])
+        print (FileName)
 
 
 #class dropDown(tk.Frame):
@@ -157,11 +186,11 @@ class StartPage(tk.Frame):
         filemenu = Menu(menubar, tearoff=0);
         menubar.add_cascade(label="File", menu=filemenu);
         filemenu.add_command(label="New", command=donothing);
-        filemenu.add_command(label="Open", command=donothing);
-        filemenu.add_command(label="Save", command=donothing);
-        filemenu.add_command(label="Save as", command=donothing);
-        filemenu.add_command(label="Import", command=donothing);
-        filemenu.add_command(label="Export", command=donothing);
+        filemenu.add_command(label="Open", command=openAddressBook);
+        filemenu.add_command(label="Save", command=save);
+        filemenu.add_command(label="Save as", command=saveAs);
+        filemenu.add_command(label="Import", command=importFile);
+        filemenu.add_command(label="Export", command=exportFile);
         filemenu.add_separator();
         filemenu.add_command(label="Exit", command=quit);
 
