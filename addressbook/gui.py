@@ -228,6 +228,10 @@ class DeletePage(tk.Frame):
         t.grid(row=1, column=0, columnspan=8, padx=20);
         t.print_contacts(contacts);
 
+        ttk.Button(self, text="Delete", command=donothing).grid(row=2, column=2, stick='e');
+        #ttk.Button(self, text="Cancle", command=).grid(row=3, column=2);
+        ttk.Button(self, text="Cancle", command=lambda: controller.show_frame(StartPage)).grid(column=3, row=2, stick='w');
+
 
 class StartPage(tk.Frame):
 
