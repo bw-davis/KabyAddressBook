@@ -279,13 +279,10 @@ class PageOne(tk.Frame):
 
     def add_contact(self, fname, lname, address, state, zipC, email, phone):
         new_contact=[fname, lname, address, state, zipC, email, phone];
-        #print(new_contact);
         contacts.append(new_contact);
-        #self.controller.refresh(StartPage);
         self.controller.refresh_frame(StartPage);
         self.controller.show_frame(StartPage);
-        #self.parent.contacts.append(contact);
-        #self.controller.show_frame(StartPage);
+        self.controller.show_frame(PageOne);
         cleanUp();
 
 
