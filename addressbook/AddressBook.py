@@ -47,45 +47,54 @@ class AddressBook():
         self.entries.append(entry)
 
     """
-    Fills the AddressBook with entries from a file
+    Sorting method for AddressBook where sorting is done by name
+    Sorting by last name, with ties broken by first name
 
-    TODO: File format not specified, currently works with example format
+    O(n + n) == O(n)
+    """
+    def sortByName(self):
+        self.entries.sort(key=lambda x: x.getAttribute("FirstName"))
+        self.entries.sort(key=lambda x: x.getAttribute("LastName"))
+
+    """
+    Sorting method for AddressBook where sorting is done by zip
+    Sort by zip, ties broken by last name, ties broken by first name
+
+    O(n + n + n) == O(n)
+    """
+    def sortByZipcode(self):
+        self.entries.sort(key=lambda x: x.getAttribute("FirstName"))
+        self.entries.sort(key=lambda x: x.getAttribute("LastName"))
+        self.entries.sort(key=lambda x: x.getAttribute("Zipcode"))
+
+    """
+    Fills the AddressBook with entries from a file that uses the .tsv format
 
     Args:
         fn: str, the filename to import entries from
     """
     def importFromFile(self, fn):
         with open(fn) as f:
-            n = int(f.readline())
-            for i in range(n):
-                l1 = f.readline().strip()
-                l2 = f.readline().strip()
-                l3 = f.readline().strip()
-                l4 = f.readline().strip()
-
-                fn, ln    = l1.split()
-                addr      = l2
-                zipcode   = l3.split()[-1]
-                citystate = " ".join(l3.split()[:-1])
-                email     = l4
+            n = f.readline() #toss out leading line
+            for line in f:
+                line = line.strip().split("\t")
+                city, state, zipcode, addr1, addr2, ln, fn, phone = line
                 
-                entry = AddressBookEntry(fn, ln, addr, citystate, zipcode, email)
+                entry = AddressBookEntry(fn, ln, addr1, addr2, city, state, zipcode, phone)
                 self.addEntry(entry)
         
     """
-    Writes the contents of the AddressBook to a file
-
-    TODO: File format not specified, currently works with example format
+    Writes the contents of the AddressBook to a file, using .tsv format
 
     Args:
         fn: str, filename to write address book to
     """
     def exportToFile(self, fn):
         f = open(fn, "w")
-        f.write(str(len(self.entries)) + "\n")
-        
-        for entry in self.entries:
-            f.write(str(entry) + "\n")
+        f.write("CITY\tSTATE\tZIP\tdelivery\tSecond\tLastName\tFirstName\tPhone\n")
+
+        for entry in self:
+            f.write(entry.getTSVFormat() + "\n")
         f.close()
 
     """

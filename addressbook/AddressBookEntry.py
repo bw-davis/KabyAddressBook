@@ -8,31 +8,36 @@ Behind-the-scenes structure is of a dictionary (key-value pairs)
 Mandatory fields in an AddressBookEntry are currently:
     first name
     last name
-    address
+    address line 1
+    address line 2 (may be empty)
     city
     state
     zipcode
-    email
+    phone
 """
 class AddressBookEntry():
     """
     Initializer of the AddressBookEntry that fills the mandatory fields
 
     Args:
-        fn:      str, first name
-        ln:      str, last name
-        addr:    str, address
-        cs:      str, city and state
-        zipcode: str, zipcode
-        email:   str, email
+        fn:       str, first name
+        ln:       str, last name
+        addr1:    str, address line 1
+        addr2:    str, address line 2
+        city:     str, city
+        state:    str, state
+        zipcode:  str, zipcode
+        phone:    str, phone number
     """
-    def __init__(self, fn, ln, addr, cs, zipcode, email):
+    def __init__(self, fn, ln, addr1, addr2, city, state, zipcode, phone):
         attrs = {"FirstName": fn,
                  "LastName": ln,
-                 "Address": addr,
-                 "CityState": cs,
+                 "Address1": addr1,
+                 "Address2": addr2,
+                 "City": city,
+                 "State": state,
                  "Zipcode": zipcode,
-                 "Email": email}
+                 "Phone": phone}
         self.attrs = attrs
 
     """
@@ -59,19 +64,39 @@ class AddressBookEntry():
             return None
 
     """
+    Returns the AddressBookEntry formatted for a line in a .tsv format
+
+    Returns:
+        str, entry fields formatted for .tsv file
+    """
+    def getTSVFormat(self):
+        return "{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}".format(self.attrs["City"],
+                                                       self.attrs["State"],
+                                                       self.attrs["Zipcode"],
+                                                       self.attrs["Address1"],
+                                                       self.attrs["Address2"],
+                                                       self.attrs["LastName"],
+                                                       self.attrs["FirstName"],
+                                                       self.attrs["Phone"])
+
+    """
     Defines the Python built-in function 'str'
 
     Behavior defined as printing out the address neatly.
     For example, 
     "John Doe
      123 Sunny Lane
-     Portland, MN 04101"
+     Apt 1
+     Portland, MN 04101
+     5411234567"
     """
     def __str__(self):
-        return "{} {}\n{}\n{} {}\n{}".format(self.attrs["FirstName"],
+        return "{} {}\n{}\n{}\n{},{} {}\n{}".format(self.attrs["FirstName"],
                                              self.attrs["LastName"],
-                                             self.attrs["Address"],
-                                             self.attrs["CityState"],
+                                             self.attrs["Address1"],
+                                             self.attrs["Address2"],
+                                             self.attrs["City"],
+                                             self.attrs["State"],
                                              self.attrs["Zipcode"],
-                                             self.attrs["Email"])
+                                             self.attrs["Phone"])
 
