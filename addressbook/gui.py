@@ -4,8 +4,12 @@ from tkinter import ttk
 import tkinter.filedialog 
 from AddressBook import *
 
-contacts=["First name", "Last name", "Address1", "Address2", "City", "State", "Zip", "Email", "Phone Number"];
-col_name = ["FirstName", "LastName", "Address1", "City", "Zipcode", "Phone"];
+#
+#Below is a the template for how a address book entery is stored.
+#AddressBookEnetry(FirstName, LastName, Address1, Address2, City, State, Zipcode, Phone)
+#
+contacts=["First name", "Last name", "Address1", "Address2", "City", "State", "Zip", "Phone Number"];
+col_name = ["FirstName", "LastName", "Address1", "Address2", "City", "State", "Zipcode", "Phone"];
 book = AddressBook()
 book.importFromFile("SavedAddressBook.tsv")
 dirty=[]; #And array of arrays of[label, row, col] of all "dirty" or modified text widgets
@@ -86,10 +90,12 @@ def saveAs():
 
 
 class SimpleTable2(tk.Frame):
+
     def __init__(self, parent):
         self._widgets=[];
         tk.Frame.__init__(self, parent, background='black');
         self._widgets = []
+
 
     def set(self, row, column, value):
         widget = self._widgets[row][column]
@@ -97,10 +103,11 @@ class SimpleTable2(tk.Frame):
 
 
     def print_contacts(self, contacts):
+        col_name = ["Delete", "FirstName", "LastName", "Address1", "Address2", "City", "State", "Zipcode", "Phone"];
         row=0;
         column=0
         current_row = []
-        for c in ["Delete","First name", "Last name", "Address1", "Address2", "City", "State", "Zip", "Email", "Phone Number"]:
+        for c in col_name:
             label=Text(self, height=1, width=15);
             label.insert(INSERT, c);
             label.config(state=DISABLED);
@@ -113,8 +120,8 @@ class SimpleTable2(tk.Frame):
         for entry in book:
             column=0;
             current_row=[];
-            for attr in ["button","FirstName", "LastName", "Address1", "City", "Zipcode", "Phone"]:
-                if(attr=="button"):
+            for attr in col_name:
+                if(attr=="Delete"):
                     print("button")
                     v=StringVar()
                     v.set("L");
@@ -137,6 +144,7 @@ class SimpleTable2(tk.Frame):
 
         for column in range(7):
             self.grid_columnconfigure(column, weight=1)
+
 
 
 class SimpleTable(tk.Frame):
@@ -350,9 +358,9 @@ class PageOne(tk.Frame):
         #new_contact.append(address);
 
         #Collect state from user
-        tk.Label(self, text="State").grid(column=3, row=6, sticky=(W, E))
-        st=ttk.Entry(self, width=7, textvariable=state);
-        st.grid(column=3, row=7, sticky=(W, E));
+        tk.Label(self, text="State").grid(column=3, row=10, sticky=(W, E))
+        st=ttk.Entry(self, width=25, textvariable=state);
+        st.grid(column=3, row=11, sticky=(W, E));
         #new_contact.append(state);
 
         #Collect zip from user
@@ -373,18 +381,22 @@ class PageOne(tk.Frame):
         phone_number.grid(column=2, row=11, sticky=(W, E));
         #new_contact.append(phone);
 
+        tk.Label(self, text="Address 2").grid(column=3, row=6, sticky=(W, E));
+        address2=ttk.Entry(self, width=25);
+        address2.grid(column=3, row=7, sticky=(W, E));
+
 
         #Bind Enter to create customer as well.
 
-        ttk.Button(self, text="submit", command=lambda: self.add_contact(first_name.get(), last_name.get(), address.get(), state.get(), zipC.get(), em.get(), phone.get())).grid(column=2, row=12);
+        ttk.Button(self, text="submit", command=lambda: self.add_contact(first_name.get(), last_name.get(), address.get(), "", city.get(),  state.get(), zipC.get(), em.get(), phone.get())).grid(column=2, row=12);
         ttk.Button(self, text="cancle", command=lambda: controller.show_frame(StartPage)).grid(column=3, row=12);
 
         for child in self.winfo_children(): child.grid_configure(padx=5, pady=5);
 
 
-
-    def add_contact(self, fname, lname, address, state, zipC, email, phone):
-        new_contact=AddressBookEntry(fname, lname, address, state, zipC, email); 
+    #AddressBookEnetry(FirstName, LastName, Address1, Address2, City, State, Zipcode, Phone)
+    def add_contact(self, fname, lname, address1, address2, city, state, zipC, email, phone):
+        new_contact=AddressBookEntry(fname, lname, address1, address2, city, state, zipC, phone); 
         book.addEntry(new_contact);
         self.controller.refresh_frame(StartPage);
         self.controller.show_frame(StartPage);
@@ -401,6 +413,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-

@@ -1,4 +1,6 @@
 CITY	STATE	ZIP	delivery	Second	LastName	FirstName	Phone
-Portville	MI	01404	190 Sunny Lane		Doe	John	Washington
-Old Hickory	TN	37138-1923	4849 Mountain Dr		Caramel	Claude	Oregon
-Portland	OR	97401	190 W 22nd Ave	Apt 1	Owen	Alex	Cali
+Portville	MI	01404	190 Sunny Lane	None	Doe	John	5411234567
+Old Hickory	TN	37138-1923	4849 Mountain Dr	None	Caramel	Claude	5411234567
+Portland	OR	97401	190 W 22nd Ave	Apt 1	Owen	Alex	6155696366
+Or	srare	zip	addr	None	lname	;fname	phone
+Eugene	Oregon	97000	home	addess	Bennett	Debi	555555555
