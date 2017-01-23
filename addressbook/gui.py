@@ -5,8 +5,10 @@ import tkinter.filedialog
 from AddressBook import *
 
 contacts=["First name", "Last name", "Address1", "Address2", "City", "State", "Zip", "Email", "Phone Number"];
+col_name = ["FirstName", "LastName", "Address1", "City", "Zipcode", "Phone"];
 book = AddressBook()
 book.importFromFile("SavedAddressBook.tsv")
+dirty=[]; #And array of arrays of[label, row, col] of all "dirty" or modified text widgets
 
 class KabyAddrapp(tk.Tk):
 
@@ -48,6 +50,7 @@ class KabyAddrapp(tk.Tk):
 
     def add_contact(contact):
         self.contacts.append(contact)
+
 
 
 
@@ -146,6 +149,23 @@ class SimpleTable(tk.Frame):
         widget = self._widgets[row][column]
         widget.configure(text=value)
 
+    #Gets text from text box, finds proper contact and contact information to replace.
+    def update_contact(self, row, col, entry):
+        #print("{} {}".format(row, col));
+        #print(book.getEntry(row).getAttribute(col_name[col]));
+        attr = col_name[col]; # The contact attribute to be replaceed
+        contact = book.getEntry(row-1); #Contact to be modified
+        contact_attr = contact.getAttribute(attr); #The contact attribute to be replaced
+        #print(contact_attr);
+        new_contact_data = entry.get("1.0", END).replace('\n', ''); #The text that has been entered in the Text widget. The end-1c ignores newline charater
+        #print(new_contact_data);
+        entry.tag_add("a", "1.0", END);
+        entry.tag_configure("a", background="skyblue");
+        entry.insert(INSERT, new_contact_data);
+        dirty.append([entry, row, col]); #Keeping track of all unsaved enteiries.
+        contact.setAttribute(attr, new_contact_data);
+        book.exportToFile("SavedAddressBook.tsv");
+
 
     def print_contacts(self, contacts):
         row=0;
@@ -164,19 +184,20 @@ class SimpleTable(tk.Frame):
         for entry in book:
             column=0;
             current_row=[];
-            for attr in ["FirstName", "LastName", "Address1", "City", "Zipcode", "Phone"]:
+            for attr in col_name:
                 t=entry.getAttribute(attr);
-                print("{} {} {}".format(t, row, column));
+                #print("{} {} {}".format(t, row, column));
                 label=Text(self, height=1, width=15);
                 label.insert(INSERT, t);
-                label.grid(row=row, column=column, sticky="nsew", padx=1, pady=1)
-                current_row.append(label)
+                label.bind("<KeyRelease-Return>", lambda cmd, row=row, column=column, entry=label: self.update_contact(row, column, entry));
+                label.grid(row=row, column=column, sticky="nsew", padx=1, pady=1);
+                current_row.append(label);
                 column+=1;
             self._widgets.append(current_row)
             row+=1;
 
             
-
+        #Adds padding around contact info
         for column in range(7):
             self.grid_columnconfigure(column, weight=1)
 
