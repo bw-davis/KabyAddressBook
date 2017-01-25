@@ -1,6 +1,6 @@
 # KabyAddressBook by Team 2 for CIS 422 Winter 2017
 
-Our Team:
+The Kaby Team:
 
 **K**ayla
 
