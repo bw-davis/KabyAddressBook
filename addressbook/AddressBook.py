@@ -78,7 +78,14 @@ class AddressBook():
             n = f.readline() #toss out leading line
             for line in f:
                 line = line.strip().split("\t")
-                city, state, zipcode, addr1, addr2, ln, fn, phone = line
+                city    = line[0]
+                state   = line[1]
+                zipcode = line[2]
+                addr1   = line[3]
+                addr2   = line[4]
+                ln      = line[5]
+                fn      = line[6]
+                phone   = line[7]
                 
                 entry = AddressBookEntry(fn, ln, addr1, addr2, city, state, zipcode, phone)
                 self.addEntry(entry)
