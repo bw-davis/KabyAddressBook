@@ -14,6 +14,8 @@ Mandatory fields in an AddressBookEntry are currently:
     state
     zipcode
     phone
+
+Optional fields are allowed in the form of keyward arguments
 """
 class AddressBookEntry():
     """
@@ -28,8 +30,9 @@ class AddressBookEntry():
         state:    str, state
         zipcode:  str, zipcode
         phone:    str, phone number
+        kwargs:   any optional field such as "email=john@gmail.com"
     """
-    def __init__(self, fn, ln, addr1, addr2, city, state, zipcode, phone):
+    def __init__(self, fn, ln, addr1, addr2, city, state, zipcode, phone, **kwargs):
         attrs = {"FirstName": fn,
                  "LastName": ln,
                  "Address1": addr1,
@@ -38,6 +41,9 @@ class AddressBookEntry():
                  "State": state,
                  "Zipcode": zipcode,
                  "Phone": phone}
+
+        for kw in kwargs.keys():
+            attrs[kw] = kwargs[kw]
         self.attrs = attrs
 
     """
