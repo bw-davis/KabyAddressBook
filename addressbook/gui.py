@@ -14,7 +14,7 @@ book = AddressBook()
 book.importFromFile("SavedAddressBook.tsv")
 
 dirty = [];  # And array of arrays of[label, row, col] of all "dirty" or modified text widgets
-states = []  # record index of the conetancts that you want to delete
+states = []  # record index of the contacts that you want to delete
 print("I cleaned states in");
 edited = False;
 skip = "#skip"
@@ -23,7 +23,7 @@ skip = "#skip"
 class KabyAddrapp(tk.Tk):
     def __init__(self, *args, **kwargs):
 
-        # states=[] #record delete indexs
+        # states=[] #record delete indexes
         # print("I cleaned states ");
         if (len(args) == 1):
             print("book");
@@ -289,18 +289,18 @@ class DeletePage(tk.Frame):
         t.print_contacts(contacts);
 
         ttk.Button(self, text="Delete", command=lambda: self.delete_confirm()).grid(row=2, column=2, stick='e');
-        # ttk.Button(self, text="Cancle", command=).grid(row=3, column=2);
-        ttk.Button(self, text="Cancle", command=lambda: controller.show_frame(StartPage)).grid(column=3, row=2,
+        # ttk.Button(self, text="Cancel", command=).grid(row=3, column=2);
+        ttk.Button(self, text="Cancel", command=lambda: controller.show_frame(StartPage)).grid(column=3, row=2,
                                                                                                stick='w');
 
     def delete_confirm(self):
-        # the function that will be involk when user click Delete button in delete page
+        # the function that will be evoked when user click Delete button in delete page
         index = 0
         count = 0
         print("donsomething2");
         print(states);
         if askokcancel("Delete", "Are you sure to Delete selected Data?"):
-            # pop a diolog let user to confirm
+            # pop a dialog let user to confirm
             print("yes")
             # if yes, delete contacts
             for i in states:
@@ -315,7 +315,7 @@ class DeletePage(tk.Frame):
             self.controller.refresh_frame(StartPage);
             self.controller.show_frame(StartPage);
         else:
-            # if user cancles
+            # if user cancels
             print("No")
 
 
