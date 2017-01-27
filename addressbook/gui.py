@@ -13,14 +13,15 @@ col_name = ["FirstName", "LastName", "Address1", "Address2", "City", "State", "Z
 book = AddressBook()
 book.importFromFile("SavedAddressBook.tsv")
 dirty=[]; #And array of arrays of[label, row, col] of all "dirty" or modified text widgets
+skip = "#skip"
 
 class KabyAddrapp(tk.Tk):
 
     def __init__(self, *args, **kwargs):
 
-        
         if(len(args)==1):
             print("book");
+            book.importFromFile(args[0]); 
         else:
             print("need to make a book");
 
@@ -77,6 +78,10 @@ def exportFile():
 def openAddressBook():
         print("dosomething");
         AddressbookName=tkinter.filedialog.askopenfilename()
+        book2 = AddressBook()
+        book2.importFromFile("SavedAddressBook.tsv")
+        app2=KabyAddrapp(AddressbookName);
+        app2.mainloop();
         print (AddressbookName)
 
 def save():
@@ -169,7 +174,8 @@ class SimpleTable(tk.Frame):
         #print(new_contact_data);
         entry.tag_add("a", "1.0", END);
         entry.tag_configure("a", background="skyblue");
-        entry.insert(INSERT, new_contact_data);
+        #entry.insert(INSERT, new_contact_data);
+        entry.delete("2.0", END);
         dirty.append([entry, row, col]); #Keeping track of all unsaved enteiries.
         contact.setAttribute(attr, new_contact_data);
         book.exportToFile("SavedAddressBook.tsv");
@@ -196,7 +202,10 @@ class SimpleTable(tk.Frame):
                 t=entry.getAttribute(attr);
                 #print("{} {} {}".format(t, row, column));
                 label=Text(self, height=1, width=15);
-                label.insert(INSERT, t);
+                if t == skip:
+                    label.insert(INSERT, "");
+                else:
+                    label.insert(INSERT, t);
                 label.bind("<KeyRelease-Return>", lambda cmd, row=row, column=column, entry=label: self.update_contact(row, column, entry));
                 label.grid(row=row, column=column, sticky="nsew", padx=1, pady=1);
                 current_row.append(label);
@@ -266,6 +275,7 @@ class StartPage(tk.Frame):
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
+        self.controller=controller;
 
 
         #File tab on menu bar
@@ -301,13 +311,25 @@ class StartPage(tk.Frame):
         var = StringVar(self);
         options = ["Name", "Zip"];
         var.set(options[0]);
-        dropdown = ttk.OptionMenu(self, var, options[0], *options);
+        dropdown = ttk.OptionMenu(self, var, options[0], *options, command=lambda cmd, var=var: self.sort(var.get()));
         dropdown.grid(row=0, column=7, sticky="w");
+
 
         
         t = SimpleTable(self);
         t.grid(row=1, column=0, columnspan=8, padx=20);
         t.print_contacts(contacts);
+
+    def sort(self, var):
+        print("var is {}".format(var));
+        if var=="Name":
+            print("sorting by name");
+            book.sortByName();
+        else:
+            print("sorting by zip");
+            book.sortByZipcode();
+        self.controller.refresh_frame(StartPage);
+        self.controller.show_frame(StartPage);
 
 
         
@@ -396,7 +418,14 @@ class PageOne(tk.Frame):
 
     #AddressBookEnetry(FirstName, LastName, Address1, Address2, City, State, Zipcode, Phone)
     def add_contact(self, fname, lname, address1, address2, city, state, zipC, email, phone):
-        new_contact=AddressBookEntry(fname, lname, address1, address2, city, state, zipC, phone); 
+        el = [fname, lname, address1, address2, city, state, zipC, email];
+        new=[x if not x=="" else "#skip" for x in el]
+        print(new)
+
+
+        print("fname={} lname={}".format(type(fname), lname));
+        #new_contact=AddressBookEntry(fname, lname, address1, address2, city, state, zipC, phone); 
+        new_contact=AddressBookEntry(*new);
         book.addEntry(new_contact);
         self.controller.refresh_frame(StartPage);
         self.controller.show_frame(StartPage);
