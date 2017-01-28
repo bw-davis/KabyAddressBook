@@ -5,7 +5,7 @@ import tkinter.filedialog
 from tkinter.messagebox import *
 from AddressBook import *
 from tkinter import messagebox
-
+import re
 # contacts=["First name", "Last name", "Address1", "Address2", "City", "State", "Zip", "Email", "Phone Number"];
 # col_name = ["FirstName", "LastName", "Address1", "City", "Zipcode", "Phone"];
 contacts = ["First name", "Last name", "Address1", "Address2", "City", "State", "Zip", "Phone Number"];
@@ -213,14 +213,13 @@ class SimpleTable(tk.Frame):
         contact = book.getEntry(row - 1);  # Contact to be modified
         contact_attr = contact.getAttribute(attr);  # The contact attribute to be replaced
         # print(contact_attr);
-        new_contact_data = entry.get("1.0", END).replace('\n',
-                                                         '');  # The text that has been entered in the Text widget. The end-1c ignores newline charater
+        new_contact_data = entry.get("1.0", END).replace('\n','');  # The text that has been entered in the Text widget. The end-1c ignores newline charater
         # print(new_contact_data);
         entry.delete("2.0", END);
         entry.tag_add("a", "1.0", END);
         entry.tag_configure("a", background="skyblue");
         # entry.insert(INSERT, new_contact_data);
-        dirty.append([entry, row, col]);  # Keeping track of all unsaved enteiries.
+        dirty.append([entry, row, col]);  # Keeping track of all unsaved entries.
         contact.setAttribute(attr, new_contact_data);
         book.exportToFile("SavedAddressBook.tsv");
 
@@ -261,7 +260,7 @@ class SimpleTable(tk.Frame):
         for column in range(7):
             self.grid_columnconfigure(column, weight=1)
 
-    def toDelete():
+    def toDelete(self):
         # tast case for delete
         pass
 
@@ -472,18 +471,61 @@ class PageOne(tk.Frame):
 
     # AddressBookEnetry(FirstName, LastName, Address1, Address2, City, State, Zipcode, Phone)
     def add_contact(self, fname, lname, address1, address2, city, state, zipC, email, phone):
-        el = [fname, lname, address1, address2, city, state, zipC, phone];
+        temp_list = [fname, lname, address1, address2, city, state, zipC, phone];
 
-        new = [x if not x == "" else "#skip" for x in el]
-        print(new)
+        list_with_skips = [x if not x == "" else "#skip" for x in temp_list]
 
-        print("fname={} lname={}".format(type(fname), lname));
+        valid=self.valid(temp_list[-1])
+
+        print("phone number={} is valid: {}".format(temp_list[-1],str(valid)));
+
+        if not valid:
+            try_again=askokcancel("Warning", "Warning: The phone number you entered is not valid\nClick 'OK' to save anyway\nClick 'Cancel' to edit the phone number")
+            if not try_again:
+                return
+
         # new_contact=AddressBookEntry(fname, lname, address1, address2, city, state, zipC, phone);
-        new_contact = AddressBookEntry(*new, email=email);
+        new_contact = AddressBookEntry(*list_with_skips, email=email);
         book.addEntry(new_contact);
         self.controller.refresh_frame(StartPage);
         self.controller.show_frame(StartPage);
         book.exportToFile("SavedAddressBook.tsv");
+
+    def valid(self,number):
+        """
+        Function to test whether or not a phone number is valid.
+        Args:
+            number: the phone number
+
+        Returns: True iff the number is of the format ###-###-####  OR ###-#### OR ###.###.####  OR ###.#### OR ####### OR ##########
+                 False otherwise
+        """
+        temp = all([x.isdigit() for x in re.split("\.|-", number)])
+        if not temp:
+            return False
+        l = re.split("\.|-", number)
+
+        if len(l) == 1:
+            # If they don't use any . or - to separate the numbers
+            if (len(l[0]) == 7 or len(l[0]) == 10):
+                return True
+            else:
+                return False
+
+        if len(l) == 2:
+            # We could have a 7 digit phone number
+            if len(l[0]) == 3 and len(l[1]) == 4:
+                return True
+            else:
+                return False
+        elif len(l) == 3:
+            # We could have a 10 digit phone number
+            if len(l[0]) == 3 and len(l[1]) == 3 and len(l[2]) == 4:
+                return True
+            else:
+                return False
+        else:
+            return False
 
 
 def on_closing(root):
