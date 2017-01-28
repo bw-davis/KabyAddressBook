@@ -48,3 +48,6 @@ coverage.xml
 
 # Sphinx documentation
 docs/_build/
+AddressBook/.idea/AddressBook.iml
+*.xml
+AddressBook/SavedAddressBook.tsv
