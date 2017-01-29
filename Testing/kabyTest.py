@@ -49,6 +49,7 @@ class TestSelfAddressBook(unittest.TestCase):
 	def setUp(self):
 		self.testAddressBook = AddressBook()
 		self.testEntry = AddressBookEntry('Brian', 'Davis', '492', '83rd', 'Springfield', 'OR', '97478', '123456789')
+	
 	def tearDown(self):
 		del self.testAddressBook
 		del self.testEntry.attrs
@@ -57,5 +58,16 @@ class TestSelfAddressBook(unittest.TestCase):
 	def test_addEntry(self):
 		self.testAddressBook.addEntry(self.testEntry)
 		assert self.testAddressBook.entries[0].getAttribute("FirstName") == "Brian"
+		assert len(self.testAddressBook.entries) == 1
+
+	def test_removeEntry(self):
+		self.testAddressBook.addEntry(self.testEntry)
+		self.testAddressBook.removeEntry(0)
+		assert len(self.testAddressBook.entries) == 0
+
+	def test_getEntry(self):
+		self.testAddressBook.addEntry(self.testEntry)
+		assert self.testAddressBook.getEntry(0) == self.testEntry
+		self.testAddressBook.removeEntry(0)
 
 
