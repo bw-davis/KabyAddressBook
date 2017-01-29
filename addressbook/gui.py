@@ -471,18 +471,82 @@ class PageOne(tk.Frame):
 
     # AddressBookEnetry(FirstName, LastName, Address1, Address2, City, State, Zipcode, Phone)
     def add_contact(self, fname, lname, address1, address2, city, state, zipC, email, phone):
+        """
+        Verifies that the inputs are correctly formatted (unless the user doesn't care). If so, the contact
+        will be added.
+        Args:
+            fname:
+            lname:
+            address1:
+            address2:
+            city:
+            state:
+            zipC:
+            email:
+            phone:
+
+        Returns:
+            Nothing but the new contact will be saved.
+        """
+
+        # Check to make sure we have at least one name (either first or last) and at least one other field
+
         temp_list = [fname, lname, address1, address2, city, state, zipC, phone];
+
+        len_list=[len(x) for x in temp_list]
+
+        if len_list[0]+len_list[1] > 0:
+            print("we have a name")
+
+        if sum(len_list[2:])+len(email)>0:
+            print("we have another field")
+
+
+        if not ((len_list[0]+len_list[1] > 0) and (sum(len_list[2:])+len(email)>0)):
+            print("we don't have both a name and an additional field")
+            showerror("Error","Error: Please enter a name (at least first or last) AND one additional field.\nPlease fix this before saving.")
+            return
+
 
         list_with_skips = [x if not x == "" else "#skip" for x in temp_list]
 
-        valid=self.valid(temp_list[-1])
+        # Check the phone number
+        if len(temp_list[-1])>0: # don't check if we don't get a phone number passed as an arg
 
-        print("phone number={} is valid: {}".format(temp_list[-1],str(valid)));
+            valid_phone_number=self.valid_phone_number(temp_list[-1])
 
-        if not valid:
-            try_again=askokcancel("Warning", "Warning: The phone number you entered is not valid\nClick 'OK' to save anyway\nClick 'Cancel' to edit the phone number")
-            if not try_again:
-                return
+            print("phone number={} is valid: {}".format(temp_list[-1],str(valid_phone_number)));
+
+            if not valid_phone_number:
+                try_again=askokcancel("Warning", "Warning: The phone number you entered is not valid\nClick 'OK' to save anyway\nClick 'Cancel' to edit the phone number")
+                if not try_again:
+                    return
+
+        # Check the ZIP Code
+        if len(temp_list[-2])>0: # don't check if we don't get a ZIP Code passed as an arg
+
+            valid_zip = self.valid_zip(temp_list[-2])
+
+            print("zip={} is valid: {}".format(temp_list[-2], str(valid_zip)));
+
+            if not valid_zip:
+                try_again = askokcancel("Warning",
+                                        "Warning: The Zip Code you entered is not valid\nClick 'OK' to save anyway\nClick 'Cancel' to edit the Zip Code")
+                if not try_again:
+                    return
+
+        # Check the email
+        if len(email)>0: # don't check if we don't get an email passed as an arg
+            valid_email = self.valid_email(email)
+
+            print("email={} is valid: {}".format(temp_list[-1], str(valid_email)));
+
+            if not valid_email:
+                try_again = askokcancel("Warning",
+                                        "Warning: The email address you entered is not valid\nClick 'OK' to save anyway\nClick 'Cancel' to edit the email address")
+                if not try_again:
+                    return
+
 
         # new_contact=AddressBookEntry(fname, lname, address1, address2, city, state, zipC, phone);
         new_contact = AddressBookEntry(*list_with_skips, email=email);
@@ -491,7 +555,7 @@ class PageOne(tk.Frame):
         self.controller.show_frame(StartPage);
         book.exportToFile("SavedAddressBook.tsv");
 
-    def valid(self,number):
+    def valid_phone_number(self, number):
         """
         Function to test whether or not a phone number is valid.
         Args:
@@ -527,24 +591,23 @@ class PageOne(tk.Frame):
         else:
             return False
 
-    def check_email(self,email):
-        #checking validaction of email
-        #format:<string><@><string><.><string>
-        #good example: clannad93@qq.com
+    def valid_email(self, email):
+        # checking validation of email
+        # format:<string><@><string><.><string>
+        # good example: clannad93@qq.com
         #              yuboz@cs.uoregon.edu
-        return re.match("([0-9 a-z]+)([@]+)([0-9 a-z]+)([.]+)([0-9a-z]+)",email) !=None
-        #print(check_email(a))
-        #zipcode = "97401-13e11"
+        return re.match("([0-9 a-z]+)([@]+)([0-9 a-z]+)([.]+)([0-9a-z]+)", email) != None
 
-    def check_zip(self,zipcode):
-        #checking validaction of Zipcode
-        #format:<5 digits>
+
+    def valid_zip(self, zipcode):
+        # checking validation of Zipcode
+        # format:<5 digits>
         #       <5 digits><-><4 digits>
-        #good example: 97401
+        # good example: 97401
         #              97401-1234
 
-        return re.match("([0-9]){5}([-]{1})([0-9]){4}$",zipcode) !=None or re.match("([0-9 a-z]){5}$",zipcode) !=None
-        #print(check_zip(zipcode))
+        return re.match("([0-9]){5}([-]{1})([0-9]){4}$", zipcode) != None or re.match("([0-9 a-z]){5}$",zipcode) != None
+
 
 
 def on_closing(root):
