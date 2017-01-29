@@ -166,6 +166,8 @@ class VerticalScrolledFrame(Frame):
     def print_contacts(self, contacts):
         row = 0;
         for entry in book:
+            print();
+            print("Adding {}".format(entry));
             column=0;
             current_row=[];
             for attr in col_name:
@@ -388,7 +390,6 @@ class DeletePage(tk.Frame):
 
 class StartPage(tk.Frame):
     def __init__(self, parent, controller):
-        #print("im in StartPage");
         tk.Frame.__init__(self, parent)
         self.parent = parent;
         self.controller = controller;
@@ -451,8 +452,9 @@ class StartPage(tk.Frame):
         row +=1;
 
         f=VerticalScrolledFrame(self);
-        f.grid(row=2, column=0, columnspan=8, padx=20);
+        f.grid(row=2, column=0, columnspan=8);
         f.print_contacts(contacts);
+        print("\n\n Contacts should be displayed \n\n");
 
     def sort(self, var):
         #print("var is {}".format(var));
