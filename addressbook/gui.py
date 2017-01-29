@@ -6,6 +6,8 @@ from tkinter.messagebox import *
 from AddressBook import *
 from tkinter import messagebox
 import re
+from os import system
+from platform import system as platform
 
 
 #global variables
@@ -29,17 +31,18 @@ class KabyAddrapp(tk.Tk):
         if (len(args) == 1):
             book.importFromFile(args[0]); 
 
-        tk.Tk.__init__(self, *args, **kwargs);
+        self.root=tk.Tk.__init__(self, *args, **kwargs);
         self.container = tk.Frame(self);
 
         self.container.grid(row=0, ipadx=25, ipady=10);
 
         self.container.grid_rowconfigure(0, weight=1);
         self.container.grid_columnconfigure(0, weight=1);
+        #self.container.update_idletasks();
 
         self.frames = {};
 
-        for F in (StartPage, PageOne, DeletePage):
+        for F in ( PageOne, DeletePage, StartPage):
             #if F == DeletePage:
                 #print("initialize StartPage")
             #if F == DeletePage:
@@ -61,7 +64,7 @@ class KabyAddrapp(tk.Tk):
 
     def show_frame(self, cont):
         frame = self.frames[cont];
-        frame.tkraise();
+        
 
     def refresh_frame(self, F):
         frame = F(self.container, self);
@@ -183,6 +186,7 @@ class VerticalScrolledFrame(Frame):
                 column += 1;
 
             row +=1;
+
 
 
 
@@ -455,6 +459,10 @@ class StartPage(tk.Frame):
         f.grid(row=2, column=0, columnspan=8);
         f.print_contacts(contacts);
         print("\n\n Contacts should be displayed \n\n");
+        self.parent.update_idletasks();
+        self.update_idletasks();
+
+
 
     def sort(self, var):
         #print("var is {}".format(var));
