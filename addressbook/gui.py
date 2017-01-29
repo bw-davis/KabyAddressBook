@@ -451,18 +451,19 @@ class PageOne(tk.Frame):
 
         # Collect zip from user
         tk.Label(self, text="Phone Number").grid(column=2, row=10, sticky=(W, E))
-        phone_number = ttk.Entry(self, width=25, textvariable=phone);
+        phone_number= ttk.Entry(self, width=25, textvariable=phone);
         phone_number.grid(column=2, row=11, sticky=(W, E));
+
         # new_contact.append(phone);
         tk.Label(self, text="Address2").grid(column=3, row=6, sticky=(W, E))
-        phone_number = ttk.Entry(self, width=25);
-        phone_number.grid(column=3, row=7, sticky=(W, E));
+        address2= ttk.Entry(self, width=25);
+        address2.grid(column=3, row=7, sticky=(W, E));
 
         # Bind Enter to create customer as well.
 
         # ttk.Button(self, text="submit", command=lambda: self.add_contact(first_name.get(), last_name.get(), address.get(), state.get(), zipC.get(), em.get(), phone.get())).grid(column=2, row=12);
         ttk.Button(self, text="submit",
-                   command=lambda: self.add_contact(first_name.get(), last_name.get(), address.get(), "", city.get(),
+                   command=lambda: self.add_contact(first_name.get(), last_name.get(), address.get(),address2.get() , city.get(),
                                                     state.get(), zipC.get(), em.get(), phone.get())).grid(column=2,
                                                                                                           row=12);
         ttk.Button(self, text="cancel", command=lambda: controller.show_frame(StartPage)).grid(column=3, row=12);
