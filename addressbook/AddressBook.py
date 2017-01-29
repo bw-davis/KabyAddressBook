@@ -55,7 +55,14 @@ class AddressBook():
     def sortByName(self):
         self.entries.sort(key=lambda x: x.getAttribute("FirstName"))
         self.entries.sort(key=lambda x: x.getAttribute("LastName"))
-
+        
+        while (not self.entries[0].getAttribute("FirstName").isalnum()): #move null fields to the end
+            entry = self.entries.pop(0)
+            self.entries.append(entry)
+        while (not self.entries[0].getAttribute("LastName").isalnum()):
+            entry = self.entries.pop(0)
+            self.entries.append(entry)
+        
     """
     Sorting method for AddressBook where sorting is done by zip
     Sort by zip, ties broken by last name, ties broken by first name
@@ -63,9 +70,39 @@ class AddressBook():
     O(n + n + n) == O(n)
     """
     def sortByZipcode(self):
-        self.entries.sort(key=lambda x: x.getAttribute("FirstName"))
-        self.entries.sort(key=lambda x: x.getAttribute("LastName"))
+        self.sortByName()
         self.entries.sort(key=lambda x: x.getAttribute("Zipcode"))
+
+        length = len(self.entries)
+        count  = 0
+        while (not self.entries[0].getAttribute("Zipcode").isalnum()):
+            count += 1
+            if count > length: #in case all zipcodes are empty
+                break
+            entry = self.entries.pop(0)
+            self.entries.append(entry)
+
+
+    """
+    Search method for AddressBook
+    Case-insensitive search of both first and last names
+
+    Args:
+        n: str, the search string
+
+    Returns:
+        list, the indices of the matching entries
+    """
+    def searchByName(self, n):
+        results = []
+        n = n.lower()
+        for i in range(len(self.entries)):
+            entry = self.entries[i]
+            if n in entry.getAttribute("FirstName").lower() or n in entry.getAttribute("LastName").lower():
+                results.append(i)
+
+        return results
+                
 
     """
     Fills the AddressBook with entries from a file that uses the .tsv format
