@@ -27,6 +27,7 @@ class KabyAddrapp(tk.Tk):
         # print("I cleaned states ");
         if (len(args) == 1):
             print("book");
+            book.importFromFile(args[0]); 
         else:
             print("need to make a book");
 
@@ -96,8 +97,6 @@ def exportFile():
 def openAddressBook():
     # print("dosomething");
     AddressbookName = tkinter.filedialog.askopenfilename()
-    book2 = AddressBook()
-    book2.importFromFile("SavedAddressBook.tsv")
     app2 = KabyAddrapp(AddressbookName);
     app2.mainloop();
     print(AddressbookName)
