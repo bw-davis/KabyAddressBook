@@ -115,6 +115,88 @@ def saveAs():
     book.exportToFile(FileName);
 
 
+
+
+
+class VerticalScrolledFrame(Frame):
+    """A pure Tkinter scrollable frame that actually works!
+    * Use the 'interior' attribute to place widgets inside the scrollable frame
+    * Construct and pack/place/grid normally
+    * This frame only allows vertical scrolling
+
+    """
+    def __init__(self, parent, *args, **kw):
+        Frame.__init__(self, parent, *args, **kw)            
+
+        # create a canvas object and a vertical scrollbar for scrolling it
+        vscrollbar = Scrollbar(self, orient=VERTICAL)
+        vscrollbar.pack(fill=Y, side=RIGHT, expand=FALSE)
+        canvas = Canvas(self, bd=0, highlightthickness=0,
+                        yscrollcommand=vscrollbar.set)
+        canvas.pack(side=LEFT, fill=BOTH, expand=TRUE)
+        vscrollbar.config(command=canvas.yview)
+
+        # reset the view
+        canvas.xview_moveto(0)
+        canvas.yview_moveto(0)
+
+        # create a frame inside the canvas which will be scrolled with it
+        self.interior = interior = Frame(canvas, background='black')
+        interior_id = canvas.create_window(0, 0, window=interior,
+                                           anchor=NW)
+
+        # track changes to the canvas and frame width and sync them,
+        # also updating the scrollbar
+        def _configure_interior(event):
+            # update the scrollbars to match the size of the inner frame
+            size = (interior.winfo_reqwidth(), interior.winfo_reqheight())
+            canvas.config(scrollregion="0 0 %s %s" % size)
+            if interior.winfo_reqwidth() != canvas.winfo_width():
+                # update the canvas's width to fit the inner frame
+                canvas.config(width=interior.winfo_reqwidth())
+        interior.bind('<Configure>', _configure_interior)
+
+        def _configure_canvas(event):
+            if interior.winfo_reqwidth() != canvas.winfo_width():
+                # update the inner frame's width to fill the canvas
+                canvas.itemconfigure(interior_id, width=canvas.winfo_width())
+        canvas.bind('<Configure>', _configure_canvas)
+
+    def print_contacts(self, contacts):
+        #for row in range(10,100):
+            #for col in range(5):
+                #l = Label(self.interior, text="   row:{} col:{}  ".format(row, col))
+                #l.grid(row=row, column=col, padx=1, pady=1);
+
+
+        row = 0;
+        #column=0;
+        #current_row=[];
+        #for c in contacts: 
+            #label = Label(self.interior, text=c);
+           # label.grid(row=row, column=column, sticky='nsew', padx=1, pady=1);
+           #column +=1;
+       #row +=1;
+
+        for entry in book:
+            column=0;
+            current_row=[];
+            for attr in col_name:
+                t = entry.getAttribute(attr);
+                label = Text(self.interior, height=1, width=15);
+                if t == skip:
+                    label.insert(INSERT, "");
+                else:
+                    label.insert(INSERT, t);
+
+                label.grid(row=row, column=column, sticky="nsew", padx=1, pady=1);
+                current_row.append(label);
+                column += 1;
+
+            row +=1;
+
+
+
 class SimpleTable2(tk.Frame):
     def __init__(self, parent):
         print("im in SimpleTable2");
@@ -363,9 +445,26 @@ class StartPage(tk.Frame):
         dropdown = ttk.OptionMenu(self, var, options[0], *options, command=lambda cmd, var=var: self.sort(var.get()));
         dropdown.grid(row=0, column=7, sticky="w");
 
-        t = SimpleTable(self);
-        t.grid(row=1, column=0, columnspan=8, padx=20);
-        t.print_contacts(contacts);
+        #t = SimpleTable(self);
+        #t.grid(row=1, column=0, columnspan=8, padx=20);
+        #t.print_contacts(contacts);
+
+        contact_info = Frame(self, background='black');
+        contact_info.grid(row=1, column=0, columnspan=8);
+        row = 0;
+        column=0;
+        current_row=[];
+        for c in contacts: 
+            label = Text(contact_info, height=1, width=15);
+            label.insert(INSERT, c);
+            label.config(state=DISABLED);
+            label.grid(row=row, column=column, sticky='nsew', padx=1, pady=1);
+            column +=1;
+        row +=1;
+
+        f=VerticalScrolledFrame(self);
+        f.grid(row=2, column=0, columnspan=8, padx=20);
+        f.print_contacts(contacts);
 
     def sort(self, var):
         print("var is {}".format(var));
