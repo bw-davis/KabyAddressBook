@@ -6,30 +6,28 @@ from tkinter.messagebox import *
 from AddressBook import *
 from tkinter import messagebox
 import re
-# contacts=["First name", "Last name", "Address1", "Address2", "City", "State", "Zip", "Email", "Phone Number"];
-# col_name = ["FirstName", "LastName", "Address1", "City", "Zipcode", "Phone"];
+
+
+#global variables
 contacts = ["First name", "Last name", "Address1", "Address2", "City", "State", "Zip", "Phone Number"];
 col_name = ["FirstName", "LastName", "Address1", "Address2", "City", "State", "Zipcode", "Phone"];
+
+#Default address book.
 book = AddressBook()
 book.importFromFile("SavedAddressBook.tsv")
 
 dirty = [];  # And array of arrays of[label, row, col] of all "dirty" or modified text widgets
 states = []  # record index of the contacts that you want to delete
-print("I cleaned states in");
 edited = False;
 skip = "#skip"
 
 
 class KabyAddrapp(tk.Tk):
     def __init__(self, *args, **kwargs):
-
-        # states=[] #record delete indexes
-        # print("I cleaned states ");
+        
+        #Pass an address book to the constructor.
         if (len(args) == 1):
-            print("book");
             book.importFromFile(args[0]); 
-        else:
-            print("need to make a book");
 
         tk.Tk.__init__(self, *args, **kwargs);
         self.container = tk.Frame(self);
@@ -42,12 +40,12 @@ class KabyAddrapp(tk.Tk):
         self.frames = {};
 
         for F in (StartPage, PageOne, DeletePage):
-            if F == DeletePage:
-                print("initialize StartPage")
-            if F == DeletePage:
-                print("initialize PageOne")
-            if F == DeletePage:
-                print("initialize DeletePage")
+            #if F == DeletePage:
+                #print("initialize StartPage")
+            #if F == DeletePage:
+                #print("initialize PageOne")
+            #if F == DeletePage:
+                #print("initialize DeletePage")
             frame = F(self.container, self);
             self.frames[F] = frame;
             frame.grid(row=0, column=0, sticky="nsew");
@@ -78,20 +76,22 @@ def donothing():
     print("donothing");
 
 
-def NewContact():
+def newBook():
+    app2 = KabyAddrapp(AddressbookName);
+    app2.mainloop();
     print("donothing");
 
 
 def importFile():
-    print("dosomething");
+    #print("dosomething");
     importFileName = tkinter.filedialog.askopenfilename()
-    print(importFileName)
+    #print(importFileName)
 
 
 def exportFile():
-    print("dosomething");
+    #print("dosomething");
     importFileName = tkinter.filedialog.askopenfilename()
-    print(exportFileName)
+    #print(exportFileName)
 
 
 def openAddressBook():
@@ -99,19 +99,19 @@ def openAddressBook():
     AddressbookName = tkinter.filedialog.askopenfilename()
     app2 = KabyAddrapp(AddressbookName);
     app2.mainloop();
-    print(AddressbookName)
+    #print(AddressbookName)
 
 
 def save():
     # print("dosomething");
-    print("savefile")
+    #print("savefile")
     book.exportToFile("SavedAddressBook.tsv");
 
 
 def saveAs():
     # print("dosomething");
     FileName = tk.filedialog.asksaveasfilename(filetypes=[("text", ".tsv")])
-    print(FileName)
+    #print(FileName)
     book.exportToFile(FileName);
 
 
@@ -156,28 +156,15 @@ class VerticalScrolledFrame(Frame):
                 canvas.config(width=interior.winfo_reqwidth())
         interior.bind('<Configure>', _configure_interior)
 
+
         def _configure_canvas(event):
             if interior.winfo_reqwidth() != canvas.winfo_width():
-                # update the inner frame's width to fill the canvas
                 canvas.itemconfigure(interior_id, width=canvas.winfo_width())
         canvas.bind('<Configure>', _configure_canvas)
 
+
     def print_contacts(self, contacts):
-        #for row in range(10,100):
-            #for col in range(5):
-                #l = Label(self.interior, text="   row:{} col:{}  ".format(row, col))
-                #l.grid(row=row, column=col, padx=1, pady=1);
-
-
         row = 0;
-        #column=0;
-        #current_row=[];
-        #for c in contacts: 
-            #label = Label(self.interior, text=c);
-           # label.grid(row=row, column=column, sticky='nsew', padx=1, pady=1);
-           #column +=1;
-       #row +=1;
-
         for entry in book:
             column=0;
             current_row=[];
@@ -199,7 +186,7 @@ class VerticalScrolledFrame(Frame):
 
 class SimpleTable2(tk.Frame):
     def __init__(self, parent):
-        print("im in SimpleTable2");
+        #print("im in SimpleTable2");
         states = [];
         self._widgets = [];
         tk.Frame.__init__(self, parent, background='black');
@@ -239,7 +226,7 @@ class SimpleTable2(tk.Frame):
             # if(attr=="button"):
             for attr in col_name:
                 if (attr == "Delete"):
-                    print("button")
+                    #print("button")
                     v = StringVar()
                     z = IntVar()
                     v.set("L");
@@ -248,12 +235,12 @@ class SimpleTable2(tk.Frame):
                         i)));  # create check buttons in when we create the table, bind to onPress funtion
                     b.grid(row=row, column=column, sticky="nsew", padx=1, pady=1);
                     states.append(0);
-                    print("now i am appending")
+                    #print("now i am appending")
 
 
                 else:
                     t = entry.getAttribute(attr);
-                    print("{} {} {}".format(t, row, column));
+                    #print("{} {} {}".format(t, row, column));
                     label = Text(self, height=1, width=15);
                     if t == skip:
                         label.insert(INSERT, "");
@@ -266,7 +253,7 @@ class SimpleTable2(tk.Frame):
             self._widgets.append(current_row)
             index += 1;
             row += 1;
-        print(states)
+        #print(states)
 
         for column in range(7):
             self.grid_columnconfigure(column, weight=1)
@@ -275,7 +262,7 @@ class SimpleTable2(tk.Frame):
 
 class SimpleTable(tk.Frame):
     def __init__(self, parent):
-        print("im in SimpleTable1");
+        #print("im in SimpleTable1");
         self._widgets = [];
         tk.Frame.__init__(self, parent, background='black');
         self._widgets = []
@@ -348,7 +335,7 @@ class SimpleTable(tk.Frame):
 
 class DeletePage(tk.Frame):
     def __init__(self, parent, controller):
-        print("im in DeletePage");
+        #print("im in DeletePage");
         tk.Frame.__init__(self, parent)
         self.parent = parent;
         self.controller = controller;
@@ -377,16 +364,16 @@ class DeletePage(tk.Frame):
         # the function that will be evoked when user click Delete button in delete page
         index = 0
         count = 0
-        print("donsomething2");
-        print(states);
+        #print("donsomething2");
+        #print(states);
         if askokcancel("Delete", "Are you sure to Delete selected Data?"):
             # pop a dialog let user to confirm
-            print("yes")
+            #print("yes")
             # if yes, delete contacts
             for i in states:
                 if i != 0:
-                    print("should delete No.")
-                    print(index + 1)
+                    #print("should delete No.")
+                    #print(index + 1)
                     book.removeEntry(index - count);
                     count += 1
                 index += 1;
@@ -401,7 +388,7 @@ class DeletePage(tk.Frame):
 
 class StartPage(tk.Frame):
     def __init__(self, parent, controller):
-        print("im in StartPage");
+        #print("im in StartPage");
         tk.Frame.__init__(self, parent)
         self.parent = parent;
         self.controller = controller;
@@ -417,7 +404,7 @@ class StartPage(tk.Frame):
         parent.master.config(menu=menubar);
         filemenu = Menu(menubar, tearoff=0);
         menubar.add_cascade(label="File", menu=filemenu);
-        filemenu.add_command(label="New", command=donothing);
+        filemenu.add_command(label="New", command=newBook);
         filemenu.add_command(label="Open", command=openAddressBook);
         filemenu.add_command(label="Save", command=save);
         filemenu.add_command(label="Save as", command=saveAs);
@@ -454,6 +441,7 @@ class StartPage(tk.Frame):
         row = 0;
         column=0;
         current_row=[];
+
         for c in contacts: 
             label = Text(contact_info, height=1, width=15);
             label.insert(INSERT, c);
@@ -467,12 +455,12 @@ class StartPage(tk.Frame):
         f.print_contacts(contacts);
 
     def sort(self, var):
-        print("var is {}".format(var));
+        #print("var is {}".format(var));
         if var == "Name":
-            print("sorting by name");
+            #print("sorting by name");
             book.sortByName();
         else:
-            print("sorting by zip");
+            #print("sorting by zip");
             book.sortByZipcode();
         self.controller.refresh_frame(StartPage);
         self.controller.show_frame(StartPage);
@@ -481,15 +469,15 @@ class StartPage(tk.Frame):
         # click delete in menu bar
         global states
         states = []  # record delete index
-        print("I cleaned states 7");
+        #print("I cleaned states 7");
         self.controller.refresh_frame(DeletePage);
-        print("Im going to the delete page")
+        #print("Im going to the delete page")
         self.controller.show_frame(DeletePage)
 
 
 class PageOne(tk.Frame):
     def __init__(self, parent, controller):
-        print("im in PageOne");
+        #print("im in PageOne");
         tk.Frame.__init__(self, parent)
         self.parent = parent;
         self.controller = controller;
