@@ -527,6 +527,25 @@ class PageOne(tk.Frame):
         else:
             return False
 
+    def check_email(self,email):
+        #checking validaction of email
+        #format:<string><@><string><.><string>
+        #good example: clannad93@qq.com
+        #              yuboz@cs.uoregon.edu
+        return re.match("([0-9 a-z]+)([@]+)([0-9 a-z]+)([.]+)([0-9a-z]+)",email) !=None
+        #print(check_email(a))
+        #zipcode = "97401-13e11"
+
+    def check_zip(self,zipcode):
+        #checking validaction of Zipcode
+        #format:<5 digits>
+        #       <5 digits><-><4 digits>
+        #good example: 97401
+        #              97401-1234
+
+        return re.match("([0-9]){5}([-]{1})([0-9]){4}$",zipcode) !=None or re.match("([0-9 a-z]){5}$",zipcode) !=None
+        #print(check_zip(zipcode))
+
 
 def on_closing(root):
     if messagebox.askokcancel("Quit", "Do you want to quit?"):
