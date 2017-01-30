@@ -66,28 +66,15 @@ class KabyAddrapp(tk.Tk):
 
 
 
-        #starttime = datetime.datetime.now()
-        #init Start page here
-        #frame = StartPage(self.container, self);
-        #self.frames[StartPage] = frame;
-        #frame.grid(row=0, column=0, sticky="nsew");
 
 
         print("StartPage initialize time")
 
 
 
-
-
-        # states=[] #record delete index
-        # print("I cleaned states 2");
         starttime = datetime.datetime.now()
-        #self.refresh_frame(StartPage);
         self.show_frame(StartPage);
 
-        #self.show_frame(StartPage);
-        #self.refresh_frame(StartPage);
-        #self.show_frame(StartPage);
 
         endtime = datetime.datetime.now()
         print (endtime - starttime)
@@ -202,27 +189,18 @@ class VerticalScrolledFrame(Frame):
                 canvas.itemconfigure(interior_id, width=canvas.winfo_width())
         canvas.bind('<Configure>', _configure_canvas)
 
-    def print_contacts(self, contacts):
-        #for row in range(10,100):
-            #for col in range(5):
-                #l = Label(self.interior, text="   row:{} col:{}  ".format(row, col))
-                #l.grid(row=row, column=col, padx=1, pady=1);
+    def onPress(self, i):
+        states[i] = 1;
 
+    def print_contacts(self, contacts):
         starttime = datetime.datetime.now()
 
         row = 0;
-        #column=0;
-        #current_row=[];
-        #for c in contacts: 
-            #label = Label(self.interior, text=c);
-           # label.grid(row=row, column=column, sticky='nsew', padx=1, pady=1);
-           #column +=1;
-       #row +=1;
 
         for entry in book:
             column=0;
             current_row=[];
-            for attr in col_name:
+            for attr in col_name: 
                 t = entry.getAttribute(attr);
                 label = Text(self.interior, height=1, width=15);
                 if t == skip:
@@ -239,6 +217,45 @@ class VerticalScrolledFrame(Frame):
         endtime = datetime.datetime.now()
         print (endtime - starttime)
         print("print entry time")
+
+    def print_delete_contact_page(self, contacts):
+        row=0;
+        index=0;
+        for entry in book:
+            column = 0;
+            current_row=[];
+            for attr in ["Delete", "FirstName", "LastName", "Address1", "Address2", "City", "State", "Zipcode", "Phone"]:
+                t=entry.getAttribute(attr);
+                if attr=="Delete":
+                    v = StringVar()
+                    z = IntVar()
+                    v.set("L");
+                    # b=Radiobutton(self, text="", variable=v);
+                    b = Checkbutton(self.interior, width=15, text=row, command=(lambda i=index: self.onPress(
+                        i)));  # create check buttons in when we create the table, bind to onPress funtion
+                    b.grid(row=row, column=column, sticky="nsew", padx=1, pady=1);
+                    states.append(0);
+                    print("now i am appending")
+                else:
+                    t = entry.getAttribute(attr);
+                    #print("{} {} {}".format(t, row, column));
+                    label = Text(self.interior, height=1, width=15);
+                    if t == skip:
+                        label.insert(INSERT, "");
+                    else:
+                        label.insert(INSERT, t);
+                    label.grid(row=row, column=column, sticky="nsew", padx=1, pady=1)
+                    current_row.append(label)
+
+                column += 1;
+            #self._widgets.append(current_row)
+            index += 1;
+            row += 1;
+
+        for column in range(7):
+            self.grid_columnconfigure(column, weight=1)
+        index = 0;
+
 
 
 
@@ -420,13 +437,35 @@ class DeletePage(tk.Frame):
         dropdown = ttk.OptionMenu(self, var, options[0], *options);
         dropdown.grid(row=0, column=7, sticky="w");
 
-        t = SimpleTable2(self);
-        t.grid(row=1, column=0, columnspan=8, padx=20);
-        t.print_contacts(contacts);
+        #t = SimpleTable2(self);
+        #t.grid(row=1, column=0, columnspan=8, padx=20);
+        #t.print_contacts(contacts);
 
-        ttk.Button(self, text="Delete", command=lambda: self.delete_confirm()).grid(row=2, column=2, stick='e');
+        contact_info = Frame(self, background='black');
+        contact_info.grid(row=1, column=0, columnspan=8);
+        row = 0;
+        column=0;
+        current_row=[];
+        for c in ["Delete", "FirstName", "LastName", "Address1", "Address2", "City", "State", "Zipcode", "Phone"]: 
+            label = Text(contact_info, height=1, width=15);
+            label.insert(INSERT, c);
+            label.config(state=DISABLED);
+            label.grid(row=row, column=column, sticky='nsew', padx=1, pady=1);
+            column +=1;
+        row +=1;
+
+        ##f=VerticalScrolledFrame(self);
+        ###f.grid(row=2, column=0, columnspan=8, padx=20);
+        #f.print_contacts(contacts);
+        #self.parent.update_idletasks();
+        f=VerticalScrolledFrame(self);
+        f.grid(row=2, column=0, columnspan=8, padx=20);
+        f.print_delete_contact_page(contacts);
+        self.parent.update_idletasks();
+
+        ttk.Button(self, text="Delete", command=lambda: self.delete_confirm()).grid(row=3, column=2, stick='e');
         # ttk.Button(self, text="Cancel", command=).grid(row=3, column=2);
-        ttk.Button(self, text="Cancel", command=lambda: controller.show_frame(StartPage)).grid(column=3, row=2,
+        ttk.Button(self, text="Cancel", command=lambda: controller.show_frame(StartPage)).grid(column=3, row=3,
                                                                                                stick='w');
 
     def delete_confirm(self):
