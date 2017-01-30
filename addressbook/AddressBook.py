@@ -141,6 +141,21 @@ class AddressBook():
             f.write(entry.getTSVFormat() + "\n")
         f.close()
 
+
+
+    """
+    Creates a new, blank file using .tsv format
+
+    Args:
+        fn: str, filename to write address book to
+    """
+    def saveNewFile(sefl, fn):
+        f = open(fn,"w");
+        #f.write("CITY\tSTATE\tZIP\tdelivery\tSecond\tLastName\tFirstName\tPhone\n")
+        f.close()
+
+
+
     """
     Populates the AddresBook object with entries from the '.kab' format. 
 

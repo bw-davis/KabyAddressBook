@@ -15,7 +15,7 @@ from platform import system as platform
 contacts = ["First name", "Last name", "Address1", "Address2", "City", "State", "Zip", "Phone Number" ];
 col_name = ["FirstName", "LastName", "Address1", "Address2", "City", "State", "Zipcode", "Phone"];
 book = AddressBook()
-book.importFromFile("SavedAddressBook.tsv")
+
 
 dirty = [];  # And array of arrays of[label, row, col] of all "dirty" or modified text widgets
 states = []  # record index of the contacts that you want to delete
@@ -29,6 +29,7 @@ endtime = datetime.datetime.now()
 
 class KabyAddrapp(tk.Tk):
     def __init__(self, *args, **kwargs):
+        global book;
         #if platform() == 'Darwin':  # How Mac OS X is identified by Python
             #system('''/usr/bin/osascript -e 'tell app "Finder" to set frontmost of process "Python" to true' ''')
 
@@ -36,9 +37,11 @@ class KabyAddrapp(tk.Tk):
         # print("I cleaned states ");
         if (len(args) == 1):
             print("book");
+            print(args[0]);
             book.importFromFile(args[0]); 
         else:
             print("need to make a book");
+            book.importFromFile("SavedAddressBook.tsv")
 
         tk.Tk.__init__(self, *args, **kwargs);
         self.container = tk.Frame(self);
@@ -100,10 +103,15 @@ class KabyAddrapp(tk.Tk):
 def donothing():
     print("donothing");
     print(tkinter.messagebox.showinfo("messagebox","welcome to the Kaby Address Book"))
+    
 
 
-def NewContact():
+def newBook():
     print("donothing");
+    FileName = tk.filedialog.asksaveasfilename(filetypes=[("text", ".tsv")])
+    book.saveNewFile(FileName);
+    newApp = KabyAddrapp(FileName);
+    newApp.mainloop();
 
 
 def importFile():
@@ -328,6 +336,11 @@ class BlankPage(tk.Frame):
 
         tk.Frame.__init__(self, parent)
 
+def start_page_search(name):
+    print(name);
+    for i in book.searchByName(name):
+        print(i);
+
  
 
 
@@ -356,7 +369,7 @@ class StartPage(tk.Frame):
         parent.master.config(menu=menubar);
         filemenu = Menu(menubar, tearoff=0);
         menubar.add_cascade(label="File", menu=filemenu);
-        filemenu.add_command(label="New", command=donothing);
+        filemenu.add_command(label="New", command=newBook);
         filemenu.add_command(label="Open", command=openAddressBook);
         filemenu.add_command(label="Save", command=save);
         filemenu.add_command(label="Save as", command=saveAs);
@@ -383,6 +396,17 @@ class StartPage(tk.Frame):
         var.set(options[0]);
         dropdown = ttk.OptionMenu(self, var, options[0], *options, command=lambda cmd, var=var: self.sort(var.get()));
         dropdown.grid(row=0, column=7, sticky="w");
+
+        search_frame=Frame(self);
+        search_frame.grid(row=0, column=0, columnspan=3);
+
+        #search menu
+        search_label = ttk.Label(search_frame, text="Search");
+        search_label.grid(row=0, column=0, sticky='e', padx=10, pady=5);
+        search_input = ttk.Entry(search_frame, width=15);
+        search_input.grid(row=0, column=1, sticky='w', pady=5);
+        search_button = ttk.Button(search_frame, text="Search", command=lambda  : start_page_search(search_input.get()));
+        search_button.grid(row=0, column=3, sticky='e', padx=10);
 
         #t = SimpleTable(self);
         #t.grid(row=1, column=0, columnspan=8, padx=20);
