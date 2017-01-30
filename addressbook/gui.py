@@ -14,7 +14,6 @@ from platform import system as platform
 # col_name = ["FirstName", "LastName", "Address1", "City", "Zipcode", "Phone"];
 contacts = ["First name", "Last name", "Address1", "Address2", "City", "State", "Zip", "Phone Number" ];
 col_name = ["FirstName", "LastName", "Address1", "Address2", "City", "State", "Zipcode", "Phone"];
-book = AddressBook()
 
 
 dirty = [];  # And array of arrays of[label, row, col] of all "dirty" or modified text widgets
@@ -28,20 +27,16 @@ endtime = datetime.datetime.now()
 
 
 class KabyAddrapp(tk.Tk):
-    def __init__(self, *args, **kwargs):
-        global book;
+    def __init__(self, addrBook="SavedAddressBook.tsv", *args, **kwargs):
+    
         #if platform() == 'Darwin':  # How Mac OS X is identified by Python
             #system('''/usr/bin/osascript -e 'tell app "Finder" to set frontmost of process "Python" to true' ''')
 
         # states=[] #record delete indexes
         # print("I cleaned states ");
-        if (len(args) == 1):
-            print("book");
-            print(args[0]);
-            book.importFromFile(args[0]); 
-        else:
-            print("need to make a book");
-            book.importFromFile("SavedAddressBook.tsv")
+        
+        #print("book");
+        #print(args[0]); 
 
         tk.Tk.__init__(self, *args, **kwargs);
         self.container = tk.Frame(self);
@@ -50,17 +45,13 @@ class KabyAddrapp(tk.Tk):
 
         self.container.grid_rowconfigure(0, weight=1);
         self.container.grid_columnconfigure(0, weight=1);
+        self.book = AddressBook()
+        self.book.importFromFile(addrBook);
 
         self.frames = {};
 
-        for F in (StartPage,PageOne):
+        for F in (StartPage, PageOne):
             starttime = datetime.datetime.now()
-            if F == DeletePage:
-                print("initialize StartPage")
-            if F == DeletePage:
-                print("initialize PageOne")
-            if F == DeletePage:
-                print("initialize DeletePage")
             frame = F(self.container, self);
             self.frames[F] = frame;
             frame.grid(row=0, column=0, sticky="nsew");
@@ -74,6 +65,7 @@ class KabyAddrapp(tk.Tk):
 
         starttime = datetime.datetime.now()
         self.show_frame(StartPage);
+
 
 
         endtime = datetime.datetime.now()
@@ -106,47 +98,6 @@ def donothing():
     
 
 
-def newBook():
-    print("donothing");
-    FileName = tk.filedialog.asksaveasfilename(filetypes=[("text", ".tsv")])
-    book.saveNewFile(FileName);
-    newApp = KabyAddrapp(FileName);
-    newApp.mainloop();
-
-
-def importFile():
-    print("dosomething");
-    importFileName = tkinter.filedialog.askopenfilename()
-    print(importFileName)
-
-
-def exportFile():
-    print("dosomething");
-    importFileName = tkinter.filedialog.askopenfilename()
-    print(exportFileName)
-
-
-def openAddressBook():
-    # print("dosomething");
-    AddressbookName = tkinter.filedialog.askopenfilename()
-    app2 = KabyAddrapp(AddressbookName);
-    app2.mainloop();
-    print(AddressbookName)
-
-
-def save():
-    # print("dosomething");
-    print("savefile")
-    book.exportToFile("SavedAddressBook.tsv");
-
-
-def saveAs():
-    # print("dosomething");
-    FileName = tk.filedialog.asksaveasfilename(filetypes=[("text", ".tsv")])
-    print(FileName)
-    book.exportToFile(FileName);
-
-
 
 
 
@@ -158,7 +109,8 @@ class VerticalScrolledFrame(Frame):
 
     """
     def __init__(self, parent, *args, **kw):
-        Frame.__init__(self, parent, *args, **kw)            
+        Frame.__init__(self, parent, *args, **kw)  
+        self.parent=parent          
 
         # create a canvas object and a vertical scrollbar for scrolling it
         vscrollbar = Scrollbar(self, orient=VERTICAL)
@@ -202,7 +154,7 @@ class VerticalScrolledFrame(Frame):
 
         row = 0;
 
-        for entry in book:
+        for entry in self.parent.controller.book:
             column=0;
             current_row=[];
             for attr in col_name: 
@@ -226,7 +178,7 @@ class VerticalScrolledFrame(Frame):
     def print_delete_contact_page(self, contacts):
         row=0;
         index=0;
-        for entry in book:
+        for entry in self.parent.controller.book:
             column = 0;
             current_row=[];
             for attr in ["Delete", "FirstName", "LastName", "Address1", "Address2", "City", "State", "Zipcode", "Phone"]:
@@ -240,7 +192,7 @@ class VerticalScrolledFrame(Frame):
                         i)));  # create check buttons in when we create the table, bind to onPress funtion
                     b.grid(row=row, column=column, sticky="nsew", padx=1, pady=1);
                     states.append(0);
-                    print("now i am appending")
+                    #print("now i am appending")
                 else:
                     t = entry.getAttribute(attr);
                     #print("{} {} {}".format(t, row, column));
@@ -318,11 +270,11 @@ class DeletePage(tk.Frame):
                 if i != 0:
                     print("should delete No.")
                     print(index + 1)
-                    book.removeEntry(index - count);
+                    self.controller.book.removeEntry(index - count);
                     count += 1
                 index += 1;
 
-            book.exportToFile("SavedAddressBook.tsv");
+            self.controller.book.exportToFile("SavedAddressBook.tsv");
             self.controller.refresh_frame(StartPage);
             self.controller.show_frame(StartPage);
         else:
@@ -338,8 +290,9 @@ class BlankPage(tk.Frame):
 
 def start_page_search(name):
     print(name);
-    for i in book.searchByName(name):
+    for i in self.controller.book.searchByName(name):
         print(i);
+        print(self.controller.book.getEntry(i));
 
  
 
@@ -369,12 +322,12 @@ class StartPage(tk.Frame):
         parent.master.config(menu=menubar);
         filemenu = Menu(menubar, tearoff=0);
         menubar.add_cascade(label="File", menu=filemenu);
-        filemenu.add_command(label="New", command=newBook);
-        filemenu.add_command(label="Open", command=openAddressBook);
-        filemenu.add_command(label="Save", command=save);
-        filemenu.add_command(label="Save as", command=saveAs);
-        filemenu.add_command(label="Import", command=importFile);
-        filemenu.add_command(label="Export", command=exportFile);
+        filemenu.add_command(label="New", command=self.newBook);
+        filemenu.add_command(label="Open", command=self.openAddressBook);
+        filemenu.add_command(label="Save", command=self.save);
+        filemenu.add_command(label="Save as", command=self.saveAs);
+        filemenu.add_command(label="Import", command=self.importFile);
+        filemenu.add_command(label="Export", command=self.exportFile);
         filemenu.add_separator();
         filemenu.add_command(label="Exit", command=quit);
 
@@ -439,10 +392,10 @@ class StartPage(tk.Frame):
         print("var is {}".format(var));
         if var == "Name":
             print("sorting by name");
-            book.sortByName();
+            self.controller.book.sortByName();
         else:
             print("sorting by zip");
-            book.sortByZipcode();
+            self.controller.book.sortByZipcode();
         self.controller.refresh_frame(StartPage);
         self.controller.show_frame(StartPage);
 
@@ -454,6 +407,46 @@ class StartPage(tk.Frame):
         self.controller.refresh_frame(DeletePage);
         print("Im going to the delete page")
         self.controller.show_frame(DeletePage)
+
+
+    def newBook(self):
+        print("donothing");
+        FileName = tk.filedialog.asksaveasfilename(filetypes=[("text", ".tsv")])
+        self.controller.book.saveNewFile(FileName);
+        newApp = KabyAddrapp(FileName);
+        newApp.mainloop();
+
+
+    def importFile(self):
+        print("dosomething");
+        importFileName = tkinter.filedialog.askopenfilename()
+        print(importFileName)
+
+
+    def exportFile(self):
+        print("dosomething");
+        importFileName = tkinter.filedialog.askopenfilename()
+        print(exportFileName)
+
+
+    def openAddressBook(self):
+        AddressbookName = tkinter.filedialog.askopenfilename()
+        app2 = KabyAddrapp(AddressbookName);
+        app2.mainloop();
+        print(AddressbookName)
+
+
+    def save(self):
+        # print("dosomething");
+        print("savefile")
+        self.controller.book.exportToFile("SavedAddressBook.tsv");
+
+
+    def saveAs(self):
+        # print("dosomething");
+        FileName = tk.filedialog.asksaveasfilename(filetypes=[("text", ".tsv")])
+        print(FileName)
+        self.controller.book.exportToFile(FileName);
 
 
 class PageOne(tk.Frame):
@@ -618,10 +611,10 @@ class PageOne(tk.Frame):
 
         # new_contact=AddressBookEntry(fname, lname, address1, address2, city, state, zipC, phone);
         new_contact = AddressBookEntry(*list_with_skips, email=email);
-        book.addEntry(new_contact);
+        self.controller.book.addEntry(new_contact);
         self.controller.refresh_frame(StartPage);
         self.controller.show_frame(StartPage);
-        book.exportToFile("SavedAddressBook.tsv");
+        self.controller.book.exportToFile("SavedAddressBook.tsv");
 
     def valid_phone_number(self, number):
         """
