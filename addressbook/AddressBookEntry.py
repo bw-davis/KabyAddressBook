@@ -21,6 +21,10 @@ class AddressBookEntry():
     """
     Initializer of the AddressBookEntry that fills the mandatory fields
 
+    If keyword argument 'dictionary' is True, will set all values to 
+    the keyword argument 'attrs'. This is used for cases where all
+    attributes are known, and in dictionary form already. 
+
     Args:
         fn:       str, first name
         ln:       str, last name
@@ -33,6 +37,10 @@ class AddressBookEntry():
         kwargs:   any optional field such as "email=john@gmail.com"
     """
     def __init__(self, fn, ln, addr1, addr2, city, state, zipcode, phone, **kwargs):
+        if 'dictionary' in kwargs and kwargs['dictionary'] == True:
+            self.attrs = kwargs['attrs']
+            return
+
         attrs = {"FirstName": fn,
                  "LastName": ln,
                  "Address1": addr1,

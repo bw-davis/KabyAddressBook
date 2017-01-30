@@ -142,6 +142,35 @@ class AddressBook():
         f.close()
 
     """
+    Populates the AddresBook object with entries from the '.kab' format. 
+
+    Args:
+        fn: str, filename to bring entries from
+    """
+    def openFromFile(self, fn):
+        with open(fn) as f:
+            for line in f:
+                d = eval(line.strip())
+                entry = AddressBookEntry(None, None, None, None, None, None, None, None, dictionary=True, attrs=d)
+                self.addEntry(entry)
+
+    """
+    Writes the contents of the AddressBook in a specialized '.kab' format. 
+
+    The '.kab' format is defined as the string format of the AddressBookEntry 
+    attribute dictionary, one per line. That is, if the file is 30 lines long,
+    it contains 30 contacts.
+
+    Args:
+        fn: str, filename to save the entries to
+    """
+    def saveToFile(self, fn):
+        f = open(fn, "w")
+        for entry in self:
+            f.write(str(entry.attrs) + "\n")
+        f.close()
+
+    """
     Iterator for AddressBook defined as an iterator over the AddressBookEntry list
     """
     def __iter__(self):
