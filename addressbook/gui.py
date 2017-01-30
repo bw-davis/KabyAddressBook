@@ -228,7 +228,7 @@ class VerticalScrolledFrame(Frame):
                     z = IntVar()
                     v.set("L");
                     # b=Radiobutton(self, text="", variable=v);
-                    b = Checkbutton(self.interior, width=15, text=row, command=(lambda i=index: self.onPress(
+                    b = Checkbutton(self.interior, width=14, text=row, command=(lambda i=index: self.onPress(
                         i)));  # create check buttons in when we create the table, bind to onPress funtion
                     b.grid(row=row, column=column, sticky="nsew", padx=1, pady=1);
                     states.append(0);
@@ -274,7 +274,7 @@ class DeletePage(tk.Frame):
         dropdown.grid(row=0, column=7, sticky="w");
 
         contact_info = Frame(self, background='black');
-        contact_info.grid(row=1, column=0, columnspan=8);
+        contact_info.grid(row=1, column=0, columnspan=8, sticky='w', padx=20, pady=5);
         row = 0;
         column=0;
         current_row=[];
@@ -389,7 +389,7 @@ class StartPage(tk.Frame):
         #t.print_contacts(contacts);
 
         contact_info = Frame(self, background='black');
-        contact_info.grid(row=1, column=0, columnspan=8);
+        contact_info.grid(row=1, column=0, columnspan=8, sticky='w', padx=20, pady=5);
         row = 0;
         column=0;
         current_row=[];
