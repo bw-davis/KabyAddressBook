@@ -9,9 +9,10 @@ import re
 import datetime
 from os import system
 from platform import system as platform
+
 # contacts=["First name", "Last name", "Address1", "Address2", "City", "State", "Zip", "Email", "Phone Number"];
 # col_name = ["FirstName", "LastName", "Address1", "City", "Zipcode", "Phone"];
-contacts = ["First name", "Last name", "Address1", "Address2", "City", "State", "Zip", "Phone Number"];
+contacts = ["First name", "Last name", "Address1", "Address2", "City", "State", "Zip", "Phone Number" ];
 col_name = ["FirstName", "LastName", "Address1", "Address2", "City", "State", "Zipcode", "Phone"];
 book = AddressBook()
 book.importFromFile("SavedAddressBook.tsv")
@@ -63,10 +64,6 @@ class KabyAddrapp(tk.Tk):
 
             endtime = datetime.datetime.now()
             print (endtime - starttime)
-
-
-
-
 
         print("StartPage initialize time")
 
@@ -258,167 +255,6 @@ class VerticalScrolledFrame(Frame):
 
 
 
-
-class SimpleTable2(tk.Frame):
-    def __init__(self, parent):
-        print("im in SimpleTable2");
-        states = [];
-        self._widgets = [];
-        tk.Frame.__init__(self, parent, background='black');
-        self._widgets = []
-
-    def set(self, row, column, value):
-        widget = self._widgets[row][column]
-        widget.configure(text=value)
-
-    def onPress(self, i):
-        states[i] = 1;
-
-    def print_contacts(self, contacts):
-        # states=[];
-
-        # print("I cleaned states 3");
-        col_name = ["Delete", "FirstName", "LastName", "Address1", "Address2", "City", "State", "Zipcode", "Phone"];
-        row = 0;
-        column = 0
-        current_row = []
-        index = 0;
-        starttime = datetime.datetime.now()
-
-        # for c in ["Delete","First name", "Last name", "Address1", "Address2", "City", "State", "Zip", "Email", "Phone Number"]:
-        for c in col_name:
-            label = Text(self, height=1, width=15);
-            label.insert(INSERT, c);
-            label.config(state=DISABLED);
-            label.grid(row=row, column=column, sticky="nsew", padx=1, pady=1)
-            current_row.append(label)
-            self._widgets.append(current_row)
-            column += 1;
-        row += 1;
-
-        for entry in book:
-            column = 0;
-            current_row = [];
-            # for attr in ["button","FirstName", "LastName", "Address1", "City", "Zipcode", "Phone"]:
-            # if(attr=="button"):
-            for attr in col_name:
-                if (attr == "Delete"):
-                    print("button")
-                    v = StringVar()
-                    z = IntVar()
-                    v.set("L");
-                    # b=Radiobutton(self, text="", variable=v);
-                    b = Checkbutton(self, text=row, command=(lambda i=index: self.onPress(
-                        i)));  # create check buttons in when we create the table, bind to onPress funtion
-                    b.grid(row=row, column=column, sticky="nsew", padx=1, pady=1);
-                    states.append(0);
-                    print("now i am appending")
-
-
-                else:
-                    t = entry.getAttribute(attr);
-                    print("{} {} {}".format(t, row, column));
-                    label = Text(self, height=1, width=15);
-                    if t == skip:
-                        label.insert(INSERT, "");
-                    else:
-                        label.insert(INSERT, t);
-                    label.grid(row=row, column=column, sticky="nsew", padx=1, pady=1)
-                    current_row.append(label)
-
-                column += 1;
-            self._widgets.append(current_row)
-            index += 1;
-            row += 1;
-        print(states)
-
-        for column in range(7):
-            self.grid_columnconfigure(column, weight=1)
-        index = 0;
-
-        endtime = datetime.datetime.now()
-        print (endtime - starttime)
-
-
-class SimpleTable(tk.Frame):
-    def __init__(self, parent):
-        print("im in SimpleTable1");
-        self._widgets = [];
-        tk.Frame.__init__(self, parent, background='black');
-        self._widgets = []
-        # states=[] #record delete index
-        # print("I cleaned states 4");
-
-    def set(self, row, column, value):
-        widget = self._widgets[row][column]
-        widget.configure(text=value)
-
-    # Gets text from text box, finds proper contact and contact information to replace.
-    def update_contact(self, row, col, entry):
-        # print("{} {}".format(row, col));
-        # print(book.getEntry(row).getAttribute(col_name[col]));
-        attr = col_name[col];  # The contact attribute to be replaceed
-        contact = book.getEntry(row - 1);  # Contact to be modified
-        contact_attr = contact.getAttribute(attr);  # The contact attribute to be replaced
-        # print(contact_attr);
-        new_contact_data = entry.get("1.0", END).replace('\n','');  # The text that has been entered in the Text widget. The end-1c ignores newline charater
-        # print(new_contact_data);
-        entry.delete("2.0", END);
-        entry.tag_add("a", "1.0", END);
-        entry.tag_configure("a", background="skyblue");
-        # entry.insert(INSERT, new_contact_data);
-        dirty.append([entry, row, col]);  # Keeping track of all unsaved entries.
-        contact.setAttribute(attr, new_contact_data);
-        book.exportToFile("SavedAddressBook.tsv");
-
-    def print_contacts(self, contacts):
-        starttime = datetime.datetime.now()
-
-        row = 0;
-        column = 0
-        current_row = []
-        for c in contacts:
-            label = Text(self, height=1, width=15);
-            label.insert(INSERT, c);
-            label.config(state=DISABLED);
-            label.grid(row=row, column=column, sticky="nsew", padx=1, pady=1)
-            current_row.append(label)
-            self._widgets.append(current_row)
-            column += 1;
-        row += 1;
-
-        for entry in book:
-            column = 0;
-            current_row = [];
-            for attr in col_name:
-                t = entry.getAttribute(attr);
-                # print("{} {} {}".format(t, row, column));
-                label = Text(self, height=1, width=15);
-                if t == skip:
-                    label.insert(INSERT, "");
-                else:
-                    label.insert(INSERT, t);
-                label.bind("<KeyRelease-Return>",
-                           lambda cmd, row=row, column=column, entry=label: self.update_contact(row, column, entry));
-                label.grid(row=row, column=column, sticky="nsew", padx=1, pady=1);
-                current_row.append(label);
-                column += 1;
-            self._widgets.append(current_row)
-            row += 1;
-
-        # Adds padding around contact info
-        for column in range(7):
-            self.grid_columnconfigure(column, weight=1)
-
-        endtime = datetime.datetime.now()
-        print (endtime - starttime)
-        print ("table time")
-
-    def toDelete(self):
-        # tast case for delete
-        pass
-
-
 class DeletePage(tk.Frame):
     def __init__(self, parent, controller):
         print("im in DeletePage");
@@ -437,10 +273,6 @@ class DeletePage(tk.Frame):
         dropdown = ttk.OptionMenu(self, var, options[0], *options);
         dropdown.grid(row=0, column=7, sticky="w");
 
-        #t = SimpleTable2(self);
-        #t.grid(row=1, column=0, columnspan=8, padx=20);
-        #t.print_contacts(contacts);
-
         contact_info = Frame(self, background='black');
         contact_info.grid(row=1, column=0, columnspan=8);
         row = 0;
@@ -454,10 +286,6 @@ class DeletePage(tk.Frame):
             column +=1;
         row +=1;
 
-        ##f=VerticalScrolledFrame(self);
-        ###f.grid(row=2, column=0, columnspan=8, padx=20);
-        #f.print_contacts(contacts);
-        #self.parent.update_idletasks();
         f=VerticalScrolledFrame(self);
         f.grid(row=2, column=0, columnspan=8, padx=20);
         f.print_delete_contact_page(contacts);
@@ -835,8 +663,6 @@ def main():
     app = KabyAddrapp();
     app.protocol("WM_DELETE_WINDOW", lambda: on_closing(app));
     starttime = datetime.datetime.now()
-
-    
 
     app.mainloop();
     endtime = datetime.datetime.now()
