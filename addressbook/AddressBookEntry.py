@@ -1,5 +1,5 @@
 
-from gui import skip
+skip = "#skip"
 
 """
 Object representing an entry into AddressBook
