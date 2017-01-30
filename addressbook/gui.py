@@ -6,55 +6,93 @@ from tkinter.messagebox import *
 from AddressBook import *
 from tkinter import messagebox
 import re
+import datetime
 from os import system
 from platform import system as platform
-
-
-#global variables
+# contacts=["First name", "Last name", "Address1", "Address2", "City", "State", "Zip", "Email", "Phone Number"];
+# col_name = ["FirstName", "LastName", "Address1", "City", "Zipcode", "Phone"];
 contacts = ["First name", "Last name", "Address1", "Address2", "City", "State", "Zip", "Phone Number"];
 col_name = ["FirstName", "LastName", "Address1", "Address2", "City", "State", "Zipcode", "Phone"];
-
-#Default address book.
 book = AddressBook()
 book.importFromFile("SavedAddressBook.tsv")
 
 dirty = [];  # And array of arrays of[label, row, col] of all "dirty" or modified text widgets
 states = []  # record index of the contacts that you want to delete
+print("I cleaned states in");
 edited = False;
 skip = "#skip"
+starttime = datetime.datetime.now()
+endtime = datetime.datetime.now()
+
 
 
 class KabyAddrapp(tk.Tk):
     def __init__(self, *args, **kwargs):
-        
-        #Pass an address book to the constructor.
-        if (len(args) == 1):
-            book.importFromFile(args[0]); 
+        #if platform() == 'Darwin':  # How Mac OS X is identified by Python
+            #system('''/usr/bin/osascript -e 'tell app "Finder" to set frontmost of process "Python" to true' ''')
 
-        self.root=tk.Tk.__init__(self, *args, **kwargs);
+        # states=[] #record delete indexes
+        # print("I cleaned states ");
+        if (len(args) == 1):
+            print("book");
+            book.importFromFile(args[0]); 
+        else:
+            print("need to make a book");
+
+        tk.Tk.__init__(self, *args, **kwargs);
         self.container = tk.Frame(self);
 
         self.container.grid(row=0, ipadx=25, ipady=10);
 
         self.container.grid_rowconfigure(0, weight=1);
         self.container.grid_columnconfigure(0, weight=1);
-        #self.container.update_idletasks();
 
         self.frames = {};
 
-        for F in ( PageOne, DeletePage, StartPage):
-            #if F == DeletePage:
-                #print("initialize StartPage")
-            #if F == DeletePage:
-                #print("initialize PageOne")
-            #if F == DeletePage:
-                #print("initialize DeletePage")
+        for F in (StartPage,PageOne):
+            starttime = datetime.datetime.now()
+            if F == DeletePage:
+                print("initialize StartPage")
+            if F == DeletePage:
+                print("initialize PageOne")
+            if F == DeletePage:
+                print("initialize DeletePage")
             frame = F(self.container, self);
             self.frames[F] = frame;
             frame.grid(row=0, column=0, sticky="nsew");
+
+            endtime = datetime.datetime.now()
+            print (endtime - starttime)
+
+
+
+        #starttime = datetime.datetime.now()
+        #init Start page here
+        #frame = StartPage(self.container, self);
+        #self.frames[StartPage] = frame;
+        #frame.grid(row=0, column=0, sticky="nsew");
+
+
+        print("StartPage initialize time")
+
+
+
+
+
         # states=[] #record delete index
         # print("I cleaned states 2");
+        starttime = datetime.datetime.now()
+        #self.refresh_frame(StartPage);
         self.show_frame(StartPage);
+
+        #self.show_frame(StartPage);
+        #self.refresh_frame(StartPage);
+        #self.show_frame(StartPage);
+
+        endtime = datetime.datetime.now()
+        print (endtime - starttime)
+        print ("first time")
+
 
     def __enter__(self, *args, **kwargs):
         return self;
@@ -64,7 +102,7 @@ class KabyAddrapp(tk.Tk):
 
     def show_frame(self, cont):
         frame = self.frames[cont];
-        
+        frame.tkraise();
 
     def refresh_frame(self, F):
         frame = F(self.container, self);
@@ -77,24 +115,23 @@ class KabyAddrapp(tk.Tk):
 
 def donothing():
     print("donothing");
+    print(tkinter.messagebox.showinfo("messagebox","welcome to the Kaby Address Book"))
 
 
-def newBook():
-    app2 = KabyAddrapp(AddressbookName);
-    app2.mainloop();
+def NewContact():
     print("donothing");
 
 
 def importFile():
-    #print("dosomething");
+    print("dosomething");
     importFileName = tkinter.filedialog.askopenfilename()
-    #print(importFileName)
+    print(importFileName)
 
 
 def exportFile():
-    #print("dosomething");
+    print("dosomething");
     importFileName = tkinter.filedialog.askopenfilename()
-    #print(exportFileName)
+    print(exportFileName)
 
 
 def openAddressBook():
@@ -102,19 +139,19 @@ def openAddressBook():
     AddressbookName = tkinter.filedialog.askopenfilename()
     app2 = KabyAddrapp(AddressbookName);
     app2.mainloop();
-    #print(AddressbookName)
+    print(AddressbookName)
 
 
 def save():
     # print("dosomething");
-    #print("savefile")
+    print("savefile")
     book.exportToFile("SavedAddressBook.tsv");
 
 
 def saveAs():
     # print("dosomething");
     FileName = tk.filedialog.asksaveasfilename(filetypes=[("text", ".tsv")])
-    #print(FileName)
+    print(FileName)
     book.exportToFile(FileName);
 
 
@@ -159,18 +196,30 @@ class VerticalScrolledFrame(Frame):
                 canvas.config(width=interior.winfo_reqwidth())
         interior.bind('<Configure>', _configure_interior)
 
-
         def _configure_canvas(event):
             if interior.winfo_reqwidth() != canvas.winfo_width():
+                # update the inner frame's width to fill the canvas
                 canvas.itemconfigure(interior_id, width=canvas.winfo_width())
         canvas.bind('<Configure>', _configure_canvas)
 
-
     def print_contacts(self, contacts):
+        #for row in range(10,100):
+            #for col in range(5):
+                #l = Label(self.interior, text="   row:{} col:{}  ".format(row, col))
+                #l.grid(row=row, column=col, padx=1, pady=1);
+
+        starttime = datetime.datetime.now()
+
         row = 0;
+        #column=0;
+        #current_row=[];
+        #for c in contacts: 
+            #label = Label(self.interior, text=c);
+           # label.grid(row=row, column=column, sticky='nsew', padx=1, pady=1);
+           #column +=1;
+       #row +=1;
+
         for entry in book:
-            print();
-            print("Adding {}".format(entry));
             column=0;
             current_row=[];
             for attr in col_name:
@@ -187,12 +236,15 @@ class VerticalScrolledFrame(Frame):
 
             row +=1;
 
+        endtime = datetime.datetime.now()
+        print (endtime - starttime)
+        print("print entry time")
 
 
 
 class SimpleTable2(tk.Frame):
     def __init__(self, parent):
-        #print("im in SimpleTable2");
+        print("im in SimpleTable2");
         states = [];
         self._widgets = [];
         tk.Frame.__init__(self, parent, background='black');
@@ -214,6 +266,8 @@ class SimpleTable2(tk.Frame):
         column = 0
         current_row = []
         index = 0;
+        starttime = datetime.datetime.now()
+
         # for c in ["Delete","First name", "Last name", "Address1", "Address2", "City", "State", "Zip", "Email", "Phone Number"]:
         for c in col_name:
             label = Text(self, height=1, width=15);
@@ -232,7 +286,7 @@ class SimpleTable2(tk.Frame):
             # if(attr=="button"):
             for attr in col_name:
                 if (attr == "Delete"):
-                    #print("button")
+                    print("button")
                     v = StringVar()
                     z = IntVar()
                     v.set("L");
@@ -241,12 +295,12 @@ class SimpleTable2(tk.Frame):
                         i)));  # create check buttons in when we create the table, bind to onPress funtion
                     b.grid(row=row, column=column, sticky="nsew", padx=1, pady=1);
                     states.append(0);
-                    #print("now i am appending")
+                    print("now i am appending")
 
 
                 else:
                     t = entry.getAttribute(attr);
-                    #print("{} {} {}".format(t, row, column));
+                    print("{} {} {}".format(t, row, column));
                     label = Text(self, height=1, width=15);
                     if t == skip:
                         label.insert(INSERT, "");
@@ -259,16 +313,19 @@ class SimpleTable2(tk.Frame):
             self._widgets.append(current_row)
             index += 1;
             row += 1;
-        #print(states)
+        print(states)
 
         for column in range(7):
             self.grid_columnconfigure(column, weight=1)
         index = 0;
 
+        endtime = datetime.datetime.now()
+        print (endtime - starttime)
+
 
 class SimpleTable(tk.Frame):
     def __init__(self, parent):
-        #print("im in SimpleTable1");
+        print("im in SimpleTable1");
         self._widgets = [];
         tk.Frame.__init__(self, parent, background='black');
         self._widgets = []
@@ -298,6 +355,8 @@ class SimpleTable(tk.Frame):
         book.exportToFile("SavedAddressBook.tsv");
 
     def print_contacts(self, contacts):
+        starttime = datetime.datetime.now()
+
         row = 0;
         column = 0
         current_row = []
@@ -334,6 +393,10 @@ class SimpleTable(tk.Frame):
         for column in range(7):
             self.grid_columnconfigure(column, weight=1)
 
+        endtime = datetime.datetime.now()
+        print (endtime - starttime)
+        print ("table time")
+
     def toDelete(self):
         # tast case for delete
         pass
@@ -341,7 +404,7 @@ class SimpleTable(tk.Frame):
 
 class DeletePage(tk.Frame):
     def __init__(self, parent, controller):
-        #print("im in DeletePage");
+        print("im in DeletePage");
         tk.Frame.__init__(self, parent)
         self.parent = parent;
         self.controller = controller;
@@ -370,16 +433,16 @@ class DeletePage(tk.Frame):
         # the function that will be evoked when user click Delete button in delete page
         index = 0
         count = 0
-        #print("donsomething2");
-        #print(states);
+        print("donsomething2");
+        print(states);
         if askokcancel("Delete", "Are you sure to Delete selected Data?"):
             # pop a dialog let user to confirm
-            #print("yes")
+            print("yes")
             # if yes, delete contacts
             for i in states:
                 if i != 0:
-                    #print("should delete No.")
-                    #print(index + 1)
+                    print("should delete No.")
+                    print(index + 1)
                     book.removeEntry(index - count);
                     count += 1
                 index += 1;
@@ -390,10 +453,23 @@ class DeletePage(tk.Frame):
         else:
             # if user cancels
             print("No")
+class BlankPage(tk.Frame):
+    def __init__(self, parent, controller):
+        starttime = datetime.datetime.now()
+
+        print("im in StartPage");
+
+        tk.Frame.__init__(self, parent)
+
+ 
 
 
 class StartPage(tk.Frame):
     def __init__(self, parent, controller):
+        starttime = datetime.datetime.now()
+
+        print("im in StartPage");
+
         tk.Frame.__init__(self, parent)
         self.parent = parent;
         self.controller = controller;
@@ -404,12 +480,16 @@ class StartPage(tk.Frame):
         # self.controller.refresh_frame(DeletePage);
 
         # File tab on menu bar
+        #print(askokcancel("Delete", "Are you sure to Delete selected Data?"))
+        #showinfo("Say Hello", "Hello World")
+        #tkinter.messagebox.showinfo("messagebox","this is button 2 dialog")  
+
         print(states)
         menubar = Menu(parent.master);
         parent.master.config(menu=menubar);
         filemenu = Menu(menubar, tearoff=0);
         menubar.add_cascade(label="File", menu=filemenu);
-        filemenu.add_command(label="New", command=newBook);
+        filemenu.add_command(label="New", command=donothing);
         filemenu.add_command(label="Open", command=openAddressBook);
         filemenu.add_command(label="Save", command=save);
         filemenu.add_command(label="Save as", command=saveAs);
@@ -446,7 +526,6 @@ class StartPage(tk.Frame):
         row = 0;
         column=0;
         current_row=[];
-
         for c in contacts: 
             label = Text(contact_info, height=1, width=15);
             label.insert(INSERT, c);
@@ -456,21 +535,22 @@ class StartPage(tk.Frame):
         row +=1;
 
         f=VerticalScrolledFrame(self);
-        f.grid(row=2, column=0, columnspan=8);
+        f.grid(row=2, column=0, columnspan=8, padx=20);
         f.print_contacts(contacts);
-        print("\n\n Contacts should be displayed \n\n");
         self.parent.update_idletasks();
-        self.update_idletasks();
 
 
+        endtime = datetime.datetime.now()
+        print (endtime - starttime)
+        print("now im here")
 
     def sort(self, var):
-        #print("var is {}".format(var));
+        print("var is {}".format(var));
         if var == "Name":
-            #print("sorting by name");
+            print("sorting by name");
             book.sortByName();
         else:
-            #print("sorting by zip");
+            print("sorting by zip");
             book.sortByZipcode();
         self.controller.refresh_frame(StartPage);
         self.controller.show_frame(StartPage);
@@ -479,15 +559,15 @@ class StartPage(tk.Frame):
         # click delete in menu bar
         global states
         states = []  # record delete index
-        #print("I cleaned states 7");
+        print("I cleaned states 7");
         self.controller.refresh_frame(DeletePage);
-        #print("Im going to the delete page")
+        print("Im going to the delete page")
         self.controller.show_frame(DeletePage)
 
 
 class PageOne(tk.Frame):
     def __init__(self, parent, controller):
-        #print("im in PageOne");
+        print("im in PageOne");
         tk.Frame.__init__(self, parent)
         self.parent = parent;
         self.controller = controller;
@@ -715,7 +795,13 @@ def on_closing(root):
 def main():
     app = KabyAddrapp();
     app.protocol("WM_DELETE_WINDOW", lambda: on_closing(app));
+    starttime = datetime.datetime.now()
+
+    
+
     app.mainloop();
+    endtime = datetime.datetime.now()
+    print (endtime - starttime)
 
 
 if __name__ == "__main__":
