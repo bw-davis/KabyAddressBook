@@ -34,3 +34,4 @@
 {'LastName': '#skip', 'Address1': '#skip', 'FirstName': 'oe', 'Phone': '12', 'Address2': '#skip', 'State': '#skip', 'City': '#skip', 'Zipcode': '#skip'}
 {'LastName': '#skip', 'Address1': '#skip', 'FirstName': 'oe', 'Phone': '12', 'Address2': '#skip', 'State': '#skip', 'City': '#skip', 'Zipcode': '#skip'}
 {'LastName': '#skip', 'Address1': '#skip', 'FirstName': 'oe', 'Phone': '12', 'Address2': '#skip', 'State': '#skip', 'City': '#skip', 'Zipcode': '#skip'}
+{'FirstName': 'John', 'LastName': 'Smith', 'Address1': '#skip', 'Address2': '#skip', 'City': '#skip', 'State': '#skip', 'Zipcode': '#skip', 'Phone': '#skip', 'email': 'Johnny@cs.edu'}

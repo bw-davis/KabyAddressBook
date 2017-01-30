@@ -12,8 +12,8 @@ from platform import system as platform
 
 # contacts=["First name", "Last name", "Address1", "Address2", "City", "State", "Zip", "Email", "Phone Number"];
 # col_name = ["FirstName", "LastName", "Address1", "City", "Zipcode", "Phone"];
-contacts = ["First name", "Last name", "Address1", "Address2", "City", "State", "Zip", "Phone Number" ];
-col_name = ["FirstName", "LastName", "Address1", "Address2", "City", "State", "Zipcode", "Phone"];
+contacts = ["First name", "Last name", "Address1", "Address2", "City", "State", "Zip", "Phone Number", "Email" ];
+col_name = ["FirstName", "LastName", "Address1", "Address2", "City", "State", "Zipcode", "Phone", "email"];
 
 
 dirty = [];  # And array of arrays of[label, row, col] of all "dirty" or modified text widgets
@@ -27,7 +27,7 @@ endtime = datetime.datetime.now()
 
 
 class KabyAddrapp(tk.Tk):
-    def __init__(self, addrBook="SavedAddressBook.tsv", *args, **kwargs):
+    def __init__(self, addrBook="SavedAddressBook.kab", *args, **kwargs):
         self.book_name=addrBook;
         #if platform() == 'Darwin':  # How Mac OS X is identified by Python
             #system('''/usr/bin/osascript -e 'tell app "Finder" to set frontmost of process "Python" to true' ''')
@@ -46,7 +46,7 @@ class KabyAddrapp(tk.Tk):
         self.container.grid_rowconfigure(0, weight=1);
         self.container.grid_columnconfigure(0, weight=1);
         self.book = AddressBook()
-        self.book.importFromFile(addrBook);
+        self.book.openFromFile(addrBook);
 
         self.frames = {};
 
@@ -274,7 +274,7 @@ class DeletePage(tk.Frame):
                     count += 1
                 index += 1;
 
-            self.controller.book.exportToFile(self.controller.book_name);
+            self.controller.book.saveToFile(self.controller.book_name);
             self.controller.refresh_frame(StartPage);
             self.controller.show_frame(StartPage);
         else:
@@ -439,14 +439,14 @@ class StartPage(tk.Frame):
     def save(self):
         # print("dosomething");
         print("savefile")
-        self.controller.book.exportToFile(self.controller.book_name);
+        self.controller.book.saveToFile(self.controller.book_name);
 
 
     def saveAs(self):
         # print("dosomething");
         FileName = tk.filedialog.asksaveasfilename(filetypes=[("text", ".tsv")])
         print(FileName)
-        self.controller.book.exportToFile(FileName);
+        self.controller.book.saveToFile(FileName);
 
 
 class PageOne(tk.Frame):
@@ -614,7 +614,7 @@ class PageOne(tk.Frame):
         self.controller.book.addEntry(new_contact);
         self.controller.refresh_frame(StartPage);
         self.controller.show_frame(StartPage);
-        self.controller.book.exportToFile(self.controller.book_name);
+        self.controller.book.saveToFile(self.controller.book_name);
 
     def valid_phone_number(self, number):
         """
