@@ -181,7 +181,7 @@ class VerticalScrolledFrame(Frame):
         for entry in self.parent.controller.book:
             column = 0;
             current_row=[];
-            for attr in ["Delete", "FirstName", "LastName", "Address1", "Address2", "City", "State", "Zipcode", "Phone"]:
+            for attr in ["Delete", "FirstName", "LastName", "Address1", "Address2", "City", "State", "Zipcode", "Phone", "email"]:
                 t=entry.getAttribute(attr);
                 if attr=="Delete":
                     v = StringVar()
@@ -238,7 +238,7 @@ class DeletePage(tk.Frame):
         row = 0;
         column=0;
         current_row=[];
-        for c in ["Delete", "FirstName", "LastName", "Address1", "Address2", "City", "State", "Zipcode", "Phone"]: 
+        for c in ["Delete", "FirstName", "LastName", "Address1", "Address2", "City", "State", "Zipcode", "Phone", "Email"]: 
             label = Text(contact_info, height=1, width=15);
             label.insert(INSERT, c);
             label.config(state=DISABLED);
@@ -411,7 +411,7 @@ class StartPage(tk.Frame):
 
     def newBook(self):
         print("donothing");
-        FileName = tk.filedialog.asksaveasfilename(filetypes=[("text", ".tsv")])
+        FileName = tk.filedialog.asksaveasfilename(filetypes=[("text", ".tsv")])+".kab"
         self.controller.book.saveNewFile(FileName);
         newApp = KabyAddrapp(FileName);
         newApp.mainloop();
@@ -553,9 +553,11 @@ class PageOne(tk.Frame):
         # Check to make sure we have at least one name (either first or last) and at least one other field
 
         temp_list = [fname, lname, address1, address2, city, state, zipC, phone];
+        
 
         len_list=[len(x) for x in temp_list]
-
+        print("temp list before checks", end=" ");
+        print(temp_list);
         if len_list[0]+len_list[1] > 0:
             print("we have a name")
 
@@ -569,7 +571,7 @@ class PageOne(tk.Frame):
             return
 
 
-        list_with_skips = [x if not x == "" else "#skip" for x in temp_list]
+        
 
         # Check the phone number
         if len(temp_list[-1])>0: # don't check if we don't get a phone number passed as an arg
@@ -610,6 +612,10 @@ class PageOne(tk.Frame):
 
 
         # new_contact=AddressBookEntry(fname, lname, address1, address2, city, state, zipC, phone);
+        #print(list_with_skips);
+        print("temp list after checks", end=" ");
+        print(temp_list);
+        list_with_skips = [x if not x == "" else "#skip" for x in temp_list]
         new_contact = AddressBookEntry(*list_with_skips, email=email);
         self.controller.book.addEntry(new_contact);
         self.controller.refresh_frame(StartPage);

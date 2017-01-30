@@ -35,3 +35,9 @@
 {'LastName': '#skip', 'Address1': '#skip', 'FirstName': 'oe', 'Phone': '12', 'Address2': '#skip', 'State': '#skip', 'City': '#skip', 'Zipcode': '#skip'}
 {'LastName': '#skip', 'Address1': '#skip', 'FirstName': 'oe', 'Phone': '12', 'Address2': '#skip', 'State': '#skip', 'City': '#skip', 'Zipcode': '#skip'}
 {'FirstName': 'John', 'LastName': 'Smith', 'Address1': '#skip', 'Address2': '#skip', 'City': '#skip', 'State': '#skip', 'Zipcode': '#skip', 'Phone': '#skip', 'email': 'Johnny@cs.edu'}
+{'FirstName': 'Andrew', 'LastName': 'Hill', 'Address1': '1575 horn', 'Address2': '#skip', 'City': 'Eugene', 'State': 'Oregon', 'Zipcode': '97404', 'Phone': '5555555555', 'email': 'ahill7@uo.edu'}
+{'FirstName': 'a', 'LastName': 'a', 'Address1': 'a', 'Address2': 'a', 'City': 'a', 'State': 'a', 'Zipcode': 'a', 'Phone': 'a', 'email': 'a'}
+{'FirstName': 'b', 'LastName': 'b', 'Address1': 'b', 'Address2': 'b', 'City': 'b', 'State': 'b', 'Zipcode': 'b', 'Phone': 'b', 'email': 'b'}
+{'FirstName': 'c', 'LastName': 'c', 'Address1': 'c', 'Address2': 'c', 'City': 'c', 'State': 'c', 'Zipcode': 'c', 'Phone': 'c', 'email': 'c'}
+{'FirstName': 'd', 'LastName': 'd', 'Address1': 'd', 'Address2': 'd', 'City': 'd', 'State': 'd', 'Zipcode': 'd', 'Phone': 'd', 'email': 'd'}
+{'FirstName': 'a', 'LastName': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'City': '#skip', 'State': '#skip', 'Zipcode': '#skip', 'Phone': '#skip', 'email': 'a'}
