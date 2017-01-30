@@ -1,4 +1,5 @@
 
+from gui import skip
 
 """
 Object representing an entry into AddressBook
@@ -72,10 +73,27 @@ class AddressBookEntry():
         attr: str, the attribute to get. Example: "Zipcode"
     """
     def getAttribute(self, attr):
+        global skip
         if attr in self.attrs:
             return self.attrs[attr]
         else:
-            return None
+            return skip 
+
+    """
+    Searches all fields in the AddressBookEntry for string 'n'
+
+    Args:
+        n: str, the string to search for
+    Returns:
+        true, if string found in any field
+        false, otherwise
+    """
+    def searchAttributes(self, n):
+        n = n.lower()
+        for key in self.attrs:
+            if n in self.attrs[key]:
+                return True
+        return False
 
     """
     Returns the AddressBookEntry formatted for a line in a .tsv format

@@ -16,6 +16,8 @@ def main():
     #book.sortByName()
     book.sortByZipcode()
 
+    print("The email: " + contact.getAttribute("Email"))
+
     for entry in book:
         #print(entry)
         print(entry.getAttribute("email"))

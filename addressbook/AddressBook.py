@@ -102,6 +102,24 @@ class AddressBook():
                 results.append(i)
 
         return results
+
+    """
+    Search method for AddressBook that check all fields of all entries
+    
+    Args:
+        n: str, the search string
+
+    Returns:
+        list, the indices of the matching entries
+    """
+    def searchByAllFields(self, n):
+        results = []
+        for i in range(len(self.entries)):
+            entry = self.entries[i]
+            if entry.searchAttributes(n):
+                results.append(i)
+        
+        return results
                 
 
     """
@@ -141,20 +159,16 @@ class AddressBook():
             f.write(entry.getTSVFormat() + "\n")
         f.close()
 
-
-
     """
     Creates a new, blank file using .tsv format
 
     Args:
         fn: str, filename to write address book to
     """
-    def saveNewFile(sefl, fn):
+    def saveNewFile(self, fn):
         f = open(fn,"w");
         #f.write("CITY\tSTATE\tZIP\tdelivery\tSecond\tLastName\tFirstName\tPhone\n")
         f.close()
-
-
 
     """
     Populates the AddresBook object with entries from the '.kab' format. 
