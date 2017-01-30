@@ -28,7 +28,7 @@ endtime = datetime.datetime.now()
 
 class KabyAddrapp(tk.Tk):
     def __init__(self, addrBook="SavedAddressBook.tsv", *args, **kwargs):
-    
+        self.book_name=addrBook;
         #if platform() == 'Darwin':  # How Mac OS X is identified by Python
             #system('''/usr/bin/osascript -e 'tell app "Finder" to set frontmost of process "Python" to true' ''')
 
@@ -274,7 +274,7 @@ class DeletePage(tk.Frame):
                     count += 1
                 index += 1;
 
-            self.controller.book.exportToFile("SavedAddressBook.tsv");
+            self.controller.book.exportToFile(self.controller.book_name);
             self.controller.refresh_frame(StartPage);
             self.controller.show_frame(StartPage);
         else:
@@ -439,7 +439,7 @@ class StartPage(tk.Frame):
     def save(self):
         # print("dosomething");
         print("savefile")
-        self.controller.book.exportToFile("SavedAddressBook.tsv");
+        self.controller.book.exportToFile(self.controller.book_name);
 
 
     def saveAs(self):
@@ -614,13 +614,13 @@ class PageOne(tk.Frame):
         self.controller.book.addEntry(new_contact);
         self.controller.refresh_frame(StartPage);
         self.controller.show_frame(StartPage);
-        self.controller.book.exportToFile("SavedAddressBook.tsv");
+        self.controller.book.exportToFile(self.controller.book_name);
 
     def valid_phone_number(self, number):
         """
         Function to test whether or not a phone number is valid.
         Args:
-            number: the phone number
+            number: the phone numbere
 
         Returns: True iff the number is of the format ###-###-####  OR ###-#### OR ###.###.####  OR ###.#### OR ####### OR ##########
                  False otherwise
