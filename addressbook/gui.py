@@ -31,7 +31,6 @@ class KabyAddrapp(tk.Tk):
         self.book_name=addrBook;
         self.search_contacts=[];
         self.dirty=False;
-        self.dirty_list=[];
         self.checkit=[];
         #if platform() == 'Darwin':  # How Mac OS X is identified by Python
             #system('''/usr/bin/osascript -e 'tell app "Finder" to set frontmost of process "Python" to true' ''')
@@ -168,9 +167,8 @@ class VerticalScrolledFrame(tk.Frame):
         # entry.insert(INSERT, new_contact_data);
         #dirty.append([entry, row, col]);  # Keeping track of all unsaved entries.
         contact.setAttribute(attr, new_contact_data);
-        #self.parent.controller.book.saveToFile(self.parent.controller.book_name);
         self.parent.controller.dirty=True;
-        self.parent.controller.dirty_list.append([entry, row, col]);
+        #self.parent.controller.book.saveToFile(self.parent.controller.book_name);
         
        
     def redraw_entry(self, r, c, entry):
@@ -194,13 +192,9 @@ class VerticalScrolledFrame(tk.Frame):
                 last_entry.tag_configure("a", background="skyblue");
                 contact = self.parent.controller.book.getEntry(row);
                 attr = col_name[col];
-                contact.setAttribute(attr, "cur_val");
+                contact.setAttribute(attr, cur_val);
                 self.parent.controller.dirty=True;
-                self.parent.controller.dirty_list.append([entry, row, col]);
-                #self.parent.controller.book.getEntry(row).setAttribuite(col_name[col], cur_val);
-                #if(old_entry==skip):
-                    #old_entry="";
-                #last_entry.insert(INSERT, old_entry);
+                
 
         else:
             print("empty")
@@ -630,23 +624,9 @@ class StartPage(tk.Frame):
         # print("dosomething");
         print("savefile")
         self.controller.book.saveToFile(self.controller.book_name);
-        self.controller.dirty=False;
-        self.clean_up();
+        self.controller.refresh_frame(StartPage)
+        self.controller.show_frame(StartPage)
 
-    def clean_up(self):
-        for i in self.controller.dirty_list:
-            entry, row, col = i;
-            print("row{} col{}".format(row, col));
-            attr = col_name[col];
-            contact = self.controller.book.getEntry(row);  # Contact to be modified
-            contact_attr = contact.getAttribute(attr);  # The contact attribute to be replaced
-            new_contact_data = entry.get("1.0", END).replace('\n','');  # The text that has been entered in the Text widget. The end-1c ignores newline charater
-            entry.delete("2.0", END);
-            entry.tag_add("a", "1.0", END);
-            entry.tag_configure("a", background="white");
-            # entry.insert(INSERT, new_contact_data);
-            #dirty.append([entry, row, col]);  # Keeping track of all unsaved entries.
-            contact.setAttribute(attr, new_contact_data);
 
 
     def saveAs(self):
@@ -654,7 +634,6 @@ class StartPage(tk.Frame):
         FileName = tk.filedialog.asksaveasfilename(filetypes=[("text", ".tsv")])
         print(FileName)
         self.controller.book.saveToFile(FileName);
-        self.controller.dirty=False;
 
     def start_page_search(self, name):
         print(name);
