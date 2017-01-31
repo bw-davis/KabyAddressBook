@@ -157,6 +157,10 @@ class VerticalScrolledFrame(tk.Frame):
         contact_attr = contact.getAttribute(attr);  # The contact attribute to be replaced
         # print(contact_attr);
         new_contact_data = entry.get("1.0", END).replace('\n','');  # The text that has been entered in the Text widget. The end-1c ignores newline charater
+        print(new_contact_data);
+        #entry = Text(self.interior, height=1, width=15);
+        entry.delete("1.0", END);
+        entry.delete("2.0", END);
         entry.insert(INSERT, new_contact_data);
         # print(new_contact_data);
         entry.tag_add("a", "1.0", END);
@@ -167,8 +171,8 @@ class VerticalScrolledFrame(tk.Frame):
         #self.parent.controller.book.saveToFile(self.parent.controller.book_name);
         self.parent.controller.dirty=True;
         self.parent.controller.dirty_list.append([entry, row, col]);
-        entry.delete("2.0", END);
-
+        
+       
     def redraw_entry(self, r, c, entry):
         val=entry.get("1.0", END);
         if(self.parent.controller.checkit):
@@ -221,7 +225,7 @@ class VerticalScrolledFrame(tk.Frame):
                 else:
                     label.insert(INSERT, t);
 
-                label.bind("<KeyRelease-Return>", lambda cmd, row=row, column=column, entry=label: self.redraw_entry(row, column, entry));
+                label.bind("<KeyRelease-Return>", lambda cmd, row=row, column=column, entry=label: self.update_contact(row, column, entry));
                 label.bind("<Button-1>", lambda cmd, row=row, column=column, entry=label: self.redraw_entry(row, column, entry))
                 label.grid(row=row, column=column, sticky="nsew", padx=1, pady=1);
                 current_row.append(label);
