@@ -62,6 +62,23 @@ class AddressBook():
         while (not self.entries[0].getAttribute("LastName").isalnum()):
             entry = self.entries.pop(0)
             self.entries.append(entry)
+
+    """
+    Sorting method for AddressBook where sorting is done by name
+    Sorting by last name, with ties broken by first name
+
+    O(n + n) == O(n)
+    """
+    def sortByNameArray(self, search_results):
+        search_results.sort(key=lambda x: x.getAttribute("FirstName"))
+        search_results.sort(key=lambda x: x.getAttribute("LastName"))
+        
+        while (not search_results[0].getAttribute("FirstName").isalnum()): #move null fields to the end
+            entry = search_results.pop(0)
+            search_results.append(entry)
+        while (not search_results[0].getAttribute("LastName").isalnum()):
+            entry = search_results.pop(0)
+            search_results.append(entry)
         
     """
     Sorting method for AddressBook where sorting is done by zip

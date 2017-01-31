@@ -30,6 +30,9 @@ class KabyAddrapp(tk.Tk):
     def __init__(self, addrBook="SavedAddressBook.kab", *args, **kwargs):
         self.book_name=addrBook;
         self.search_contacts=[];
+        self.dirty=False;
+        self.dirty_list=[];
+        self.checkit=[];
         #if platform() == 'Darwin':  # How Mac OS X is identified by Python
             #system('''/usr/bin/osascript -e 'tell app "Finder" to set frontmost of process "Python" to true' ''')
 
@@ -100,9 +103,7 @@ def donothing():
 
 
 
-
-
-class VerticalScrolledFrame(Frame):
+class VerticalScrolledFrame(tk.Frame):
     """A pure Tkinter scrollable frame that actually works!
     * Use the 'interior' attribute to place widgets inside the scrollable frame
     * Construct and pack/place/grid normally
@@ -150,6 +151,60 @@ class VerticalScrolledFrame(Frame):
     def onPress(self, i):
         states[i] = 1;
 
+    def update_contact(self, row, col, entry):
+        attr = col_name[col];  # The contact attribute to be replaceed
+        contact = self.parent.controller.book.getEntry(row);  # Contact to be modified
+        contact_attr = contact.getAttribute(attr);  # The contact attribute to be replaced
+        # print(contact_attr);
+        new_contact_data = entry.get("1.0", END).replace('\n','');  # The text that has been entered in the Text widget. The end-1c ignores newline charater
+        entry.insert(INSERT, new_contact_data);
+        # print(new_contact_data);
+        entry.tag_add("a", "1.0", END);
+        entry.tag_configure("a", background="skyblue");
+        # entry.insert(INSERT, new_contact_data);
+        #dirty.append([entry, row, col]);  # Keeping track of all unsaved entries.
+        contact.setAttribute(attr, new_contact_data);
+        #self.parent.controller.book.saveToFile(self.parent.controller.book_name);
+        self.parent.controller.dirty=True;
+        self.parent.controller.dirty_list.append([entry, row, col]);
+        entry.delete("2.0", END);
+
+    def redraw_entry(self, r, c, entry):
+        val=entry.get("1.0", END);
+        if(self.parent.controller.checkit):
+            #print(self.parent.controller.checkit);
+            last_entry, row, col = self.parent.controller.checkit.pop();
+            cur_val=last_entry.get("1.0", END).replace('\n','');
+            if(len(cur_val.strip())==0):
+                cur_val=skip;
+            print("not empty")
+            print("need to redraw")
+            old_entry=self.parent.controller.book.getEntry(row).getAttribute(col_name[col])
+            print("old entry= {} | cur val= {}".format(old_entry, cur_val));
+            print("old entry type = {} | cur val type = {}".format(type(old_entry), type(cur_val)));
+            print("old_entry==cur_val={}".format(old_entry.strip()==cur_val.strip()));
+            if(not (old_entry.strip()==cur_val.strip())):
+                last_entry.delete("2.0", END);
+                #last_entry.delete("1.0", END);
+                last_entry.tag_add("a", "1.0", END);
+                last_entry.tag_configure("a", background="skyblue");
+                contact = self.parent.controller.book.getEntry(row);
+                attr = col_name[col];
+                contact.setAttribute(attr, "cur_val");
+                self.parent.controller.dirty=True;
+                self.parent.controller.dirty_list.append([entry, row, col]);
+                #self.parent.controller.book.getEntry(row).setAttribuite(col_name[col], cur_val);
+                #if(old_entry==skip):
+                    #old_entry="";
+                #last_entry.insert(INSERT, old_entry);
+
+        else:
+            print("empty")
+
+        print("Appending{}".format(val));
+        self.parent.controller.checkit.append([entry,r,c]);
+        
+
     def print_contacts(self, contacts):
         starttime = datetime.datetime.now()
 
@@ -166,6 +221,8 @@ class VerticalScrolledFrame(Frame):
                 else:
                     label.insert(INSERT, t);
 
+                label.bind("<KeyRelease-Return>", lambda cmd, row=row, column=column, entry=label: self.redraw_entry(row, column, entry));
+                label.bind("<Button-1>", lambda cmd, row=row, column=column, entry=label: self.redraw_entry(row, column, entry))
                 label.grid(row=row, column=column, sticky="nsew", padx=1, pady=1);
                 current_row.append(label);
                 column += 1;
@@ -181,10 +238,10 @@ class VerticalScrolledFrame(Frame):
 
         row = 0;
 
-        for e in self.parent.controller.search_contacts:
+        for entry in self.parent.controller.search_contacts:
             column=0;
             current_row=[];
-            entry=self.parent.controller.book.getEntry(e);
+            #sentry=self.parent.controller.book.getEntry(e);
             for attr in col_name: 
                 t = entry.getAttribute(attr);
                 label = Text(self.interior, height=1, width=15);
@@ -383,26 +440,34 @@ class SearchResultPage(tk.Frame):
         print("var is {}".format(var));
         if var == "Name":
             print("sorting by name");
-            self.controller.book.sortByName();
+            self.controller.book.sortByNameArray(self.controller.search_contacts);
         else:
             print("sorting by zip");
             self.controller.book.sortByZipcode();
-        self.controller.refresh_frame(StartPage);
-        self.controller.show_frame(StartPage);
+        self.controller.refresh_frame(SearchResultPage);
+        self.controller.show_frame(SearchResultPage);
 
 
     def serach_page_search(self, name):
         print(name);
         results = self.controller.book.searchByAllFields(name);
-        print(results)
-        
-        for i in results:
-            print(i);
-            print(self.controller.book.getEntry(i));
-        self.controller.search_contacts=results;
-        self.controller.refresh_frame(SearchResultPage);
-        print("Im going to the delete page")
-        self.controller.show_frame(SearchResultPage)
+        self.controller.search_contacts=[];
+
+        if(((len(results)) > 1) and name):
+            print(len(results))
+
+            for i in results:
+                #print(i);
+                #print(self.controller.book.getEntry(i));
+                self.controller.search_contacts.append(self.controller.book.getEntry(i));
+            
+            self.controller.refresh_frame(SearchResultPage);
+            print("Im staying on search page")
+            print("name = {}".format(name))
+            self.controller.show_frame(SearchResultPage)
+        else:
+            print("Going home");
+            self.controller.show_frame(StartPage)
 
 
 
@@ -441,7 +506,7 @@ class StartPage(tk.Frame):
         filemenu.add_command(label="Import", command=self.importFile);
         filemenu.add_command(label="Export", command=self.exportFile);
         filemenu.add_separator();
-        filemenu.add_command(label="Exit", command=quit);
+        filemenu.add_command(label="Exit", command=self.exit_app);
 
         # Edit tab on menu bar
         editmenu = Menu(menubar, tearoff=0);
@@ -500,6 +565,15 @@ class StartPage(tk.Frame):
         print (endtime - starttime)
         print("now im here")
 
+    def exit_app(self):
+        if(self.controller.dirty):
+            print("Want to save");
+            if messagebox.askokcancel("Quit", "Do you want to quit?"):
+                self.controller.destroy();
+        else:
+            print("Nothing to save, quiting")
+            self.controller.destroy();
+
     def sort(self, var):
         print("var is {}".format(var));
         if var == "Name":
@@ -552,6 +626,23 @@ class StartPage(tk.Frame):
         # print("dosomething");
         print("savefile")
         self.controller.book.saveToFile(self.controller.book_name);
+        self.controller.dirty=False;
+        self.clean_up();
+
+    def clean_up(self):
+        for i in self.controller.dirty_list:
+            entry, row, col = i;
+            print("row{} col{}".format(row, col));
+            attr = col_name[col];
+            contact = self.controller.book.getEntry(row);  # Contact to be modified
+            contact_attr = contact.getAttribute(attr);  # The contact attribute to be replaced
+            new_contact_data = entry.get("1.0", END).replace('\n','');  # The text that has been entered in the Text widget. The end-1c ignores newline charater
+            entry.delete("2.0", END);
+            entry.tag_add("a", "1.0", END);
+            entry.tag_configure("a", background="white");
+            # entry.insert(INSERT, new_contact_data);
+            #dirty.append([entry, row, col]);  # Keeping track of all unsaved entries.
+            contact.setAttribute(attr, new_contact_data);
 
 
     def saveAs(self):
@@ -559,19 +650,29 @@ class StartPage(tk.Frame):
         FileName = tk.filedialog.asksaveasfilename(filetypes=[("text", ".tsv")])
         print(FileName)
         self.controller.book.saveToFile(FileName);
+        self.controller.dirty=False;
 
     def start_page_search(self, name):
         print(name);
         results = self.controller.book.searchByAllFields(name);
-        print(results)
+        self.controller.search_contacts=[];
 
-        for i in results:
-            print(i);
-            print(self.controller.book.getEntry(i));
-        self.controller.search_contacts=results;
-        self.controller.refresh_frame(SearchResultPage);
-        print("Im going to the delete page")
-        self.controller.show_frame(SearchResultPage)
+        if(((len(results)) > 1) and name):
+            print(len(results))
+
+            for i in results:
+                #print(i);
+                #print(self.controller.book.getEntry(i));
+                self.controller.search_contacts.append(self.controller.book.getEntry(i));
+            
+            self.controller.refresh_frame(SearchResultPage);
+            print("Im going to the search page")
+            print("name = {}".format(name))
+            self.controller.show_frame(SearchResultPage)
+        else:
+            print("Staying");
+            self.controller.show_frame(StartPage)
+
         
 
 
@@ -789,7 +890,7 @@ class PageOne(tk.Frame):
         # format:<string><@><string><.><string>
         # good example: clannad93@qq.com
         #              yuboz@cs.uoregon.edu
-        return re.match("([0-9 a-z]+)([@]+)([0-9 a-z]+)([.]+)([0-9a-z]+)", email) != None
+        return re.match("([0-9A-z]+)([@]+)([0-9A-z]+)([.]+)([0-9A-z]+)", email) != None
 
 
     def valid_zip(self, zipcode):
