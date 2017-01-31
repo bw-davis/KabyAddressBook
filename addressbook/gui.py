@@ -29,6 +29,7 @@ endtime = datetime.datetime.now()
 class KabyAddrapp(tk.Tk):
     def __init__(self, addrBook="SavedAddressBook.kab", *args, **kwargs):
         self.book_name=addrBook;
+        self.search_contacts=[];
         #if platform() == 'Darwin':  # How Mac OS X is identified by Python
             #system('''/usr/bin/osascript -e 'tell app "Finder" to set frontmost of process "Python" to true' ''')
 
@@ -175,6 +176,37 @@ class VerticalScrolledFrame(Frame):
         print (endtime - starttime)
         print("print entry time")
 
+    def print_search_contacts(self, contacts):
+        starttime = datetime.datetime.now()
+
+        row = 0;
+
+        for e in self.parent.controller.search_contacts:
+            column=0;
+            current_row=[];
+            entry=self.parent.controller.book.getEntry(e);
+            for attr in col_name: 
+                t = entry.getAttribute(attr);
+                label = Text(self.interior, height=1, width=15);
+                if t == skip:
+                    label.insert(INSERT, "");
+                else:
+                    label.insert(INSERT, t);
+
+                label.grid(row=row, column=column, sticky="nsew", padx=1, pady=1);
+                current_row.append(label);
+                column += 1;
+
+            row +=1;
+
+        endtime = datetime.datetime.now()
+        print (endtime - starttime)
+        print("print entry time")
+
+
+
+
+
     def print_delete_contact_page(self, contacts):
         row=0;
         index=0;
@@ -288,11 +320,91 @@ class BlankPage(tk.Frame):
 
         tk.Frame.__init__(self, parent)
 
-def start_page_search(name):
-    print(name);
-    for i in self.controller.book.searchByName(name):
-        print(i);
-        print(self.controller.book.getEntry(i));
+
+class SearchResultPage(tk.Frame):
+    def __init__(self, parent, controller):
+        starttime = datetime.datetime.now()
+
+        print("im in StartPage");
+
+        tk.Frame.__init__(self, parent)
+        self.parent = parent;
+        self.controller = controller; 
+
+        # Sort by meu
+        sort_label = ttk.Label(self, text="Sort by:");
+        sort_label.grid(row=0, column=6, stick="e");
+        var = StringVar(self);
+        options = ["Name", "Zip"];
+        var.set(options[0]);
+        dropdown = ttk.OptionMenu(self, var, options[0], *options, command=lambda cmd, var=var: self.sort(var.get()));
+        dropdown.grid(row=0, column=7, sticky="w");
+
+        search_frame=Frame(self);
+        search_frame.grid(row=0, column=0, columnspan=3);
+
+        #search menu
+        search_label = ttk.Label(search_frame, text="Search");
+        search_label.grid(row=0, column=0, sticky='e', padx=10, pady=5);
+        search_input = ttk.Entry(search_frame, width=15);
+        search_input.grid(row=0, column=1, sticky='w', pady=5);
+        search_button = ttk.Button(search_frame, text="Search", command=lambda  : self.serach_page_search(search_input.get()));
+        search_button.grid(row=0, column=3, sticky='e', padx=10);
+
+        #t = SimpleTable(self);
+        #t.grid(row=1, column=0, columnspan=8, padx=20);
+        #t.print_contacts(contacts);
+
+        contact_info = Frame(self, background='black');
+        contact_info.grid(row=1, column=0, columnspan=8, sticky='w', padx=20, pady=5);
+        row = 0;
+        column=0;
+        current_row=[];
+        for c in contacts: 
+            label = Text(contact_info, height=1, width=15);
+            label.insert(INSERT, c);
+            label.config(state=DISABLED);
+            label.grid(row=row, column=column, sticky='nsew', padx=1, pady=1);
+            column +=1;
+        row +=1;
+
+        print(self.controller.search_contacts);
+        f=VerticalScrolledFrame(self);
+        f.grid(row=2, column=0, columnspan=8, padx=20);
+        f.print_search_contacts(self.controller.search_contacts);
+        self.parent.update_idletasks();
+
+
+        endtime = datetime.datetime.now()
+        print (endtime - starttime)
+        print("now im here")
+
+    def sort(self, var):
+        print("var is {}".format(var));
+        if var == "Name":
+            print("sorting by name");
+            self.controller.book.sortByName();
+        else:
+            print("sorting by zip");
+            self.controller.book.sortByZipcode();
+        self.controller.refresh_frame(StartPage);
+        self.controller.show_frame(StartPage);
+
+
+    def serach_page_search(self, name):
+        print(name);
+        results = self.controller.book.searchByAllFields(name);
+        print(results)
+        
+        for i in results:
+            print(i);
+            print(self.controller.book.getEntry(i));
+        self.controller.search_contacts=results;
+        self.controller.refresh_frame(SearchResultPage);
+        print("Im going to the delete page")
+        self.controller.show_frame(SearchResultPage)
+
+
 
  
 
@@ -358,7 +470,7 @@ class StartPage(tk.Frame):
         search_label.grid(row=0, column=0, sticky='e', padx=10, pady=5);
         search_input = ttk.Entry(search_frame, width=15);
         search_input.grid(row=0, column=1, sticky='w', pady=5);
-        search_button = ttk.Button(search_frame, text="Search", command=lambda  : start_page_search(search_input.get()));
+        search_button = ttk.Button(search_frame, text="Search", command=lambda  : self.start_page_search(search_input.get()));
         search_button.grid(row=0, column=3, sticky='e', padx=10);
 
         #t = SimpleTable(self);
@@ -366,7 +478,7 @@ class StartPage(tk.Frame):
         #t.print_contacts(contacts);
 
         contact_info = Frame(self, background='black');
-        contact_info.grid(row=1, column=0, columnspan=8, sticky='w', padx=20, pady=5);
+        contact_info.grid(row=1, column=0, columnspan=8, sticky='w', padx=75, pady=5);
         row = 0;
         column=0;
         current_row=[];
@@ -379,7 +491,7 @@ class StartPage(tk.Frame):
         row +=1;
 
         f=VerticalScrolledFrame(self);
-        f.grid(row=2, column=0, columnspan=8, padx=20);
+        f.grid(row=2, column=0, columnspan=8, padx=75);
         f.print_contacts(contacts);
         self.parent.update_idletasks();
 
@@ -447,6 +559,20 @@ class StartPage(tk.Frame):
         FileName = tk.filedialog.asksaveasfilename(filetypes=[("text", ".tsv")])
         print(FileName)
         self.controller.book.saveToFile(FileName);
+
+    def start_page_search(self, name):
+        print(name);
+        results = self.controller.book.searchByAllFields(name);
+        print(results)
+
+        for i in results:
+            print(i);
+            print(self.controller.book.getEntry(i));
+        self.controller.search_contacts=results;
+        self.controller.refresh_frame(SearchResultPage);
+        print("Im going to the delete page")
+        self.controller.show_frame(SearchResultPage)
+        
 
 
 class PageOne(tk.Frame):

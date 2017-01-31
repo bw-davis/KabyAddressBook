@@ -91,7 +91,7 @@ class AddressBookEntry():
     def searchAttributes(self, n):
         n = n.lower()
         for key in self.attrs:
-            if n in self.attrs[key]:
+            if n in self.attrs[key].lower():
                 return True
         return False
 
