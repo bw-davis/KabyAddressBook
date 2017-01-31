@@ -312,13 +312,13 @@ class DeletePage(tk.Frame):
         # print("I cleaned states 5");
 
 
-        sort_label = ttk.Label(self, text="Sort by:");
-        sort_label.grid(row=0, column=6, stick="e");
-        var = StringVar(self);
-        options = ["Name", "Zip"];
-        var.set(options[0]);
-        dropdown = ttk.OptionMenu(self, var, options[0], *options);
-        dropdown.grid(row=0, column=7, sticky="w");
+        #sort_label = ttk.Label(self, text="Sort by:");
+        #sort_label.grid(row=0, column=6, stick="e");
+        #var = StringVar(self);
+        #options = ["Name", "Zip"];
+        #var.set(options[0]);
+        #dropdown = ttk.OptionMenu(self, var, options[0], *options);
+        #dropdown.grid(row=0, column=7, sticky="w");
 
         contact_info = Frame(self, background='black');
         contact_info.grid(row=1, column=0, columnspan=8, sticky='w', padx=20, pady=5);
@@ -338,7 +338,7 @@ class DeletePage(tk.Frame):
         f.print_delete_contact_page(contacts);
         self.parent.update_idletasks();
 
-        ttk.Button(self, text="Delete", command=lambda: self.delete_confirm()).grid(row=3, column=2, stick='e');
+        ttk.Button(self, text="Delete/Save", command=lambda: self.delete_confirm()).grid(row=3, column=2, stick='e');
         # ttk.Button(self, text="Cancel", command=).grid(row=3, column=2);
         ttk.Button(self, text="Cancel", command=lambda: controller.show_frame(StartPage)).grid(column=3, row=3,
                                                                                                stick='w');
@@ -565,11 +565,10 @@ class StartPage(tk.Frame):
 
     def exit_app(self):
         if(self.controller.dirty):
-            print("Want to save");
-            if messagebox.askokcancel("Quit", "Do you want to quit?"):
+            if messagebox.askokcancel("Quit", "Want to save unsaved data?"):
                 self.controller.destroy();
         else:
-            print("Nothing to save, quiting")
+            #print("Nothing to save, quiting")
             self.controller.destroy();
 
     def sort(self, var):
@@ -677,34 +676,40 @@ class PageOne(tk.Frame):
         phone = StringVar();
 
         # Collect first name from user.
-        tk.Label(self, text="first name").grid(column=2, row=2, sticky=(W, E))
+        tk.Label(self, text="First name").grid(column=2, row=2, sticky=(W, E))
         first_name = ttk.Entry(self, width=7, textvariable=fname);
         first_name.insert(INSERT, "");
         first_name.grid(column=2, row=3, sticky=(W, E));
         # new_contact.append(fname);
 
         # Collect last name from user.
-        tk.Label(self, text="last name").grid(column=3, row=2, sticky=(W, E))
+        tk.Label(self, text="Last name").grid(column=3, row=2, sticky=(W, E))
         last_name = ttk.Entry(self, width=7, textvariable=lname);
         last_name.grid(column=3, row=3, sticky=(W, E));
         # new_contact.append(lname);
 
-        # Collect email from user.
-        tk.Label(self, text="email").grid(column=2, row=4, sticky=(W, E))
-        em = ttk.Entry(self, width=7, textvariable=email);
-        em.grid(column=2, row=5, sticky=(W, E));
-        # new_contact.append(email);
 
         # Collect address from user
-        tk.Label(self, text="Address").grid(column=2, row=6, sticky=(W, E))
+        tk.Label(self, text="Address").grid(column=2, row=4, sticky=(W, E))
         addr = ttk.Entry(self, width=7, textvariable=address);
-        addr.grid(column=2, row=7, sticky=(W, E));
+        addr.grid(column=2, row=5, sticky=(W, E));
         # new_contact.append(address);
 
+        # new_contact.append(phone);
+        tk.Label(self, text="Address2").grid(column=3, row=4, sticky=(W, E))
+        address2= ttk.Entry(self, width=25);
+        address2.grid(column=3, row=5, sticky=(W, E));
+
+        # Collect city from user7
+        tk.Label(self, text="City").grid(column=2, row=6, sticky=(W, E))
+        city = ttk.Entry(self, width=7);
+        city.grid(column=2, row=7, sticky=(W, E));
+        # new_contact.append(zipC);
+
         # Collect state from user
-        tk.Label(self, text="State").grid(column=3, row=10, sticky=(W, E))
+        tk.Label(self, text="State").grid(column=3, row=6, sticky=(W, E))
         st = ttk.Entry(self, width=25, textvariable=state);
-        st.grid(column=3, row=11, sticky=(W, E));
+        st.grid(column=3, row=7, sticky=(W, E));
         # new_contact.append(state);
 
         # Collect zip from user
@@ -713,26 +718,21 @@ class PageOne(tk.Frame):
         zip_code.grid(column=2, row=9, sticky=(W, E));
         # new_contact.append(zipC);
 
-        # Collect city from user7
-        tk.Label(self, text="City").grid(column=3, row=8, sticky=(W, E))
-        city = ttk.Entry(self, width=7);
-        city.grid(column=3, row=9, sticky=(W, E));
-        # new_contact.append(zipC);
-
         # Collect zip from user
         tk.Label(self, text="Phone Number").grid(column=2, row=10, sticky=(W, E))
         phone_number= ttk.Entry(self, width=25, textvariable=phone);
         phone_number.grid(column=2, row=11, sticky=(W, E));
 
-        # new_contact.append(phone);
-        tk.Label(self, text="Address2").grid(column=3, row=6, sticky=(W, E))
-        address2= ttk.Entry(self, width=25);
-        address2.grid(column=3, row=7, sticky=(W, E));
+        # Collect email from user.
+        tk.Label(self, text="Email").grid(column=3, row=10, sticky=(W, E))
+        em = ttk.Entry(self, width=7, textvariable=email);
+        em.grid(column=3, row=11, sticky=(W, E));
+        # new_contact.append(email);
 
         # Bind Enter to create customer as well.
 
         # ttk.Button(self, text="submit", command=lambda: self.add_contact(first_name.get(), last_name.get(), address.get(), state.get(), zipC.get(), em.get(), phone.get())).grid(column=2, row=12);
-        ttk.Button(self, text="submit",
+        ttk.Button(self, text="save",
                    command=lambda: self.add_contact(first_name.get(), last_name.get(), address.get(),address2.get() , city.get(),
                                                     state.get(), zipC.get(), em.get(), phone.get())).grid(column=2,
                                                                                                           row=12);
