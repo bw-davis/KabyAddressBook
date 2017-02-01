@@ -53,8 +53,8 @@ class AddressBook():
     O(n + n) == O(n)
     """
     def sortByName(self):
-        self.entries.sort(key=lambda x: x.getAttribute("FirstName"))
-        self.entries.sort(key=lambda x: x.getAttribute("LastName"))
+        self.entries.sort(key=lambda x: x.getAttribute("FirstName").lower())
+        self.entries.sort(key=lambda x: x.getAttribute("LastName").lower())
         
         while (not self.entries[0].getAttribute("FirstName").isalnum()): #move null fields to the end
             entry = self.entries.pop(0)
