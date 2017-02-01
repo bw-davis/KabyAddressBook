@@ -8,7 +8,7 @@ The Kaby Team:
 
 **B**rian
 
-**Y**uboZ
+**Y**ubo
 
 
 To visit our wiki: https://app.assembla.com/spaces/cis422s14_team2/wiki/Home 
