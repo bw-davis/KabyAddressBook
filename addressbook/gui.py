@@ -334,10 +334,12 @@ class DeletePage(tk.Frame):
             column +=1;
         row +=1;
 
-        f=VerticalScrolledFrame(self);
-        f.grid(row=2, column=0, columnspan=8, padx=20);
-        f.print_delete_contact_page(contacts);
-        self.parent.update_idletasks();
+
+        if(len(self.controller.book) > 0):
+            f=VerticalScrolledFrame(self);
+            f.grid(row=2, column=0, columnspan=8, padx=20);
+            f.print_delete_contact_page(contacts);
+            self.parent.update_idletasks();
 
         ttk.Button(self, text="Delete/Save", command=lambda: self.delete_confirm()).grid(row=3, column=2, stick='e');
         # ttk.Button(self, text="Cancel", command=).grid(row=3, column=2);
@@ -435,11 +437,12 @@ class SearchResultPage(tk.Frame):
 
         print(self.controller.search_contacts);
 
-        ##TODO: after Alex implements length function, check if there are any contacts.
-        f=VerticalScrolledFrame(self);
-        f.grid(row=2, column=0, columnspan=8, padx=20);
-        f.print_search_contacts(self.controller.search_contacts);
-        self.parent.update_idletasks();
+        
+        if(len(self.controller.book) > 0):
+            f=VerticalScrolledFrame(self);
+            f.grid(row=2, column=0, columnspan=8, padx=20);
+            f.print_search_contacts(self.controller.search_contacts);
+            self.parent.update_idletasks();
 
 
         endtime = datetime.datetime.now()
@@ -596,10 +599,13 @@ class StartPage(tk.Frame):
             column +=1;
         row +=1;
 
-        f=VerticalScrolledFrame(self);
-        f.grid(row=2, column=0, columnspan=8, padx=75);
-        f.print_contacts(contacts);
-        self.parent.update_idletasks();
+
+        #print("\n\nLen of contacts = {}\n\n".format(len(self.controller.book)));
+        if(len(self.controller.book) > 0):
+            f=VerticalScrolledFrame(self);
+            f.grid(row=2, column=0, columnspan=8, padx=75);
+            f.print_contacts(contacts);
+            self.parent.update_idletasks();
 
 
         endtime = datetime.datetime.now()
