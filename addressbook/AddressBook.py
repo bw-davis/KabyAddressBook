@@ -204,13 +204,19 @@ class AddressBook():
 
     Args:
         fn: str, filename to bring entries from
+    Raises:
+        Exception, if a natural exception occurs during processing of file
     """
     def openFromFile(self, fn):
-        with open(fn) as f:
-            for line in f:
-                d = eval(line.strip())
-                entry = AddressBookEntry(None, None, None, None, None, None, None, None, dictionary=True, attrs=d)
-                self.addEntry(entry)
+        try:
+            with open(fn) as f:
+                for line in f:
+                    d = eval(line.strip())
+                    entry = AddressBookEntry(None, None, None, None, None, None, None, None, dictionary=True, attrs=d)
+                    self.addEntry(entry)
+        except:
+            raise Exception("Error processing .kab file. Malformed file.")
+
 
     """
     Writes the contents of the AddressBook in a specialized '.kab' format. 
