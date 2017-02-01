@@ -739,8 +739,8 @@ class PageOne(tk.Frame):
 
         # ttk.Button(self, text="submit", command=lambda: self.add_contact(first_name.get(), last_name.get(), address.get(), state.get(), zipC.get(), em.get(), phone.get())).grid(column=2, row=12);
         ttk.Button(self, text="save",
-                   command=lambda: self.add_contact(first_name.get(), last_name.get(), address.get(),address2.get() , city.get(),
-                                                    state.get(), zipC.get(), em.get(), phone.get())).grid(column=2,
+                   command=lambda: self.add_contact(first_name.get(), last_name.get(), addr.get(), address2.get() , city.get(),
+                                                    st.get(), zip_code.get(), em.get(), phone_number.get())).grid(column=2,
                                                                                                           row=12);
         ttk.Button(self, text="cancel", command=lambda: controller.show_frame(StartPage)).grid(column=3, row=12);
 
@@ -769,6 +769,7 @@ class PageOne(tk.Frame):
         # Check to make sure we have at least one name (either first or last) and at least one other field
 
         temp_list = [fname, lname, address1, address2, city, state, zipC, phone];
+        #print("\n\ntemp list {}".format(temp_list))
         
 
         len_list=[len(x) for x in temp_list]
