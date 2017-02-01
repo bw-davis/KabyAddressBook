@@ -1,0 +1,46 @@
+CITY	STATE	ZIP	delivery	Second	LastName	FirstName	Phone
+Portville	MI	01404	190 Sunny Lane	None	Doe	John	5411234567
+Portville	MI	01404	190 Sunny Lane		Doe	John	5411234567
+Portville	MI	01404	190 Sunny Lane		Smith	John	5411234567
+Portville	MI	01404	190 Suny Lane		Yubo	Joe	5411234567
+Old Hickory	TN	37138-1923	cur_val	None	Caramel	Claude	5411234567
+Porhtn	OR	97401	190 W 22nd Ave	Apt 1	Good bye	Alex	6155696366
+#skip	#skip	#skip	#skip	#skip	#skip	aue	123
+#skip	#skip	#skip	#skip	#skip	#skip	aue	1234567
+#skip	#skip	#skip	#skip	#skip	#skip	aue	1234567891
+#skip	#skip	#skip		#skip		aue	123456789141
+#skip	#skip	#skip	#skip	#skip	#skip	aue	123
+#skip	#skip	#skip	#skip	#skip	#skip	aue	1234567
+#skip	#skip	#skip	#skip	#skip	#skip	aue	1234567891
+#skip	#skip	#skip	#skip	#skip	#skip	aue	123456789141
+#skip	#skip	#skip	#skip	#skip	#skip	aue	123
+#skip	#skip	#skip	#skip	#skip	#skip	aue	1234567
+#skip	#skip	#skip	#skip	#skip	#skip	aue	1234567891
+#skip	#skip	#skip	#skip	#skip	#skip	aue	123456789141
+#skip	#skip	#skip	#skip	#skip	#skip	aue	123
+#skip	#skip	#skip	#skip	#skip	#skip	aue	1234567
+#skip	#skip	#skip	#skip	#skip	#skip	aue	1234567891
+#skip	#skip	#skip	#skip	#skip	#skip	aue	123456789141
+#skip	#skip	#skip	#skip	#skip	#skip	eu	12
+#skip	#skip	#skip	#skip	#skip	#skip	eu	1234567
+#skip	#skip	#skip	#skip	#skip	#skip	eu	12
+#skip	#skip	#skip	#skip	#skip	#skip	eu	1234567
+#skip	#skip	#skip	#skip	#skip	#skip	eu	12
+#skip	#skip	#skip	#skip	#skip	#skip	eu	1234567
+#skip	#skip	#skip	#skip	#skip	#skip	eu	12
+#skip	#skip	#skip	#skip	#skip	#skip	eu	1234567
+#skip	#skip	#skip	#skip	#skip	#skip	kayla	12345
+#skip	#skip	#skip	#skip	#skip	#skip	oe	12
+#skip	#skip	#skip	#skip	#skip	#skip	oe	12
+#skip	#skip	#skip	#skip	#skip	#skip	oe	12
+#skip	#skip	#skip	#skip	#skip	#skip	oe	12
+#skip	#skip	#skip	#skip	#skip	#skip	oe	12
+#skip	#skip	#skip	#skip	#skip	Smith	John	#skip
+a	a	a	a	a	a	a	a
+b	b	b	b	b	b	b	b
+c	c	c	c	c	c	c	c
+d	d	d	d	d	d	d	d
+#skip	#skip	#skip	#skip	#skip	#skip	a	#skip
+#skip	#skip	#skip	#skip	#skip	A	John	#skip
+#skip	#skip	#skip	#skip	#skip	#skip	j	#skip
+#skip	#skip	#skip	#skip	#skip	John	John	#skip

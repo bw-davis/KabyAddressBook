@@ -125,4 +125,4 @@
 {'FirstName': 'Patrick', 'LastName': 'Fowler', 'Address1': '32113 Randy Street', 'Address2': '', 'City': 'Chicago', 'State': 'IL', 'Zipcode': '60641', 'Phone': '1-(630)858-5776'}
 {'FirstName': 'Harold', 'LastName': 'Nichols', 'Address1': '18835 Derek Plaza', 'Address2': '', 'City': 'Chicago', 'State': 'IL', 'Zipcode': '60652', 'Phone': '1-(773)759-6455'}
 {'FirstName': 'Christine', 'LastName': 'Garza', 'Address1': '3256 Walton Terrace', 'Address2': '', 'City': 'Chicago', 'State': 'IL', 'Zipcode': '60657', 'Phone': '1-(773)448-6444'}
-{'FirstName': 'Roger', 'LastName': 'Richardson', 'Address1': '67 Birchwood Street', 'Address2': '', 'City': 'Chicago', 'State': 'IL', 'Zipcode': '60657', 'Phone': ''}
+{'FirstName': 'Roger', 'LastName': 'Richardson', 'Address1': '67 Birchwood Street', 'Address2': '', 'City': 'Chicago', 'State': 'IL', 'Zipcode': '60657', 'Phone': '1-(773)850-9304'}

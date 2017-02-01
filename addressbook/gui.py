@@ -10,13 +10,9 @@ import datetime
 from os import system
 from platform import system as platform
 
-# contacts=["First name", "Last name", "Address1", "Address2", "City", "State", "Zip", "Email", "Phone Number"];
-# col_name = ["FirstName", "LastName", "Address1", "City", "Zipcode", "Phone"];
 contacts = ["First name", "Last name", "Address1", "Address2", "City", "State", "Zip", "Phone Number", "Email" ];
 col_name = ["FirstName", "LastName", "Address1", "Address2", "City", "State", "Zipcode", "Phone", "email"];
 
-
-dirty = [];  # And array of arrays of[label, row, col] of all "dirty" or modified text widgets
 states = []  # record index of the contacts that you want to delete
 print("I cleaned states in");
 edited = False;
@@ -27,29 +23,36 @@ endtime = datetime.datetime.now()
 
 
 class KabyAddrapp(tk.Tk):
-    def __init__(self, addrBook="SavedAddressBook.kab", *args, **kwargs):
-        self.book_name=addrBook;
-        self.search_contacts=[];
-        self.dirty=False;
-        self.checkit=[];
-        #if platform() == 'Darwin':  # How Mac OS X is identified by Python
-            #system('''/usr/bin/osascript -e 'tell app "Finder" to set frontmost of process "Python" to true' ''')
-
-        # states=[] #record delete indexes
-        # print("I cleaned states ");
+    def __init__(self, addrBook="SavedAddressBook.kab", kab_format=True, *args, **kwargs):
         
-        #print("book");
-        #print(args[0]); 
+       
 
         tk.Tk.__init__(self, *args, **kwargs);
+        #self.top = tk.Toplevel(self);
+        
         self.container = tk.Frame(self);
+        #self.top = Toplevel(self.container);
 
         self.container.grid(row=0, ipadx=25, ipady=10);
 
         self.container.grid_rowconfigure(0, weight=1);
         self.container.grid_columnconfigure(0, weight=1);
         self.book = AddressBook()
-        self.book.openFromFile(addrBook);
+        if(kab_format):
+            self.book.openFromFile(addrBook);
+            self.book_name=addrBook;
+        else:
+            self.book.importFromFile(addrBook);
+            fileNameSplit = addrBook.strip().split("/")
+            file = fileNameSplit[-1].strip().split(".");
+            kabFileName=file[0]+".kab";
+            self.book_name=kabFileName;
+
+
+        
+        self.search_contacts=[];
+        self.dirty=False;
+        self.checkit=[];
 
         self.frames = {};
 
@@ -367,6 +370,10 @@ class DeletePage(tk.Frame):
         else:
             # if user cancels
             print("No")
+
+
+
+
 class BlankPage(tk.Frame):
     def __init__(self, parent, controller):
         starttime = datetime.datetime.now()
@@ -374,6 +381,7 @@ class BlankPage(tk.Frame):
         print("im in StartPage");
 
         tk.Frame.__init__(self, parent)
+
 
 
 class SearchResultPage(tk.Frame):
@@ -480,17 +488,7 @@ class StartPage(tk.Frame):
 
         tk.Frame.__init__(self, parent)
         self.parent = parent;
-        self.controller = controller;
-        # reset array states for next delete operation
-        # states =[]
-        # print("I cleaned states 6");
-        # resetDeletePage
-        # self.controller.refresh_frame(DeletePage);
-
-        # File tab on menu bar
-        #print(askokcancel("Delete", "Are you sure to Delete selected Data?"))
-        #showinfo("Say Hello", "Hello World")
-        #tkinter.messagebox.showinfo("messagebox","this is button 2 dialog")  
+        self.controller = controller; 
 
         print(states)
         menubar = Menu(parent.master);
@@ -525,20 +523,17 @@ class StartPage(tk.Frame):
         dropdown = ttk.OptionMenu(self, var, options[0], *options, command=lambda cmd, var=var: self.sort(var.get()));
         dropdown.grid(row=0, column=7, sticky="w");
 
-        search_frame=Frame(self);
-        search_frame.grid(row=0, column=0, columnspan=3);
+        
 
         #search menu
+        search_frame=Frame(self);
+        search_frame.grid(row=0, column=0, columnspan=3);
         search_label = ttk.Label(search_frame, text="Search");
         search_label.grid(row=0, column=0, sticky='e', padx=10, pady=5);
         search_input = ttk.Entry(search_frame, width=15);
         search_input.grid(row=0, column=1, sticky='w', pady=5);
         search_button = ttk.Button(search_frame, text="Search", command=lambda  : self.start_page_search(search_input.get()));
         search_button.grid(row=0, column=3, sticky='e', padx=10);
-
-        #t = SimpleTable(self);
-        #t.grid(row=1, column=0, columnspan=8, padx=20);
-        #t.print_contacts(contacts);
 
         contact_info = Frame(self, background='black');
         contact_info.grid(row=1, column=0, columnspan=8, sticky='w', padx=75, pady=5);
@@ -603,18 +598,29 @@ class StartPage(tk.Frame):
     def importFile(self):
         print("dosomething");
         importFileName = tkinter.filedialog.askopenfilename()
-        print(importFileName)
+        fileNameSplit = importFileName.strip().split("/")
+        file = fileNameSplit[-1].strip().split(".");
+        kabFileName=file[0]+".kab";
+       # print(importFileName)
+        print(fileNameSplit[-1]);
+        print("Kab file {}".format(kabFileName));
+        app2 = KabyAddrapp(importFileName, False);
+        app2.protocol("WM_DELETE_WINDOW", lambda: on_closing(app2));
+        app2.mainloop();
 
 
     def exportFile(self):
-        print("dosomething");
-        importFileName = tkinter.filedialog.askopenfilename()
-        print(exportFileName)
+        #print("dosomething");
+        #exportFileName = tkinter.filedialog.askopenfilename()
+        exportFileName = tk.filedialog.asksaveasfilename(filetypes=[("text", ".tsv")])+".tsv"
+        self.controller.book.exportToFile(exportFileName);
+        
 
 
     def openAddressBook(self):
         AddressbookName = tkinter.filedialog.askopenfilename()
         app2 = KabyAddrapp(AddressbookName);
+        app2.protocol("WM_DELETE_WINDOW", lambda: on_closing(app2));
         app2.mainloop();
         print(AddressbookName)
 
@@ -630,7 +636,7 @@ class StartPage(tk.Frame):
 
     def saveAs(self):
         # print("dosomething");
-        FileName = tk.filedialog.asksaveasfilename(filetypes=[("text", ".tsv")])
+        FileName = tk.filedialog.asksaveasfilename(filetypes=[("text", ".tsv")])+".kab"
         print(FileName)
         self.controller.book.saveToFile(FileName);
 
