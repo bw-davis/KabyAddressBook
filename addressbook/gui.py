@@ -57,14 +57,14 @@ class KabyAddrapp(tk.Tk):
 
         self.frames = {};
 
-        for F in (StartPage, PageOne):
-            starttime = datetime.datetime.now()
-            frame = F(self.container, self);
-            self.frames[F] = frame;
-            frame.grid(row=0, column=0, sticky="nsew");
+        #for F in (StartPage, PageOne):
+        starttime = datetime.datetime.now()
+        frame = StartPage(self.container, self);
+        self.frames[StartPage] = frame;
+        frame.grid(row=0, column=0, sticky="nsew");
 
-            endtime = datetime.datetime.now()
-            print (endtime - starttime)
+        endtime = datetime.datetime.now()
+        print (endtime - starttime)
 
         print("StartPage initialize time")
 
@@ -492,15 +492,15 @@ class StartPage(tk.Frame):
         filemenu.add_command(label="Import", command=self.importFile);
         filemenu.add_command(label="Export", command=self.exportFile);
         filemenu.add_separator();
-        filemenu.add_command(label="Exit", command=self.exit_app);
+        filemenu.add_command(label="Exit", command=self.exit_app_option);
 
         # Edit tab on menu bar
         editmenu = Menu(menubar, tearoff=0);
         menubar.add_cascade(label="Edit", menu=editmenu);
         # editmenu.add_command(label="Undo", command=donothing);
         addmenu = Menu(menubar, tearoff=0);
-        # menubar.add_cascade(label="Add", menu=addmenu);
-        editmenu.add_command(label="Add", command=lambda: controller.show_frame(PageOne));
+        # menubar.add_cascade(label="Add", menu=addmenu); 
+        editmenu.add_command(label="Add", command=lambda: controller.show_frame(controller.refresh_frame(PageOne)));
         # editmenu.add_command(label="Delete", command=lambda: controller.show_frame(DeletePage));
         editmenu.add_command(label="Delete", command=self.to_delete_page);
 
@@ -551,10 +551,25 @@ class StartPage(tk.Frame):
     def exit_app(self, root):
         if(self.controller.dirty):
             if messagebox.askokcancel("Quit", "Want to save unsaved data?"):
+                self.controller.book.saveToFile(self.controller.book_name);
+                root.destroy();
+            else:
                 root.destroy();
         else:
             #print("Nothing to save, quiting")
             root.destroy();
+
+
+    def exit_app_option(self):
+        if(self.controller.dirty):
+            if messagebox.askokcancel("Quit", "Want to save unsaved data?"):
+                self.controller.book.saveToFile(self.controller.book_name);
+                self.controller.destroy();
+            else:
+                self.controller.destroy();
+        else:
+            #print("Nothing to save, quiting")
+            self.controller.destroy();
 
     def sort(self, var):
         print("var is {}".format(var));
@@ -604,8 +619,6 @@ class StartPage(tk.Frame):
 
 
     def exportFile(self):
-        #print("dosomething");
-        #exportFileName = tkinter.filedialog.askopenfilename()
         exportFileName = tk.filedialog.asksaveasfilename(filetypes=[("text", ".tsv")])+".tsv"
         self.controller.book.exportToFile(exportFileName);
         
