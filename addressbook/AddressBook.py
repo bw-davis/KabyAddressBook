@@ -240,3 +240,9 @@ class AddressBook():
     def __iter__(self):
         return self.entries.__iter__()
 
+    """
+    Overloading method for built-in 'len' function. 
+    """
+    def __len__(self):
+        return len(self.entries)
+
