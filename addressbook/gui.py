@@ -13,7 +13,7 @@ from platform import system as platform
 contacts = ["First name", "Last name", "Address1", "Address2", "City", "State", "Zip", "Phone Number", "Email" ];
 col_name = ["FirstName", "LastName", "Address1", "Address2", "City", "State", "Zipcode", "Phone", "email"];
 
-states = []  # record index of the contacts that you want to delete
+#states = []  # record index of the contacts that you want to delete
 print("I cleaned states in");
 edited = False;
 skip = "#skip"
@@ -31,6 +31,7 @@ class KabyAddrapp(tk.Tk):
         #self.top = tk.Toplevel(self);
         
         self.container = tk.Frame(self);
+        self.status=[];
         #self.top = Toplevel(self.container);
 
         self.container.grid(row=0, ipadx=25, ipady=10);
@@ -56,14 +57,14 @@ class KabyAddrapp(tk.Tk):
 
         self.frames = {};
 
-        for F in (StartPage, PageOne):
-            starttime = datetime.datetime.now()
-            frame = F(self.container, self);
-            self.frames[F] = frame;
-            frame.grid(row=0, column=0, sticky="nsew");
+        #for F in (StartPage, PageOne):
+        starttime = datetime.datetime.now()
+        frame = StartPage(self.container, self);
+        self.frames[StartPage] = frame;
+        frame.grid(row=0, column=0, sticky="nsew");
 
-            endtime = datetime.datetime.now()
-            print (endtime - starttime)
+        endtime = datetime.datetime.now()
+        print (endtime - starttime)
 
         print("StartPage initialize time")
 
@@ -151,7 +152,7 @@ class VerticalScrolledFrame(tk.Frame):
         canvas.bind('<Configure>', _configure_canvas)
 
     def onPress(self, i):
-        states[i] = 1;
+        self.parent.controller.status[i] = 1;
 
     def update_contact(self, row, col, entry):
         attr = col_name[col];  # The contact attribute to be replaceed
@@ -281,7 +282,7 @@ class VerticalScrolledFrame(tk.Frame):
                     b = Checkbutton(self.interior, width=14, text=row, command=(lambda i=index: self.onPress(
                         i)));  # create check buttons in when we create the table, bind to onPress funtion
                     b.grid(row=row, column=column, sticky="nsew", padx=1, pady=1);
-                    states.append(0);
+                    self.parent.controller.status.append(0);
                     #print("now i am appending")
                 else:
                     t = entry.getAttribute(attr);
@@ -311,17 +312,6 @@ class DeletePage(tk.Frame):
         tk.Frame.__init__(self, parent)
         self.parent = parent;
         self.controller = controller;
-        states = []  # record delete index
-        # print("I cleaned states 5");
-
-
-        #sort_label = ttk.Label(self, text="Sort by:");
-        #sort_label.grid(row=0, column=6, stick="e");
-        #var = StringVar(self);
-        #options = ["Name", "Zip"];
-        #var.set(options[0]);
-        #dropdown = ttk.OptionMenu(self, var, options[0], *options);
-        #dropdown.grid(row=0, column=7, sticky="w");
 
         contact_info = Frame(self, background='black');
         contact_info.grid(row=1, column=0, columnspan=8, sticky='w', padx=20, pady=5);
@@ -351,12 +341,12 @@ class DeletePage(tk.Frame):
         index = 0
         count = 0
         print("donsomething2");
-        print(states);
+        print(self.controller.status);
         if askokcancel("Delete", "Are you sure to Delete selected Data?"):
             # pop a dialog let user to confirm
             print("yes")
             # if yes, delete contacts
-            for i in states:
+            for i in self.controller.status:
                 if i != 0:
                     print("should delete No.")
                     print(index + 1)
@@ -490,7 +480,7 @@ class StartPage(tk.Frame):
         self.parent = parent;
         self.controller = controller; 
 
-        print(states)
+        print(self.controller.status)
         menubar = Menu(parent.master);
         parent.master.config(menu=menubar);
         filemenu = Menu(menubar, tearoff=0);
@@ -502,15 +492,15 @@ class StartPage(tk.Frame):
         filemenu.add_command(label="Import", command=self.importFile);
         filemenu.add_command(label="Export", command=self.exportFile);
         filemenu.add_separator();
-        filemenu.add_command(label="Exit", command=self.exit_app);
+        filemenu.add_command(label="Exit", command=self.exit_app_option);
 
         # Edit tab on menu bar
         editmenu = Menu(menubar, tearoff=0);
         menubar.add_cascade(label="Edit", menu=editmenu);
         # editmenu.add_command(label="Undo", command=donothing);
         addmenu = Menu(menubar, tearoff=0);
-        # menubar.add_cascade(label="Add", menu=addmenu);
-        editmenu.add_command(label="Add", command=lambda: controller.show_frame(PageOne));
+        # menubar.add_cascade(label="Add", menu=addmenu); 
+        editmenu.add_command(label="Add", command=lambda: controller.show_frame(controller.refresh_frame(PageOne)));
         # editmenu.add_command(label="Delete", command=lambda: controller.show_frame(DeletePage));
         editmenu.add_command(label="Delete", command=self.to_delete_page);
 
@@ -558,9 +548,24 @@ class StartPage(tk.Frame):
         print (endtime - starttime)
         print("now im here")
 
-    def exit_app(self):
+    def exit_app(self, root):
         if(self.controller.dirty):
             if messagebox.askokcancel("Quit", "Want to save unsaved data?"):
+                self.controller.book.saveToFile(self.controller.book_name);
+                root.destroy();
+            else:
+                root.destroy();
+        else:
+            #print("Nothing to save, quiting")
+            root.destroy();
+
+
+    def exit_app_option(self):
+        if(self.controller.dirty):
+            if messagebox.askokcancel("Quit", "Want to save unsaved data?"):
+                self.controller.book.saveToFile(self.controller.book_name);
+                self.controller.destroy();
+            else:
                 self.controller.destroy();
         else:
             #print("Nothing to save, quiting")
@@ -579,8 +584,8 @@ class StartPage(tk.Frame):
 
     def to_delete_page(self):
         # click delete in menu bar
-        global states
-        states = []  # record delete index
+        #global states
+        self.controller.status = []  # record delete index
         print("I cleaned states 7");
         self.controller.refresh_frame(DeletePage);
         print("Im going to the delete page")
@@ -608,14 +613,12 @@ class StartPage(tk.Frame):
        # print(importFileName)
         print(fileNameSplit[-1]);
         print("Kab file {}".format(kabFileName));
-        app2 = KabyAddrapp(importFileName, False);
-        app2.protocol("WM_DELETE_WINDOW", lambda: on_closing(app2));
-        app2.mainloop();
+        importApp = KabyAddrapp(importFileName, False);
+        importApp.protocol("WM_DELETE_WINDOW", lambda: on_closing(app2));
+        importApp.mainloop();
 
 
     def exportFile(self):
-        #print("dosomething");
-        #exportFileName = tkinter.filedialog.askopenfilename()
         exportFileName = tk.filedialog.asksaveasfilename(filetypes=[("text", ".tsv")])+".tsv"
         self.controller.book.exportToFile(exportFileName);
         
@@ -624,7 +627,7 @@ class StartPage(tk.Frame):
     def openAddressBook(self):
         AddressbookName = tkinter.filedialog.askopenfilename()
         app2 = KabyAddrapp(AddressbookName);
-        app2.protocol("WM_DELETE_WINDOW", lambda: on_closing(app2));
+        app2.protocol("WM_DELETE_WINDOW", lambda: self.exit_app(app2));
         app2.mainloop();
         print(AddressbookName)
 
@@ -899,8 +902,13 @@ class PageOne(tk.Frame):
 
 
 def on_closing(root):
-    if messagebox.askokcancel("Quit", "Do you want to quit?"):
-        root.destroy()
+    if(root.dirty):
+            if messagebox.askokcancel("Quit", "Want to save unsaved data?"):
+                root.destroy();
+    else:
+        #print("Nothing to save, quiting")
+        root.destroy();
+
 
 
 def main():
