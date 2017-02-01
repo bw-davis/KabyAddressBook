@@ -588,11 +588,15 @@ class StartPage(tk.Frame):
 
 
     def newBook(self):
+
         print("donothing");
-        FileName = tk.filedialog.asksaveasfilename(filetypes=[("text", ".tsv")])+".kab"
-        self.controller.book.saveNewFile(FileName);
-        newApp = KabyAddrapp(FileName);
-        newApp.mainloop();
+        FileName = tk.filedialog.asksaveasfilename(filetypes=[("text", ".tsv")])
+        if FileName!="":
+            FileName +=".kab"
+            self.controller.book.saveNewFile(FileName);
+            newApp = KabyAddrapp(FileName);
+            newApp.mainloop();
+        print(FileName)
 
 
     def importFile(self):
