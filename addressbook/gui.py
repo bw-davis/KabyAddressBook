@@ -378,6 +378,7 @@ class DeletePage(tk.Frame):
                     count += 1
                 index += 1;
 
+            set_last_book(self.controller.book_name);
             self.controller.book.saveToFile(self.controller.book_name);
             self.controller.refresh_frame(StartPage);
             self.controller.show_frame(StartPage);
@@ -653,9 +654,11 @@ class StartPage(tk.Frame):
                       book is closed.
     """
     def exit_app(self, root):
-        if(self.controller.dirty):
+        #print("\n\nexiting app={}\n\n".format(self.controller.book_name))
+        if(root.dirty):
             if messagebox.askokcancel("Quit", "Want to save unsaved data?"):
-                self.controller.book.saveToFile(self.controller.book_name);
+                root.book.saveToFile(root.book_name);
+                set_last_book(self.controller.book_name);
                 root.destroy();
             else:
                 root.destroy();
@@ -682,9 +685,11 @@ class StartPage(tk.Frame):
                       book is closed.
     """
     def exit_app_option(self):
+        #print("\n\nexiting app={}\n\n".format(self.controller.book_name))
         if(self.controller.dirty):
             if messagebox.askokcancel("Quit", "Want to save unsaved data?"):
                 self.controller.book.saveToFile(self.controller.book_name);
+                set_last_book(self.controller.book_name);
                 self.controller.destroy();
             else:
                 self.controller.destroy();
@@ -895,7 +900,8 @@ class StartPage(tk.Frame):
         #Save the all of the editing
         # print("dosomething");
         # print("dosomething");
-        print("savefile")
+        print("\n\nsaving to = {}\n\n".format(self.controller.book_name))
+        set_last_book(self.controller.book_name);
         self.controller.book.saveToFile(self.controller.book_name);
         self.controller.refresh_frame(StartPage)
         self.controller.show_frame(StartPage)
@@ -925,6 +931,7 @@ class StartPage(tk.Frame):
         # print("dosomething");
         FileName = tk.filedialog.asksaveasfilename(filetypes=[("text", ".tsv")])+".kab"
         print(FileName)
+        set_last_book(self.controller.book_name);
         self.controller.book.saveToFile(FileName);
 
 
@@ -1143,6 +1150,7 @@ class PageOne(tk.Frame):
         self.controller.book.addEntry(new_contact);
         self.controller.refresh_frame(StartPage);
         self.controller.show_frame(StartPage);
+        set_last_book(self.controller.book_name);
         self.controller.book.saveToFile(self.controller.book_name);
 
     def valid_phone_number(self, number):
@@ -1208,14 +1216,32 @@ def on_closing(root):
         #print("Nothing to save, quiting")
         root.destroy();
 
+def get_last_book():
+    with open('last_book.ini') as f:
+        lastbook = f.readline().split("=")[1];
+    
+    return lastbook;
 
+
+def set_last_book(new_book):
+        print("\n\n new book ={}".format(new_book))
+        f = open('last_book.ini', "w")
+        to_write="last_book={}".format(new_book);
+        f.write(to_write);
+        print(to_write)
 
 def main():
-    app = KabyAddrapp();
+    lastbook = get_last_book();
+    print(lastbook);
+
+
+
+    app = KabyAddrapp(lastbook);
     app.protocol("WM_DELETE_WINDOW", lambda: on_closing(app));
     starttime = datetime.datetime.now()
 
     app.mainloop();
+    #set_last_book(lastbook);
     endtime = datetime.datetime.now()
     print (endtime - starttime)
 
