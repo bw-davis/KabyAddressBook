@@ -45,8 +45,8 @@ class KabyAddrapp(tk.Tk):
         else:
 
             ##fix here
-            #self.book.importFromFile(addrBook,kab_format);
-            self.book.importFromFile(addrBook);
+            self.book.importFromFile(addrBook,True);
+            #self.book.importFromFile(addrBook);
             fileNameSplit = addrBook.strip().split("/")
             file = fileNameSplit[-1].strip().split(".");
             kabFileName=file[0]+".kab";
@@ -805,15 +805,28 @@ class StartPage(tk.Frame):
         print("dosomething");
 
         importFileName = tkinter.filedialog.askopenfilename()
-        fileNameSplit = importFileName.strip().split("/")
-        file = fileNameSplit[-1].strip().split(".");
-        kabFileName=file[0]+".kab";
-       # print(importFileName)
-        print(fileNameSplit[-1]);
-        print("Kab file {}".format(kabFileName));
-        importApp = KabyAddrapp(importFileName, False);
-        importApp.protocol("WM_DELETE_WINDOW", lambda: on_closing(importApp));
-        importApp.mainloop();
+        if importFileName!="":
+             fileNameSplit = importFileName.strip().split("/")
+             file = fileNameSplit[-1].strip().split(".");
+             kabFileName=file[0]+".kab";
+             print(fileNameSplit[-1]);
+             print("Kab file {}".format(kabFileName));
+ 
+             try:
+                 self.controller.book.importFromFile(importFileName);
+                 print("im here")
+             except:            
+                 try_again=askokcancel("Warning", "This is not a standard .tsv file,\n do you still want to import that")
+                 if try_again:
+
+                     app2 = KabyAddrapp(importFileName, False);
+                     app2.protocol("WM_DELETE_WINDOW", lambda: on_closing(app2));
+                     app2.mainloop();
+             else:
+                     app2 = KabyAddrapp(importFileName, False);
+                     app2.protocol("WM_DELETE_WINDOW", lambda: on_closing(app2));
+                     app2.mainloop();
+
 
 
     """
