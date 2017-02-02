@@ -8,11 +8,18 @@ from tkinter import messagebox
 import re
 import datetime
 from os import system
-from platform import system as platformz
-
+from platform import system as platform
+from KabyLauncher import *
 
 contacts = ["First name", "Last name", "Address1", "Address2", "City", "State", "Zip", "Phone Number", "Email" ];
 col_name = ["FirstName", "LastName", "Address1", "Address2", "City", "State", "Zipcode", "Phone", "email"];
+
+#states = []  # record index of the contacts that you want to delete
+edited = False;
+skip = "#skip"
+starttime = datetime.datetime.now()
+endtime = datetime.datetime.now()
+
 
 
 """
@@ -194,8 +201,10 @@ class VerticalScrolledFrame(tk.Frame):
 
 
 
+
+
     def print_delete_contact_page(self, contacts):
-        #DeletePage Frame
+    #DeletePage Frame
         row=0;
         index=0;
         for entry in self.parent.controller.book:
@@ -232,3 +241,4 @@ class VerticalScrolledFrame(tk.Frame):
         for column in range(7):
             self.grid_columnconfigure(column, weight=1)
         index = 0;
+

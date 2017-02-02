@@ -1,6 +1,5 @@
 from tkinter import *
 import tkinter as tk
-from DisplayContacts import *
 from tkinter import ttk
 import tkinter.filedialog
 from tkinter.messagebox import *
@@ -10,10 +9,8 @@ import re
 import datetime
 from os import system
 from platform import system as platform
-from PageOne import *
-from DeletePage import *
-from StartPage import *
-from SearchPage import *
+from Frames import *
+from DisplayContacts import *
 
 
 contacts = ["First name", "Last name", "Address1", "Address2", "City", "State", "Zip", "Phone Number", "Email" ];
@@ -106,6 +103,15 @@ class KabyAddrapp(tk.Tk):
 
     def add_contact(contact):
         self.contacts.append(contact)
+
+
+
+
+
+
+
+
+
 
 def on_closing(root):
     if(root.dirty):
