@@ -13,8 +13,8 @@ from platform import system as platform
 contacts = ["First name", "Last name", "Address1", "Address2", "City", "State", "Zip", "Phone Number", "Email" ];
 col_name = ["FirstName", "LastName", "Address1", "Address2", "City", "State", "Zipcode", "Phone", "email"];
 
-states = []  # record index of the contacts that you want to delete
-print("I cleaned states in");
+#delete_status = []  # record index of the contacts that you want to delete
+print("I cleaned delete_status in");
 edited = False;
 skip = "#skip"
 starttime = datetime.datetime.now()
@@ -23,6 +23,7 @@ endtime = datetime.datetime.now()
 
 
 class KabyAddrapp(tk.Tk):
+    #Main frame
     def __init__(self, addrBook="SavedAddressBook.kab", kab_format=True, *args, **kwargs):
         
        
@@ -42,6 +43,9 @@ class KabyAddrapp(tk.Tk):
             self.book.openFromFile(addrBook);
             self.book_name=addrBook;
         else:
+
+            ##fix here
+            #self.book.importFromFile(addrBook,kab_format);
             self.book.importFromFile(addrBook);
             fileNameSplit = addrBook.strip().split("/")
             file = fileNameSplit[-1].strip().split(".");
@@ -99,6 +103,7 @@ class KabyAddrapp(tk.Tk):
 
 
 def donothing():
+    #test for buttons if those work
     print("donothing");
     print(tkinter.messagebox.showinfo("messagebox","welcome to the Kaby Address Book"))
     
@@ -151,9 +156,13 @@ class VerticalScrolledFrame(tk.Frame):
         canvas.bind('<Configure>', _configure_canvas)
 
     def onPress(self, i):
-        states[i] = 1;
+        #onPress will be invoked when one Deleted data is seleted.
+        #delete_status[i] = 1;
+        self.parent.controller.delete_status[i] = 1
 
     def update_contact(self, row, col, entry):
+        #Up date contact
+        #Change the background of the field
         attr = col_name[col];  # The contact attribute to be replaceed
         contact = self.parent.controller.book.getEntry(row);  # Contact to be modified
         contact_attr = contact.getAttribute(attr);  # The contact attribute to be replaced
@@ -175,6 +184,8 @@ class VerticalScrolledFrame(tk.Frame):
         
        
     def redraw_entry(self, r, c, entry):
+        #For editing update.
+        #Redraw the blank
         val=entry.get("1.0", END);
         if(self.parent.controller.checkit):
             #print(self.parent.controller.checkit);
@@ -207,6 +218,8 @@ class VerticalScrolledFrame(tk.Frame):
         
 
     def print_contacts(self, contacts):
+        #For search result
+        #print contacts into the table
         starttime = datetime.datetime.now()
 
         row = 0;
@@ -235,6 +248,9 @@ class VerticalScrolledFrame(tk.Frame):
         print("print entry time")
 
     def print_search_contacts(self, contacts):
+        #For search result
+        #print contacts into the table
+        #print checkbox widgets
         starttime = datetime.datetime.now()
 
         row = 0;
@@ -266,6 +282,7 @@ class VerticalScrolledFrame(tk.Frame):
 
 
     def print_delete_contact_page(self, contacts):
+    #DeletePage Frame
         row=0;
         index=0;
         for entry in self.parent.controller.book:
@@ -281,7 +298,8 @@ class VerticalScrolledFrame(tk.Frame):
                     b = Checkbutton(self.interior, width=14, text=row, command=(lambda i=index: self.onPress(
                         i)));  # create check buttons in when we create the table, bind to onPress funtion
                     b.grid(row=row, column=column, sticky="nsew", padx=1, pady=1);
-                    states.append(0);
+                    #delete_status.append(0);
+                    self.parent.controller.delete_status.append(0)
                     #print("now i am appending")
                 else:
                     t = entry.getAttribute(attr);
@@ -306,13 +324,15 @@ class VerticalScrolledFrame(tk.Frame):
 
 
 class DeletePage(tk.Frame):
+    # the function that will be invoked when user click Delete button in delete page
     def __init__(self, parent, controller):
         print("im in DeletePage");
         tk.Frame.__init__(self, parent)
         self.parent = parent;
         self.controller = controller;
-        states = []  # record delete index
-        # print("I cleaned states 5");
+        #delete_status = []  # record delete index
+        # print("I cleaned delete_status 5");
+        self.controller.delete_status = []
 
 
         #sort_label = ttk.Label(self, text="Sort by:");
@@ -351,12 +371,14 @@ class DeletePage(tk.Frame):
         index = 0
         count = 0
         print("donsomething2");
-        print(states);
+        #print(delete_status);
+        print(self.controller.delete_status)
         if askokcancel("Delete", "Are you sure to Delete selected Data?"):
             # pop a dialog let user to confirm
             print("yes")
             # if yes, delete contacts
-            for i in states:
+            #for i in delete_status:
+            for i in self.controller.delete_status:
                 if i != 0:
                     print("should delete No.")
                     print(index + 1)
@@ -367,6 +389,7 @@ class DeletePage(tk.Frame):
             self.controller.book.saveToFile(self.controller.book_name);
             self.controller.refresh_frame(StartPage);
             self.controller.show_frame(StartPage);
+            self.controller.delete_status=[]
         else:
             # if user cancels
             print("No")
@@ -375,6 +398,7 @@ class DeletePage(tk.Frame):
 
 
 class BlankPage(tk.Frame):
+    #SearchResultPage Frame
     def __init__(self, parent, controller):
         starttime = datetime.datetime.now()
 
@@ -385,6 +409,7 @@ class BlankPage(tk.Frame):
 
 
 class SearchResultPage(tk.Frame):
+    #SearchResult Page Frame
     def __init__(self, parent, controller):
         starttime = datetime.datetime.now()
 
@@ -490,7 +515,7 @@ class StartPage(tk.Frame):
         self.parent = parent;
         self.controller = controller; 
 
-        print(states)
+        #print(delete_status)
         menubar = Menu(parent.master);
         parent.master.config(menu=menubar);
         filemenu = Menu(menubar, tearoff=0);
@@ -559,6 +584,7 @@ class StartPage(tk.Frame):
         print("now im here")
 
     def exit_app(self):
+        # this method will be involked when user trying to quit
         if(self.controller.dirty):
             if messagebox.askokcancel("Quit", "Want to save unsaved data?"):
                 self.controller.destroy();
@@ -567,6 +593,7 @@ class StartPage(tk.Frame):
             self.controller.destroy();
 
     def sort(self, var):
+        #Sorting method 
         print("var is {}".format(var));
         if var == "Name":
             print("sorting by name");
@@ -579,15 +606,18 @@ class StartPage(tk.Frame):
 
     def to_delete_page(self):
         # click delete in menu bar
-        global states
-        states = []  # record delete index
-        print("I cleaned states 7");
+        #global delete_status
+        #delete_status = []  # record delete index
+        print("I cleaned delete_status 7");
         self.controller.refresh_frame(DeletePage);
         print("Im going to the delete page")
         self.controller.show_frame(DeletePage)
 
 
+
     def newBook(self):
+        #To create a new book
+        #create a new .kab file and then go to that file
 
         print("donothing");
         FileName = tk.filedialog.asksaveasfilename(filetypes=[("text", ".tsv")])
@@ -600,20 +630,39 @@ class StartPage(tk.Frame):
 
 
     def importFile(self):
+        # To import a .tsv file
         print("dosomething");
+
         importFileName = tkinter.filedialog.askopenfilename()
-        fileNameSplit = importFileName.strip().split("/")
-        file = fileNameSplit[-1].strip().split(".");
-        kabFileName=file[0]+".kab";
-       # print(importFileName)
-        print(fileNameSplit[-1]);
-        print("Kab file {}".format(kabFileName));
-        app2 = KabyAddrapp(importFileName, False);
-        app2.protocol("WM_DELETE_WINDOW", lambda: on_closing(app2));
-        app2.mainloop();
+        if importFileName!="":
+            fileNameSplit = importFileName.strip().split("/")
+            file = fileNameSplit[-1].strip().split(".");
+            kabFileName=file[0]+".kab";
+           # print(importFileName)
+            print(fileNameSplit[-1]);
+            print("Kab file {}".format(kabFileName));
+
+            #if 
+
+            try:
+                self.controller.book.importFromFile(importFileName);
+                print("im here")
+            except:            
+                try_again=askokcancel("Warning", "This is not a standard .tsv file,\n do you still want to import that")
+                if try_again:
+                    app2 = KabyAddrapp(importFileName, False);
+                    app2.protocol("WM_DELETE_WINDOW", lambda: on_closing(app2));
+                    app2.mainloop();
+
+            else:
+                    app2 = KabyAddrapp(importFileName, False);
+                    app2.protocol("WM_DELETE_WINDOW", lambda: on_closing(app2));
+                    app2.mainloop();
+
 
 
     def exportFile(self):
+        #To export .tsv file
         #print("dosomething");
         #exportFileName = tkinter.filedialog.askopenfilename()
         exportFileName = tk.filedialog.asksaveasfilename(filetypes=[("text", ".tsv")])+".tsv"
@@ -622,6 +671,7 @@ class StartPage(tk.Frame):
 
 
     def openAddressBook(self):
+        #to open an existing  .kab file
         AddressbookName = tkinter.filedialog.askopenfilename()
         app2 = KabyAddrapp(AddressbookName);
         app2.protocol("WM_DELETE_WINDOW", lambda: on_closing(app2));
@@ -630,6 +680,8 @@ class StartPage(tk.Frame):
 
 
     def save(self):
+        #Save the all of the editing
+        # print("dosomething");
         # print("dosomething");
         print("savefile")
         self.controller.book.saveToFile(self.controller.book_name);
@@ -639,12 +691,14 @@ class StartPage(tk.Frame):
 
 
     def saveAs(self):
+
         # print("dosomething");
         FileName = tk.filedialog.asksaveasfilename(filetypes=[("text", ".tsv")])+".kab"
         print(FileName)
         self.controller.book.saveToFile(FileName);
 
     def start_page_search(self, name):
+        #searching function on StartPage
         print(name);
         results = self.controller.book.searchByAllFields(name);
         self.controller.search_contacts=[];
