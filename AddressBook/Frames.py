@@ -1,23 +1,6 @@
 """
-This module contains all the frames used to display the address book app
-
-    HomePage => Home page of the app, were all contacts are shown and can be edited. Addionaly all options to manipulate
-                the address book can be found on this frame. The ability to open or create a new address book, import or
-                export and address book to or from a tsv file and the ability to save and delete contacts.
-
-    DeletePage => Page that displays all contacts with checks boxs that allows you to select contacts to delete.
-                  there are 2 buttons at the bottom of the page,
-                        delete: will delete the selected contacts from the address book, refresh the home page, then redispaly 
-                                the home page with the deleted contacts removed.
-                        cancle: will discard all user input and redirect back to the Start Page.
-                    You can also acces the file and edit menus from this page.
-
-    SearchResultPage => Dispalys all contacts that containe the search string. If there are no matches then the Start page is
-                        shown, if you search the emtpy string then the StartPage will be displayed.
-
-    PageOne => This page dispalys the form for the user to enter a new contact, with fields for 
-                firt name, last name, address1, address2, city, state, zip code, email, and phone.
-
+This module containes the KabyAddrapp class, when this class is executed a KabyAddrapp instance is created and
+the last edited address book.
 """
 
 from tkinter import *
@@ -31,17 +14,104 @@ import re
 import datetime
 from os import system
 from platform import system as platform
-from DisplayContacts import VerticalScrolledFrame
-import KabyLauncher
+#import Frames
+from DisplayContacts import *
 
-contacts = ["First name", "Last name", "Address1", "Address2", "City", "State", "Zip", "Phone Number", "Email" ];
-col_name = ["FirstName", "LastName", "Address1", "Address2", "City", "State", "Zipcode", "Phone", "email"];
+#contacts = ["First name", "Last name", "Address1", "Address2", "City", "State", "Zip", "Phone Number", "Email" ];
+#col_name = ["FirstName", "LastName", "Address1", "Address2", "City", "State", "Zipcode", "Phone", "email"];
 
 #states = []  # record index of the contacts that you want to delete
 edited = False;
 skip = "#skip"
 starttime = datetime.datetime.now()
 endtime = datetime.datetime.now()
+
+
+"""
+"""
+class KabyAddrapp(tk.Tk):
+    #Main frame
+    def __init__(self, addrBook="SavedAddressBook.kab", kab_format=True, *args, **kwargs):
+        
+       
+
+        tk.Tk.__init__(self, *args, **kwargs);
+        #self.top = tk.Toplevel(self);
+        
+        self.container = tk.Frame(self);
+        self.status=[];
+        #self.top = Toplevel(self.container);
+
+        self.container.grid(row=0, ipadx=25, ipady=10);
+
+        self.container.grid_rowconfigure(0, weight=1);
+        self.container.grid_columnconfigure(0, weight=1);
+        self.book = AddressBook()
+        if(kab_format):
+            self.book.openFromFile(addrBook);
+            self.book_name=addrBook;
+        else:
+
+            ##fix here
+            self.book.importFromFile(addrBook,True);
+            #self.book.importFromFile(addrBook);
+            fileNameSplit = addrBook.strip().split("/")
+            file = fileNameSplit[-1].strip().split(".");
+            kabFileName=file[0]+".kab";
+            self.book_name=kabFileName;
+
+
+        
+        self.search_contacts=[];
+        self.dirty=False;
+        self.checkit=[];
+
+        self.frames = {};
+
+        #for F in (StartPage, PageOne):
+        starttime = datetime.datetime.now()
+        frame = StartPage(self.container, self);
+        self.frames[StartPage] = frame;
+        frame.grid(row=0, column=0, sticky="nsew");
+
+        endtime = datetime.datetime.now()
+        print (endtime - starttime)
+
+        print("StartPage initialize time")
+
+
+
+        starttime = datetime.datetime.now()
+        self.show_frame(StartPage);
+
+
+
+        endtime = datetime.datetime.now()
+        print (endtime - starttime)
+        print ("first time")
+
+
+    def __enter__(self, *args, **kwargs):
+        return self;
+
+    def __exit__(self, *args, **kwargs):
+        print("exiting")
+
+    def show_frame(self, cont):
+        frame = self.frames[cont];
+        frame.tkraise();
+
+    def refresh_frame(self, F):
+        frame = F(self.container, self);
+        self.frames[F] = frame;
+        frame.grid(row=0, column=0, sticky="nsew");
+
+    def add_contact(contact):
+        self.contacts.append(contact)
+
+
+
+
 """
 Class used to display the results of a search on the 
 """
@@ -255,7 +325,7 @@ class DeletePage(tk.Frame):
                     count += 1
                 index += 1;
 
-            KabyLauncher.set_last_book(self.controller.book_name);
+            set_last_book(self.controller.book_name);
             self.controller.book.saveToFile(self.controller.book_name);
             self.controller.refresh_frame(StartPage);
             self.controller.show_frame(StartPage);
@@ -385,7 +455,7 @@ class StartPage(tk.Frame):
         if(root.dirty):
             if messagebox.askokcancel("Quit", "Want to save unsaved data?"):
                 root.book.saveToFile(root.book_name);
-                KabyLauncher.set_last_book(root.book_name);
+                set_last_book(root.book_name);
                 root.destroy();
             else:
                 root.destroy();
@@ -416,7 +486,7 @@ class StartPage(tk.Frame):
         if(self.controller.dirty):
             if messagebox.askokcancel("Quit", "Want to save unsaved data?"):
                 self.controller.book.saveToFile(self.controller.book_name);
-                KabyLauncher.set_last_book(self.controller.book_name);
+                set_last_book(self.controller.book_name);
                 self.controller.destroy();
             else:
                 self.controller.destroy();
@@ -503,7 +573,7 @@ class StartPage(tk.Frame):
         if FileName!="":
             FileName +=".kab"
             self.controller.book.saveNewFile(FileName);
-            newApp = KabyLauncher.KabyAddrapp(FileName);
+            newApp = KabyAddrapp(FileName);
             newApp.mainloop();
         print(FileName)
 
@@ -561,12 +631,12 @@ class StartPage(tk.Frame):
                         print("This is an invalid .tsv file")
                         showerror("Error","This is an invalid .tsv file")
                     else:
-                         app2 = KabyLauncher.KabyAddrapp(importFileName, False);
-                         app2.protocol("WM_DELETE_WINDOW", lambda: KabyLauncher.on_closing(app2));
+                         app2 = KabyAddrapp(importFileName, False);
+                         app2.protocol("WM_DELETE_WINDOW", lambda: on_closing(app2));
                          app2.mainloop();
              else:
-                     app2 = KabyLauncher.KabyAddrapp(importFileName, False);
-                     app2.protocol("WM_DELETE_WINDOW", lambda: KabyLauncher.on_closing(app2));
+                     app2 = KabyAddrapp(importFileName, False);
+                     app2.protocol("WM_DELETE_WINDOW", lambda: on_closing(app2));
                      app2.mainloop();
 
 
@@ -629,7 +699,7 @@ class StartPage(tk.Frame):
                     showerror("Error","This is an invalid .kab file")
 
             else:
-                app2 = KabyLauncher.KabyAddrapp(AddressbookName);
+                app2 = KabyAddrapp(AddressbookName);
                 app2.protocol("WM_DELETE_WINDOW", lambda: self.exit_app(app2));
                 app2.mainloop();
                 print(AddressbookName)
@@ -650,7 +720,7 @@ class StartPage(tk.Frame):
         # print("dosomething");
         # print("dosomething");
         print("\n\nsaving to = {}\n\n".format(self.controller.book_name))
-        KabyLauncher.set_last_book(self.controller.book_name);
+        set_last_book(self.controller.book_name);
         self.controller.book.saveToFile(self.controller.book_name);
         self.controller.refresh_frame(StartPage)
         self.controller.show_frame(StartPage)
@@ -680,7 +750,7 @@ class StartPage(tk.Frame):
         # print("dosomething");
         FileName = tk.filedialog.asksaveasfilename(filetypes=[("text", ".tsv")])+".kab"
         print(FileName)
-        KabyLauncher.set_last_book(self.controller.book_name);
+        set_last_book(self.controller.book_name);
         self.controller.book.saveToFile(FileName);
 
 
@@ -914,7 +984,7 @@ class PageOne(tk.Frame):
         self.controller.book.addEntry(new_contact);
         self.controller.refresh_frame(StartPage);
         self.controller.show_frame(StartPage);
-        KabyLauncher.set_last_book(self.controller.book_name);
+        set_last_book(self.controller.book_name);
         self.controller.book.saveToFile(self.controller.book_name);
 
 
@@ -1007,3 +1077,63 @@ class PageOne(tk.Frame):
         return re.match("([0-9]){5}([-]{1})([0-9]){4}$", zipcode) != None or re.match("([0-9 a-z]){5}$",zipcode) != None
 
 
+
+
+
+
+
+
+
+
+
+"""
+Function defines how the first app ran in the main loop below will respond to hitting the x in the top right corner of the screen.
+----------------------------------------------------------------------------------------------------------------------------------
+    paramters: root => KabyAddrapp book instance being manipulated.
+
+    return: None
+
+    side affects: Closes the KabyAddrapp (root) passed to this Functio
+"""
+def on_closing(root):
+    if(root.dirty):
+            if messagebox.askokcancel("Quit", "Want to save unsaved data?"):
+                root.destroy();
+    else:
+        #print("Nothing to save, quiting")
+        root.destroy();
+
+
+"""
+When the app is first launched this function will get the location of the last address book opened, if that file no longer exists 
+it will attempt to open the example saved address book in the KabyAddressBook/AddressBook file. If this file has been deleted then
+the file KabyAddressBook/AddressBook/SavedAddressBook.kab will be recreated.
+----------------------------------------------------------------------------------------------------------------------------------
+    paramters: None
+
+    return: lastbook, the path to the last address book edited.
+
+    side affects: None
+"""
+def get_last_book():
+    with open('last_book.ini') as f:
+        lastbook = f.readline().split("=")[1].strip();
+    
+    return lastbook;
+
+"""
+Function is called when an address book has been edited and exited to set the default address book to be opened the next time
+the app runs.
+-----------------------------------------------------------------------------------------------------------------------------
+    parameter: None
+
+    return: None
+
+    side affects: Changes the value of the lastbook in the inilitizer file for the app to the last edited addressbook.
+"""
+def set_last_book(new_book):
+        print("\n\n new book ={}".format(new_book))
+        f = open('last_book.ini', "w")
+        to_write="last_book={}".format(new_book);
+        f.write(to_write);
+        print(to_write)
