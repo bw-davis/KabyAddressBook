@@ -109,7 +109,7 @@ class AddressBookEntry():
                                                        self.attrs["Address2"],
                                                        self.attrs["LastName"],
                                                        self.attrs["FirstName"],
-                                                       self.attrs["Phone"])
+                                                       self.attrs["Phone"]).replace("#skip", "")
 
     """
     Defines the Python built-in function 'str'
