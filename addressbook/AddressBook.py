@@ -141,26 +141,38 @@ class AddressBook():
 
     """
     Fills the AddressBook with entries from a file that uses the .tsv format
+    If force is True, checks leading line against the spec
 
     Args:
         fn: str, the filename to import entries from
+        force: bool, optional argument that specifies whether or not the check
+                    the leading line of the .tsv file to match the specifications
+    Raises:
+        Exception if force == False and leading .tsv line does not match spec
+        Exception if error occurs during processing of .tsv file
     """
-    def importFromFile(self, fn):
+    def importFromFile(self, fn, force=False):
+        tsvfmt = "CITY\tSTATE\tZIP\tdelivery\tSecond\tLastName\tFirstName\tPhone\n"
         with open(fn) as f:
-            n = f.readline() #toss out leading line
-            for line in f:
-                line = line.strip().split("\t")
-                city    = line[0]
-                state   = line[1]
-                zipcode = line[2]
-                addr1   = line[3]
-                addr2   = line[4]
-                ln      = line[5]
-                fn      = line[6]
-                phone   = line[7]
-                
-                entry = AddressBookEntry(fn, ln, addr1, addr2, city, state, zipcode, phone)
-                self.addEntry(entry)
+            fmt = f.readline() 
+            if force == False and fmt != tsvfmt:
+                raise Exception("Possible malformed .tsv file. Header line does not match spec")
+            try:
+                for line in f:
+                    line = line.strip().split("\t")
+                    city    = line[0]
+                    state   = line[1]
+                    zipcode = line[2]
+                    addr1   = line[3]
+                    addr2   = line[4]
+                    ln      = line[5]
+                    fn      = line[6]
+                    phone   = line[7]
+                    
+                    entry = AddressBookEntry(fn, ln, addr1, addr2, city, state, zipcode, phone)
+                    self.addEntry(entry)
+            except:
+                raise Exception("Error processing .tsv file. Malformed .tsv file.")
         
     """
     Writes the contents of the AddressBook to a file, using .tsv format
@@ -192,13 +204,19 @@ class AddressBook():
 
     Args:
         fn: str, filename to bring entries from
+    Raises:
+        Exception, if a natural exception occurs during processing of file
     """
     def openFromFile(self, fn):
-        with open(fn) as f:
-            for line in f:
-                d = eval(line.strip())
-                entry = AddressBookEntry(None, None, None, None, None, None, None, None, dictionary=True, attrs=d)
-                self.addEntry(entry)
+        try:
+            with open(fn) as f:
+                for line in f:
+                    d = eval(line.strip())
+                    entry = AddressBookEntry(None, None, None, None, None, None, None, None, dictionary=True, attrs=d)
+                    self.addEntry(entry)
+        except:
+            raise Exception("Error processing .kab file. Malformed file.")
+
 
     """
     Writes the contents of the AddressBook in a specialized '.kab' format. 
@@ -221,4 +239,10 @@ class AddressBook():
     """
     def __iter__(self):
         return self.entries.__iter__()
+
+    """
+    Overloading method for built-in 'len' function. 
+    """
+    def __len__(self):
+        return len(self.entries)
 
