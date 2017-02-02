@@ -1218,7 +1218,7 @@ def on_closing(root):
 
 def get_last_book():
     with open('last_book.ini') as f:
-        lastbook = f.readline().split("=")[1];
+        lastbook = f.readline().split("=")[1].strip();
     
     return lastbook;
 
@@ -1247,4 +1247,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    main() 
