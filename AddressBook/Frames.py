@@ -790,7 +790,7 @@ class StartPage(tk.Frame):
             print("name = {}".format(name))
             self.controller.show_frame(SearchResultPage)
         else:
-            print("Staying");
+            showerror("Error","No contact matches")
             self.controller.show_frame(StartPage)
 
         
