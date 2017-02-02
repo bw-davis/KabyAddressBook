@@ -658,7 +658,7 @@ class StartPage(tk.Frame):
         if(root.dirty):
             if messagebox.askokcancel("Quit", "Want to save unsaved data?"):
                 root.book.saveToFile(root.book_name);
-                set_last_book(self.controller.book_name);
+                set_last_book(root.book_name);
                 root.destroy();
             else:
                 root.destroy();
