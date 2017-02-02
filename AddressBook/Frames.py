@@ -31,7 +31,8 @@ import re
 import datetime
 from os import system
 from platform import system as platform
-from KabyLauncher import *
+from DisplayContacts import VerticalScrolledFrame
+import KabyLauncher
 
 contacts = ["First name", "Last name", "Address1", "Address2", "City", "State", "Zip", "Phone Number", "Email" ];
 col_name = ["FirstName", "LastName", "Address1", "Address2", "City", "State", "Zipcode", "Phone", "email"];
@@ -254,7 +255,7 @@ class DeletePage(tk.Frame):
                     count += 1
                 index += 1;
 
-            set_last_book(self.controller.book_name);
+            KabyLauncher.set_last_book(self.controller.book_name);
             self.controller.book.saveToFile(self.controller.book_name);
             self.controller.refresh_frame(StartPage);
             self.controller.show_frame(StartPage);
@@ -384,7 +385,7 @@ class StartPage(tk.Frame):
         if(root.dirty):
             if messagebox.askokcancel("Quit", "Want to save unsaved data?"):
                 root.book.saveToFile(root.book_name);
-                set_last_book(root.book_name);
+                KabyLauncher.set_last_book(root.book_name);
                 root.destroy();
             else:
                 root.destroy();
@@ -415,7 +416,7 @@ class StartPage(tk.Frame):
         if(self.controller.dirty):
             if messagebox.askokcancel("Quit", "Want to save unsaved data?"):
                 self.controller.book.saveToFile(self.controller.book_name);
-                set_last_book(self.controller.book_name);
+                KabyLauncher.set_last_book(self.controller.book_name);
                 self.controller.destroy();
             else:
                 self.controller.destroy();
@@ -502,7 +503,7 @@ class StartPage(tk.Frame):
         if FileName!="":
             FileName +=".kab"
             self.controller.book.saveNewFile(FileName);
-            newApp = KabyAddrapp(FileName);
+            newApp = KabyLauncher.KabyAddrapp(FileName);
             newApp.mainloop();
         print(FileName)
 
@@ -560,12 +561,12 @@ class StartPage(tk.Frame):
                         print("This is an invalid .tsv file")
                         showerror("Error","This is an invalid .tsv file")
                     else:
-                         app2 = KabyAddrapp(importFileName, False);
-                         app2.protocol("WM_DELETE_WINDOW", lambda: on_closing(app2));
+                         app2 = KabyLauncher.KabyAddrapp(importFileName, False);
+                         app2.protocol("WM_DELETE_WINDOW", lambda: KabyLauncher.on_closing(app2));
                          app2.mainloop();
              else:
-                     app2 = KabyAddrapp(importFileName, False);
-                     app2.protocol("WM_DELETE_WINDOW", lambda: on_closing(app2));
+                     app2 = KabyLauncher.KabyAddrapp(importFileName, False);
+                     app2.protocol("WM_DELETE_WINDOW", lambda: KabyLauncher.on_closing(app2));
                      app2.mainloop();
 
 
@@ -628,7 +629,7 @@ class StartPage(tk.Frame):
                     showerror("Error","This is an invalid .kab file")
 
             else:
-                app2 = KabyAddrapp(AddressbookName);
+                app2 = KabyLauncher.KabyAddrapp(AddressbookName);
                 app2.protocol("WM_DELETE_WINDOW", lambda: self.exit_app(app2));
                 app2.mainloop();
                 print(AddressbookName)
@@ -649,7 +650,7 @@ class StartPage(tk.Frame):
         # print("dosomething");
         # print("dosomething");
         print("\n\nsaving to = {}\n\n".format(self.controller.book_name))
-        set_last_book(self.controller.book_name);
+        KabyLauncher.set_last_book(self.controller.book_name);
         self.controller.book.saveToFile(self.controller.book_name);
         self.controller.refresh_frame(StartPage)
         self.controller.show_frame(StartPage)
@@ -679,7 +680,7 @@ class StartPage(tk.Frame):
         # print("dosomething");
         FileName = tk.filedialog.asksaveasfilename(filetypes=[("text", ".tsv")])+".kab"
         print(FileName)
-        set_last_book(self.controller.book_name);
+        KabyLauncher.set_last_book(self.controller.book_name);
         self.controller.book.saveToFile(FileName);
 
 
@@ -913,7 +914,7 @@ class PageOne(tk.Frame):
         self.controller.book.addEntry(new_contact);
         self.controller.refresh_frame(StartPage);
         self.controller.show_frame(StartPage);
-        set_last_book(self.controller.book_name);
+        KabyLauncher.set_last_book(self.controller.book_name);
         self.controller.book.saveToFile(self.controller.book_name);
 
 

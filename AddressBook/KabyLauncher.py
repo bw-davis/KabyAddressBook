@@ -14,9 +14,8 @@ import re
 import datetime
 from os import system
 from platform import system as platform
-from Frames import *
+import Frames
 from DisplayContacts import *
-
 
 contacts = ["First name", "Last name", "Address1", "Address2", "City", "State", "Zip", "Phone Number", "Email" ];
 col_name = ["FirstName", "LastName", "Address1", "Address2", "City", "State", "Zipcode", "Phone", "email"];
@@ -71,8 +70,8 @@ class KabyAddrapp(tk.Tk):
 
         #for F in (StartPage, PageOne):
         starttime = datetime.datetime.now()
-        frame = StartPage(self.container, self);
-        self.frames[StartPage] = frame;
+        frame = Frames.StartPage(self.container, self);
+        self.frames[Frames.StartPage] = frame;
         frame.grid(row=0, column=0, sticky="nsew");
 
         endtime = datetime.datetime.now()
@@ -83,7 +82,7 @@ class KabyAddrapp(tk.Tk):
 
 
         starttime = datetime.datetime.now()
-        self.show_frame(StartPage);
+        self.show_frame(Frames.StartPage);
 
 
 
