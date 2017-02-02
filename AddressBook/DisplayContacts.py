@@ -1,3 +1,17 @@
+"""
+This module contains VerticalScrolledFrame with methods to display contacts in 3 different formats
+    print_contacts => method used to display all contacts on the start page.
+
+    print_search_contacts => method used to display selected contacts that match the results of a search 
+                             in the search page.
+
+    print_delete_contact_page=> method used to display all contacts and the check box to select contacts 
+                                to delete
+
+This page also contians methods to edit and delete contacts and display the scroll bar.
+
+"""
+
 from tkinter import *
 import tkinter as tk
 from tkinter import ttk

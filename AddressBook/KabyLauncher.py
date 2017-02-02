@@ -1,3 +1,8 @@
+"""
+This module containes the KabyAddrapp class, when this class is executed a KabyAddrapp instance is created and
+the last edited address book.
+"""
+
 from tkinter import *
 import tkinter as tk
 from tkinter import ttk
@@ -23,7 +28,8 @@ starttime = datetime.datetime.now()
 endtime = datetime.datetime.now()
 
 
-
+"""
+"""
 class KabyAddrapp(tk.Tk):
     #Main frame
     def __init__(self, addrBook="SavedAddressBook.kab", kab_format=True, *args, **kwargs):
@@ -112,7 +118,15 @@ class KabyAddrapp(tk.Tk):
 
 
 
+"""
+Function defines how the first app ran in the main loop below will respond to hitting the x in the top right corner of the screen.
+----------------------------------------------------------------------------------------------------------------------------------
+    paramters: root => KabyAddrapp book instance being manipulated.
 
+    return: None
+
+    side affects: Closes the KabyAddrapp (root) passed to this Functio
+"""
 def on_closing(root):
     if(root.dirty):
             if messagebox.askokcancel("Quit", "Want to save unsaved data?"):
@@ -121,13 +135,34 @@ def on_closing(root):
         #print("Nothing to save, quiting")
         root.destroy();
 
+
+"""
+When the app is first launched this function will get the location of the last address book opened, if that file no longer exists 
+it will attempt to open the example saved address book in the KabyAddressBook/AddressBook file. If this file has been deleted then
+the file KabyAddressBook/AddressBook/SavedAddressBook.kab will be recreated.
+----------------------------------------------------------------------------------------------------------------------------------
+    paramters: None
+
+    return: lastbook, the path to the last address book edited.
+
+    side affects: None
+"""
 def get_last_book():
     with open('last_book.ini') as f:
         lastbook = f.readline().split("=")[1].strip();
     
     return lastbook;
 
+"""
+Function is called when an address book has been edited and exited to set the default address book to be opened the next time
+the app runs.
+-----------------------------------------------------------------------------------------------------------------------------
+    parameter: None
 
+    return: None
+
+    side affects: Changes the value of the lastbook in the inilitizer file for the app to the last edited addressbook.
+"""
 def set_last_book(new_book):
         print("\n\n new book ={}".format(new_book))
         f = open('last_book.ini', "w")
@@ -135,6 +170,9 @@ def set_last_book(new_book):
         f.write(to_write);
         print(to_write)
 
+"""
+Function that executes when the KabyLauncer.py file is executed. This creates the first KabyAddrapp instances.
+"""
 def main():
     lastbook = get_last_book();
     print(lastbook);
@@ -150,6 +188,8 @@ def main():
     endtime = datetime.datetime.now()
     print (endtime - starttime)
 
-
+"""
+Executes main function when this file is executed.
+"""
 if __name__ == "__main__":
     main() 

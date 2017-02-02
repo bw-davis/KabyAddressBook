@@ -1,3 +1,25 @@
+"""
+This module contains all the frames used to display the address book app
+
+    HomePage => Home page of the app, were all contacts are shown and can be edited. Addionaly all options to manipulate
+                the address book can be found on this frame. The ability to open or create a new address book, import or
+                export and address book to or from a tsv file and the ability to save and delete contacts.
+
+    DeletePage => Page that displays all contacts with checks boxs that allows you to select contacts to delete.
+                  there are 2 buttons at the bottom of the page,
+                        delete: will delete the selected contacts from the address book, refresh the home page, then redispaly 
+                                the home page with the deleted contacts removed.
+                        cancle: will discard all user input and redirect back to the Start Page.
+                    You can also acces the file and edit menus from this page.
+
+    SearchResultPage => Dispalys all contacts that containe the search string. If there are no matches then the Start page is
+                        shown, if you search the emtpy string then the StartPage will be displayed.
+
+    PageOne => This page dispalys the form for the user to enter a new contact, with fields for 
+                firt name, last name, address1, address2, city, state, zip code, email, and phone.
+
+"""
+
 from tkinter import *
 import tkinter as tk
 from tkinter import ttk
@@ -159,23 +181,12 @@ class SearchResultPage(tk.Frame):
             self.controller.show_frame(StartPage)
 
 
-    
 
 
-
-
-class BlankPage(tk.Frame):
-    #SearchResultPage Frame
-    def __init__(self, parent, controller):
-        starttime = datetime.datetime.now()
-
-
-        tk.Frame.__init__(self, parent)
-
-
-
-
-
+"""
+Class that is used to display all the contacts with a check box next to each contect to allow you to select
+which contacts you want to delte.
+"""
 class DeletePage(tk.Frame):
     # the function that will be invoked when user click Delete button in delete page
     def __init__(self, parent, controller):
@@ -208,7 +219,23 @@ class DeletePage(tk.Frame):
         # ttk.Button(self, text="Cancel", command=).grid(row=3, column=2);
         ttk.Button(self, text="Cancel", command=lambda: controller.show_frame(StartPage)).grid(column=3, row=3,
                                                                                                stick='w');
+    
+   
 
+    #########################################################################
+                    ### Methods of the delete page class ###
+    #########################################################################
+
+    """
+    Mehtod used to remove the selected contacts from the address book and the display.
+    ----------------------------------------------------------------------------------
+        arguments: None
+
+        return: None
+
+        side affects: Deletes the selected contacts from the address book, then redraws the
+                      start page with the contacts deleted.
+    """
     def delete_confirm(self):
         # the function that will be evoked when user click Delete button in delete page
         index = 0
@@ -697,7 +724,9 @@ class StartPage(tk.Frame):
 
         
 
-
+"""
+The page that dspalys the page with the fields for you to enter the data about a new contact.
+"""
 class PageOne(tk.Frame):
     def __init__(self, parent, controller):
         print("im in PageOne");
@@ -720,20 +749,17 @@ class PageOne(tk.Frame):
         first_name = ttk.Entry(self, width=7, textvariable=fname);
         first_name.insert(INSERT, "");
         first_name.grid(column=2, row=3, sticky=(W, E));
-        # new_contact.append(fname);
 
         # Collect last name from user.
         tk.Label(self, text="Last name").grid(column=3, row=2, sticky=(W, E))
         last_name = ttk.Entry(self, width=7, textvariable=lname);
         last_name.grid(column=3, row=3, sticky=(W, E));
-        # new_contact.append(lname);
 
 
         # Collect address from user
         tk.Label(self, text="Address").grid(column=2, row=4, sticky=(W, E))
         addr = ttk.Entry(self, width=7, textvariable=address);
         addr.grid(column=2, row=5, sticky=(W, E));
-        # new_contact.append(address);
 
         # new_contact.append(phone);
         tk.Label(self, text="Address2").grid(column=3, row=4, sticky=(W, E))
@@ -744,19 +770,16 @@ class PageOne(tk.Frame):
         tk.Label(self, text="City").grid(column=2, row=6, sticky=(W, E))
         city = ttk.Entry(self, width=7);
         city.grid(column=2, row=7, sticky=(W, E));
-        # new_contact.append(zipC);
 
         # Collect state from user
         tk.Label(self, text="State").grid(column=3, row=6, sticky=(W, E))
         st = ttk.Entry(self, width=25, textvariable=state);
         st.grid(column=3, row=7, sticky=(W, E));
-        # new_contact.append(state);
 
         # Collect zip from user
         tk.Label(self, text="Zip Code").grid(column=2, row=8, sticky=(W, E))
         zip_code = ttk.Entry(self, width=25, textvariable=zipC);
         zip_code.grid(column=2, row=9, sticky=(W, E));
-        # new_contact.append(zipC);
 
         # Collect zip from user
         tk.Label(self, text="Phone Number").grid(column=2, row=10, sticky=(W, E))
@@ -767,10 +790,8 @@ class PageOne(tk.Frame):
         tk.Label(self, text="Email").grid(column=3, row=10, sticky=(W, E))
         em = ttk.Entry(self, width=7, textvariable=email);
         em.grid(column=3, row=11, sticky=(W, E));
-        # new_contact.append(email);
 
         # Bind Enter to create customer as well.
-
         # ttk.Button(self, text="submit", command=lambda: self.add_contact(first_name.get(), last_name.get(), address.get(), state.get(), zipC.get(), em.get(), phone.get())).grid(column=2, row=12);
         ttk.Button(self, text="save",
                    command=lambda: self.add_contact(first_name.get(), last_name.get(), addr.get(), address2.get() , city.get(),
@@ -780,7 +801,28 @@ class PageOne(tk.Frame):
 
         for child in self.winfo_children(): child.grid_configure(padx=5, pady=5);
 
-    # AddressBookEnetry(FirstName, LastName, Address1, Address2, City, State, Zipcode, Phone)
+    """
+    Method used to get the user entered data from the the fields for a new contact. At least one of the name fileds is required 
+    to be filled out, first or last. Then one addiaionl field must be filled in as well from (address1, address2, city, state, 
+    email, phone or zipC)
+    -------------------------------------------------------------------------------------------
+        parameters: fname => first name of the new contact
+                    lname => last name of the new contact
+                    address1 => first part of the new contacts address 1234 some street
+                    address2 => second part of an address such as apt #1
+                    city => city for the new contact
+                    state => state for the new contact
+                    zipC => zip cod efor the new contact
+                    email => email for the new contact
+                    phoen => phone number for new contact
+
+        return: None
+
+        side affects: Checks users input to see if nemail, phone, and zip are of the. Prompts the user if input
+        is not of the expected form and if not enough data has been entered then the contact will not be added.
+        After sufficent data has been added then the new contact will be added to the contact book and the home 
+        page will be redrawn with the new contact added.
+    """
     def add_contact(self, fname, lname, address1, address2, city, state, zipC, email, phone):
         """
         Verifies that the inputs are correctly formatted (unless the user doesn't care). If so, the contact
@@ -874,6 +916,21 @@ class PageOne(tk.Frame):
         set_last_book(self.controller.book_name);
         self.controller.book.saveToFile(self.controller.book_name);
 
+
+
+    #########################################################################
+                    ### Methods of the new contact page class ###
+    #########################################################################
+
+    """
+    Mehtod used to validate user phone number
+    ------------------------------------------------------------------
+        paramter: number => number to be validated
+
+        return: boolean => true if the phone number is of valid from, false if not
+
+        side affects: None
+    """
     def valid_phone_number(self, number):
         """
         Function to test whether or not a phone number is valid.
@@ -910,6 +967,16 @@ class PageOne(tk.Frame):
         else:
             return False
 
+
+    """
+    Mehtod used to validate user email
+    ------------------------------------------------------------------
+        paramter: email => email to be validated
+
+        return: boolean => true if the email is of valid from, false otherwise
+
+        side affects: None
+    """
     def valid_email(self, email):
         # checking validation of email
         # format:<string><@><string><.><string>
@@ -918,6 +985,17 @@ class PageOne(tk.Frame):
         return re.match("([0-9A-z]+)([@]+)([0-9A-z]+)([.]+)([0-9A-z]+)", email) != None
 
 
+
+
+    """
+    Mehtod used to validate user zip code
+    ------------------------------------------------------------------
+        paramter: zipcode => zip code to be validated
+
+        return: boolean => true if the zip code is of valid from, false otherwise
+
+        side affects: None
+    """
     def valid_zip(self, zipcode):
         # checking validation of Zipcode
         # format:<5 digits>
