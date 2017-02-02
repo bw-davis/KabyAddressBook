@@ -1,4 +1,7 @@
 from tkinter import *
+from SearchPage import *
+from DeletePage import *
+from PageOne import *
 from DisplayContacts import *
 import tkinter as tk
 from tkinter import ttk
@@ -10,6 +13,7 @@ import re
 import datetime
 from os import system
 from platform import system as platform
+
 
 
 """

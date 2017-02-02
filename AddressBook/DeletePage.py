@@ -9,6 +9,10 @@ import re
 import datetime
 from os import system
 from platform import system as platform
+from StartPage import *
+from SearchPage import *
+from PageOne import *
+from DisplayContacts import *
 
 
 contacts = ["First name", "Last name", "Address1", "Address2", "City", "State", "Zip", "Phone Number", "Email" ];

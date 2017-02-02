@@ -10,6 +10,10 @@ import re
 import datetime
 from os import system
 from platform import system as platform
+from PageOne import *
+from DeletePage import *
+from StartPage import *
+from DisplayContacts import *
 
 
 

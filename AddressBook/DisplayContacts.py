@@ -8,7 +8,7 @@ from tkinter import messagebox
 import re
 import datetime
 from os import system
-from platform import system as platform
+from platform import system as platformz
 
 
 contacts = ["First name", "Last name", "Address1", "Address2", "City", "State", "Zip", "Phone Number", "Email" ];

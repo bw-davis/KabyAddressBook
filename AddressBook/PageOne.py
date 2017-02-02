@@ -9,10 +9,16 @@ import re
 import datetime
 from os import system
 from platform import system as platform
+from DeletePage import *
+from StartPage import *
+from SearchPage import *
+from DisplayContacts import *
+
 
 
 class PageOne(tk.Frame):
     def __init__(self, parent, controller):
+        
         print("im in PageOne");
         tk.Frame.__init__(self, parent)
         self.parent = parent;
@@ -20,31 +26,23 @@ class PageOne(tk.Frame):
 
         new_contact = []
 
-        fname = StringVar();
-        lname = StringVar();
-        email = StringVar();
-        address = StringVar();
-        state = StringVar();
-        zipC = StringVar();
-        phone = StringVar();
-
         # Collect first name from user.
         tk.Label(self, text="First name").grid(column=2, row=2, sticky=(W, E))
-        first_name = ttk.Entry(self, width=7, textvariable=fname);
+        first_name = ttk.Entry(self, width=7);
         first_name.insert(INSERT, "");
         first_name.grid(column=2, row=3, sticky=(W, E));
         # new_contact.append(fname);
 
         # Collect last name from user.
         tk.Label(self, text="Last name").grid(column=3, row=2, sticky=(W, E))
-        last_name = ttk.Entry(self, width=7, textvariable=lname);
+        last_name = ttk.Entry(self, width=7);
         last_name.grid(column=3, row=3, sticky=(W, E));
         # new_contact.append(lname);
 
 
         # Collect address from user
         tk.Label(self, text="Address").grid(column=2, row=4, sticky=(W, E))
-        addr = ttk.Entry(self, width=7, textvariable=address);
+        addr = ttk.Entry(self, width=7);
         addr.grid(column=2, row=5, sticky=(W, E));
         # new_contact.append(address);
 
@@ -61,24 +59,24 @@ class PageOne(tk.Frame):
 
         # Collect state from user
         tk.Label(self, text="State").grid(column=3, row=6, sticky=(W, E))
-        st = ttk.Entry(self, width=25, textvariable=state);
+        st = ttk.Entry(self, width=25);
         st.grid(column=3, row=7, sticky=(W, E));
         # new_contact.append(state);
 
         # Collect zip from user
         tk.Label(self, text="Zip Code").grid(column=2, row=8, sticky=(W, E))
-        zip_code = ttk.Entry(self, width=25, textvariable=zipC);
+        zip_code = ttk.Entry(self, width=25);
         zip_code.grid(column=2, row=9, sticky=(W, E));
         # new_contact.append(zipC);
 
         # Collect zip from user
         tk.Label(self, text="Phone Number").grid(column=2, row=10, sticky=(W, E))
-        phone_number= ttk.Entry(self, width=25, textvariable=phone);
+        phone_number= ttk.Entry(self, width=25);
         phone_number.grid(column=2, row=11, sticky=(W, E));
 
         # Collect email from user.
         tk.Label(self, text="Email").grid(column=3, row=10, sticky=(W, E))
-        em = ttk.Entry(self, width=7, textvariable=email);
+        em = ttk.Entry(self, width=7);
         em.grid(column=3, row=11, sticky=(W, E));
         # new_contact.append(email);
 
