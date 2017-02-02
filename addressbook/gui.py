@@ -823,10 +823,15 @@ class StartPage(tk.Frame):
              except:            
                  try_again=askokcancel("Warning", "This is not a standard .tsv file,\n do you still want to import that")
                  if try_again:
-
-                     app2 = KabyAddrapp(importFileName, False);
-                     app2.protocol("WM_DELETE_WINDOW", lambda: on_closing(app2));
-                     app2.mainloop();
+                    try:
+                        self.book.importFromFile(addrBook,True);
+                    except:
+                        print("This is an invalid .tsv file")
+                        showerror("Error","This is an invalid .tsv file")
+                    else:
+                         app2 = KabyAddrapp(importFileName, False);
+                         app2.protocol("WM_DELETE_WINDOW", lambda: on_closing(app2));
+                         app2.mainloop();
              else:
                      app2 = KabyAddrapp(importFileName, False);
                      app2.protocol("WM_DELETE_WINDOW", lambda: on_closing(app2));
@@ -879,11 +884,23 @@ class StartPage(tk.Frame):
     def openAddressBook(self):
         #to open an existing  .kab file
         AddressbookName = tkinter.filedialog.askopenfilename()
-        app2 = KabyAddrapp(AddressbookName);
-        app2.protocol("WM_DELETE_WINDOW", lambda: self.exit_app(app2));
-        app2.mainloop();
-        print(AddressbookName)
+        if AddressbookName!="":
+            try:
+                self.controller.book.openFromFile(AddressbookName);
+                #app2 = KabyAddrapp(AddressbookName);
+                #app2.protocol("WM_DELETE_WINDOW", lambda: self.exit_app(app2));
+                #app2.mainloop();
+                print('I tried here')
+                #print(AddressbookName)
+            except:
+                    #print("This is an invalid .tsv file")
+                    showerror("Error","This is an invalid .kab file")
 
+            else:
+                app2 = KabyAddrapp(AddressbookName);
+                app2.protocol("WM_DELETE_WINDOW", lambda: self.exit_app(app2));
+                app2.mainloop();
+                print(AddressbookName)
 
     """
     Method called when user clicks save option under file menu tab.
