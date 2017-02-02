@@ -1,0 +1,462 @@
+from tkinter import *
+from DisplayContacts import *
+import tkinter as tk
+from tkinter import ttk
+import tkinter.filedialog
+from tkinter.messagebox import *
+from AddressBook import *
+from tkinter import messagebox
+import re
+import datetime
+from os import system
+from platform import system as platform
+
+
+"""
+Class that represents the initial or home page of the app. This class displays all contacts in the specified
+address book. This frame also provides options for the user to edit, add, or delete contacts, to open new 
+or existing address books or to import or export a address book to or from, respectively, a tsv file.
+"""
+class StartPage(tk.Frame):
+    """
+    Initializing function to create the StartPag , this method will display all contacts in the address book.
+    It also draws all buttons, text entry fields and labels on this screen.
+    """
+    def __init__(self, parent, controller):
+        starttime = datetime.datetime.now()
+
+        print("im in StartPage");
+
+        tk.Frame.__init__(self, parent)
+        self.parent = parent;
+        self.controller = controller; 
+
+        print(self.controller.status)
+        menubar = Menu(parent.master);
+        parent.master.config(menu=menubar);
+        filemenu = Menu(menubar, tearoff=0);
+        menubar.add_cascade(label="File", menu=filemenu);
+        filemenu.add_command(label="New", command=self.newBook);
+        filemenu.add_command(label="Open", command=self.openAddressBook);
+        filemenu.add_command(label="Save", command=self.save);
+        filemenu.add_command(label="Save as", command=self.saveAs);
+        filemenu.add_command(label="Import", command=self.importFile);
+        filemenu.add_command(label="Export", command=self.exportFile);
+        filemenu.add_separator();
+        filemenu.add_command(label="Exit", command=self.exit_app_option);
+
+        # Edit tab on menu bar
+        editmenu = Menu(menubar, tearoff=0);
+        menubar.add_cascade(label="Edit", menu=editmenu);
+        addmenu = Menu(menubar, tearoff=0);
+        editmenu.add_command(label="Add", command=lambda: controller.show_frame(controller.refresh_frame(PageOne)));
+        editmenu.add_command(label="Delete", command=self.to_delete_page);
+
+        # Sort by meu
+        sort_label = ttk.Label(self, text="Sort by:");
+        sort_label.grid(row=0, column=6, stick="e");
+        var = StringVar(self);
+        options = ["Name", "Zip"];
+        var.set(options[0]);
+        dropdown = ttk.OptionMenu(self, var, options[0], *options, command=lambda cmd, var=var: self.sort(var.get()));
+        dropdown.grid(row=0, column=7, sticky="w");
+
+        
+
+        #search menu
+        search_frame=Frame(self);
+        search_frame.grid(row=0, column=0, columnspan=3);
+        search_label = ttk.Label(search_frame, text="Search");
+        search_label.grid(row=0, column=0, sticky='e', padx=10, pady=5);
+        search_input = ttk.Entry(search_frame, width=15);
+        search_input.grid(row=0, column=1, sticky='w', pady=5);
+        search_button = ttk.Button(search_frame, text="Search", command=lambda  : self.start_page_search(search_input.get()));
+        search_button.grid(row=0, column=3, sticky='e', padx=10);
+
+        contact_info = Frame(self, background='black');
+        contact_info.grid(row=1, column=0, columnspan=8, sticky='w', padx=75, pady=5);
+        row = 0;
+        column=0;
+        current_row=[];
+        for c in contacts: 
+            label = Text(contact_info, height=1, width=15);
+            label.insert(INSERT, c);
+            label.config(state=DISABLED);
+            label.grid(row=row, column=column, sticky='nsew', padx=1, pady=1);
+            column +=1;
+        row +=1;
+
+
+        #print("\n\nLen of contacts = {}\n\n".format(len(self.controller.book)));
+        if(len(self.controller.book) > 0):
+            f=VerticalScrolledFrame(self);
+            f.grid(row=2, column=0, columnspan=8, padx=75);
+            f.print_contacts(contacts);
+            self.parent.update_idletasks();
+
+
+        endtime = datetime.datetime.now()
+        print (endtime - starttime)
+        print("now im here")
+
+
+
+
+    #########################################################################
+                    ### Methods of the Start Page class ###
+    #########################################################################
+
+    """
+    Handles exiting app when the x is clicked in the top left of the corner.
+
+    ------------------------------------------------------------------------
+        arguments: root => the KabyAddrApp to be closed
+
+        returns: None
+
+        side affects: Checks if address book has been modified. If the book
+                      has been modified since last save the user is prompted
+                      to save the book.
+
+                      (option 1) if the user clicks save the book is saved then closed
+
+                      (option 2) if the user clicks no all changed data is lost and 
+                      book is closed.
+    """
+    def exit_app(self, root):
+        #print("\n\nexiting app={}\n\n".format(self.controller.book_name))
+        if(root.dirty):
+            if messagebox.askokcancel("Quit", "Want to save unsaved data?"):
+                root.book.saveToFile(root.book_name);
+                set_last_book(root.book_name);
+                root.destroy();
+            else:
+                root.destroy();
+        else:
+            root.destroy();
+
+
+
+    """
+    Handles exiting app when the user chooses the exit option under the file tab
+
+    ----------------------------------------------------------------------------
+        arguments: root => None
+
+        returns: None
+
+        side affects: Checks if address book has been modified. If the book
+                      has been modified since last save the user is prompted
+                      to save the book.
+
+                      (option 1) if the user clicks save the book is saved then closed
+
+                      (option 2) if the user clicks no all changed data is lost and 
+                      book is closed.
+    """
+    def exit_app_option(self):
+        #print("\n\nexiting app={}\n\n".format(self.controller.book_name))
+        if(self.controller.dirty):
+            if messagebox.askokcancel("Quit", "Want to save unsaved data?"):
+                self.controller.book.saveToFile(self.controller.book_name);
+                set_last_book(self.controller.book_name);
+                self.controller.destroy();
+            else:
+                self.controller.destroy();
+        else:
+            self.controller.destroy();
+
+
+
+    """
+    Handles when the user selects a sort option from the sort drop down menu
+
+    ----------------------------------------------------------------------------
+        arguments: var => 2 choices from the drop down menu;
+                            1.) Name: will call AddressBook method to sort the
+                                      address book by last name then display sorted
+                                      results.
+                            2.) Zip: will call AddressBook method to sort the
+                                     contacts by zip code with displays being
+                                     displayed on the screen.
+
+        returns: None
+
+        side affects: All the contacts are displayed in the manner specified by the
+                      sort drop down menu.
+    """
+    def sort(self, var):
+        #Sorting method 
+        print("var is {}".format(var));
+        if var == "Name":
+            print("sorting by name");
+            self.controller.book.sortByName();
+        else:
+            print("sorting by zip");
+            self.controller.book.sortByZipcode();
+        self.controller.refresh_frame(StartPage);
+        self.controller.show_frame(StartPage);
+
+
+    """
+    Method called when user clicks delete option under edit menu tab.
+
+    -----------------------------------------------------------------
+        arguments: None
+
+        returns: None
+
+        side affects: Refreshes then displays the delete page.
+    """
+    def to_delete_page(self):
+        # click delete in menu bar
+        #global states
+        self.controller.status = []  # record delete index
+        print("I cleaned states 7");
+        self.controller.refresh_frame(DeletePage);
+        print("Im going to the delete page")
+        self.controller.show_frame(DeletePage)
+
+
+    """
+    Method called when user clicks new option under file menu tab.
+
+    -----------------------------------------------------------------
+        arguments: None
+
+        returns: None
+
+        side affects: Opens a pop up window, requests user to enter path
+                      and name of the new address book. The user then either;
+
+                      1) Clicks the save button which saves and displays the
+                         new and empty address book.
+
+                      2) Clicks cancel, discards all user input information,
+                         and closes pop up window.
+    """
+    def newBook(self):
+        print("donothing");
+        FileName = tk.filedialog.asksaveasfilename(filetypes=[("text", ".tsv")])
+        if FileName!="":
+            FileName +=".kab"
+            self.controller.book.saveNewFile(FileName);
+            newApp = KabyAddrapp(FileName);
+            newApp.mainloop();
+        print(FileName)
+
+
+
+    """
+    Method called when user clicks import option under file menu tab.
+
+    -----------------------------------------------------------------
+        arguments: None
+
+        returns: None
+
+        side affects: Opens a pop up window, requests user to enter path
+                      and name of the new of the .tsv file they wish to 
+                      import. The user then either;
+
+                      1) Clicks open, which will import all information in
+                         the .tsv file. Create a new file with same name and
+                         path as the .tsv file just change its extension to .kab
+                         and create the first save of the address book. The new 
+                         address book with imported information is now imported.
+
+                       2) User clicks cancel, closes pop up window and discards all
+                          users input
+
+        format: the .tsv file is expected to have the following format.
+                CITY<tab>STATE<tab>ZIP<tab>delivery<tab>Second<tab>LastName<tab>FirstName<tab>Phone
+                This line is expected to be the first line of the file, if this line does not exist
+                or the form is different a pop up will alert the user the format may not be correct
+                then ask if the user would still like to import this file.
+
+    """
+    def importFile(self):
+        # To import a .tsv file
+        print("dosomething");
+
+        importFileName = tkinter.filedialog.askopenfilename()
+        if importFileName!="":
+             fileNameSplit = importFileName.strip().split("/")
+             file = fileNameSplit[-1].strip().split(".");
+             kabFileName=file[0]+".kab";
+             print(fileNameSplit[-1]);
+             print("Kab file {}".format(kabFileName));
+ 
+             try:
+                 self.controller.book.importFromFile(importFileName);
+                 print("im here")
+             except:            
+                 try_again=askokcancel("Warning", "This is not a standard .tsv file,\n do you still want to import that")
+                 if try_again:
+                    try:
+                        self.book.importFromFile(addrBook,True);
+                    except:
+                        print("This is an invalid .tsv file")
+                        showerror("Error","This is an invalid .tsv file")
+                    else:
+                         app2 = KabyAddrapp(importFileName, False);
+                         app2.protocol("WM_DELETE_WINDOW", lambda: on_closing(app2));
+                         app2.mainloop();
+             else:
+                     app2 = KabyAddrapp(importFileName, False);
+                     app2.protocol("WM_DELETE_WINDOW", lambda: on_closing(app2));
+                     app2.mainloop();
+
+
+
+    """
+    Method called when user clicks export option under file menu tab.
+
+    -----------------------------------------------------------------
+        arguments: None
+
+        returns: None
+
+        side affects: Opens a pop up window, requests user to enter path
+                      and name of the corresponding .tsv file they would
+                      like their address book exported to. The user can 
+                      then;
+
+                      1) Click export which will save the addresses book 
+                         in the user specified tsv file.
+
+                      2) Cancel close the pop up window and discard all
+                         user input.
+    """
+    def exportFile(self):
+        exportFileName = tk.filedialog.asksaveasfilename(filetypes=[("text", ".tsv")])+".tsv"
+        self.controller.book.exportToFile(exportFileName);
+        
+
+
+    """
+    Method called when user clicks open option under file menu tab.
+
+    -----------------------------------------------------------------
+        arguments: None
+
+        returns: None
+
+        side affects: Opens a pop up window, requests user to select the .kab
+                      address book they would like to open. The user either
+
+                      1) Clicks the open button which opens the specified
+                         address book in a new window.
+
+                      2) Clicks cancel, discards all user input information,
+                         and closes pop up window.
+    """
+    def openAddressBook(self):
+        #to open an existing  .kab file
+        AddressbookName = tkinter.filedialog.askopenfilename()
+        if AddressbookName!="":
+            try:
+                self.controller.book.openFromFile(AddressbookName);
+                #app2 = KabyAddrapp(AddressbookName);
+                #app2.protocol("WM_DELETE_WINDOW", lambda: self.exit_app(app2));
+                #app2.mainloop();
+                print('I tried here')
+                #print(AddressbookName)
+            except:
+                    #print("This is an invalid .tsv file")
+                    showerror("Error","This is an invalid .kab file")
+
+            else:
+                app2 = KabyAddrapp(AddressbookName);
+                app2.protocol("WM_DELETE_WINDOW", lambda: self.exit_app(app2));
+                app2.mainloop();
+                print(AddressbookName)
+
+    """
+    Method called when user clicks save option under file menu tab.
+
+    -----------------------------------------------------------------
+        arguments: None
+
+        returns: None
+
+        side affects: Saves all changes to the current address book
+                       .kab file
+    """
+    def save(self):
+        #Save the all of the editing
+        # print("dosomething");
+        # print("dosomething");
+        print("\n\nsaving to = {}\n\n".format(self.controller.book_name))
+        set_last_book(self.controller.book_name);
+        self.controller.book.saveToFile(self.controller.book_name);
+        self.controller.refresh_frame(StartPage)
+        self.controller.show_frame(StartPage)
+
+
+
+    """
+    Method called when user clicks save as option under file menu tab.
+
+    -----------------------------------------------------------------
+        arguments: None
+
+        returns: None
+
+        side affects: Opens a pop up window which requests the user
+                      to enter the path and name they'd like to save
+                      this address book as. Then user either clicks;
+
+                      1) save, which saves the address book
+                         in the specified file. OR
+
+                      2) cancel, closes the pop up window and discards 
+                         all user input info.
+    """
+    def saveAs(self):
+
+        # print("dosomething");
+        FileName = tk.filedialog.asksaveasfilename(filetypes=[("text", ".tsv")])+".kab"
+        print(FileName)
+        set_last_book(self.controller.book_name);
+        self.controller.book.saveToFile(FileName);
+
+
+    """
+    Method called when user clicks the search button at the top right of the corner of the app.
+
+    -------------------------------------------------------------------------------------------
+        arguments: name => the value gotten from the text field to the left of the search button.
+
+        returns: None
+
+        side affects: Calls the AddressBook class searchByAllFields method, which returns an array
+                      of contacts that have at least 1 field that contains the users search string.
+                      The search result page is then refreshed and brought into focus with
+                      the contacts being passed as an array to the VerticalScrolledFrame
+                      print_contact_search method. This displays the search results.
+
+                      If the entered search string(name) is the empty string or returns
+                      no matches then the entire address book is displayed again.
+    """
+    def start_page_search(self, name):
+        #searching function on StartPage
+        print(name);
+        results = self.controller.book.searchByAllFields(name);
+        self.controller.search_contacts=[];
+
+        if(((len(results)) > 1) and name):
+            print(len(results))
+
+            for i in results:
+                #print(i);
+                #print(self.controller.book.getEntry(i));
+                self.controller.search_contacts.append(self.controller.book.getEntry(i));
+            
+            self.controller.refresh_frame(SearchResultPage);
+            print("Im going to the search page")
+            print("name = {}".format(name))
+            self.controller.show_frame(SearchResultPage)
+        else:
+            print("Staying");
+            self.controller.show_frame(StartPage)
