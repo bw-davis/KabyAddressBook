@@ -17,11 +17,7 @@ from platform import system as platform
 #import Frames
 from DisplayContacts import *
 
-#contacts = ["First name", "Last name", "Address1", "Address2", "City", "State", "Zip", "Phone Number", "Email" ];
-#col_name = ["FirstName", "LastName", "Address1", "Address2", "City", "State", "Zipcode", "Phone", "email"];
 
-#states = []  # record index of the contacts that you want to delete
-edited = False;
 skip = "#skip"
 starttime = datetime.datetime.now()
 endtime = datetime.datetime.now()
@@ -153,7 +149,7 @@ class SearchResultPage(tk.Frame):
 
 
         contact_info = Frame(self, background='black');
-        contact_info.grid(row=1, column=0, columnspan=8, sticky='w', padx=20, pady=5);
+        contact_info.grid(row=1, column=0, columnspan=8, sticky='w', padx=75, pady=5);
         row = 0;
         column=0;
         current_row=[];
@@ -165,12 +161,12 @@ class SearchResultPage(tk.Frame):
             column +=1;
         row +=1;
 
-        print(self.controller.search_contacts);
+        #print(self.controller.search_contacts);
 
-        
+        #Displays contacts if there is at least 1 contact in address book.
         if(len(self.controller.book) > 0):
             f=VerticalScrolledFrame(self);
-            f.grid(row=2, column=0, columnspan=8, padx=20);
+            f.grid(row=2, column=0, columnspan=8, padx=75);
             f.print_search_contacts(self.controller.search_contacts);
             self.parent.update_idletasks();
 
@@ -248,7 +244,8 @@ class SearchResultPage(tk.Frame):
             print("name = {}".format(name))
             self.controller.show_frame(SearchResultPage)
         else:
-            print("Going home");
+            #print("Going home");
+            showerror("Error", "No contact matches go to start page");
             self.controller.show_frame(StartPage)
 
 
@@ -286,7 +283,7 @@ class DeletePage(tk.Frame):
             f.print_delete_contact_page(contacts);
             self.parent.update_idletasks();
 
-        ttk.Button(self, text="Delete/Save", command=lambda: self.delete_confirm()).grid(row=3, column=2, stick='e');
+        ttk.Button(self, text="Delete", command=lambda: self.delete_confirm()).grid(row=3, column=2, stick='e');
         # ttk.Button(self, text="Cancel", command=).grid(row=3, column=2);
         ttk.Button(self, text="Cancel", command=lambda: controller.show_frame(StartPage)).grid(column=3, row=3,
                                                                                                stick='w');
@@ -313,7 +310,7 @@ class DeletePage(tk.Frame):
         count = 0
         print("donsomething2");
         print(self.controller.status);
-        if askokcancel("Delete", "Are you sure to Delete selected Data?"):
+        if askokcancel("Delete", "Are you sure to permanently Delete the selected Data?"):
             # pop a dialog let user to confirm
             print("yes")
             # if yes, delete contacts
@@ -414,7 +411,7 @@ class StartPage(tk.Frame):
         row +=1;
 
 
-        #print("\n\nLen of contacts = {}\n\n".format(len(self.controller.book)));
+        
         if(len(self.controller.book) > 0):
             f=VerticalScrolledFrame(self);
             f.grid(row=2, column=0, columnspan=8, padx=75);
@@ -569,7 +566,7 @@ class StartPage(tk.Frame):
     """
     def newBook(self):
         print("donothing");
-        FileName = tk.filedialog.asksaveasfilename(filetypes=[("text", ".tsv")])
+        FileName = tk.filedialog.asksaveasfilename(filetypes=[("text", ".kab")])
         if FileName!="":
             FileName +=".kab"
             self.controller.book.saveNewFile(FileName);
@@ -719,7 +716,7 @@ class StartPage(tk.Frame):
         #Save the all of the editing
         # print("dosomething");
         # print("dosomething");
-        print("\n\nsaving to = {}\n\n".format(self.controller.book_name))
+        #print("\n\nsaving to = {}\n\n".format(self.controller.book_name))
         set_last_book(self.controller.book_name);
         self.controller.book.saveToFile(self.controller.book_name);
         self.controller.refresh_frame(StartPage)
@@ -748,7 +745,7 @@ class StartPage(tk.Frame):
     def saveAs(self):
 
         # print("dosomething");
-        FileName = tk.filedialog.asksaveasfilename(filetypes=[("text", ".tsv")])+".kab"
+        FileName = tk.filedialog.asksaveasfilename(filetypes=[("text", ".kab")])+".kab"
         print(FileName)
         set_last_book(self.controller.book_name);
         self.controller.book.saveToFile(FileName);
@@ -781,8 +778,6 @@ class StartPage(tk.Frame):
             print(len(results))
 
             for i in results:
-                #print(i);
-                #print(self.controller.book.getEntry(i));
                 self.controller.search_contacts.append(self.controller.book.getEntry(i));
             
             self.controller.refresh_frame(SearchResultPage);
@@ -790,7 +785,7 @@ class StartPage(tk.Frame):
             print("name = {}".format(name))
             self.controller.show_frame(SearchResultPage)
         else:
-            showerror("Error","No contact matches")
+            showerror("Error", "No contact matches");
             self.controller.show_frame(StartPage)
 
         
@@ -864,11 +859,11 @@ class PageOne(tk.Frame):
 
         # Bind Enter to create customer as well.
         # ttk.Button(self, text="submit", command=lambda: self.add_contact(first_name.get(), last_name.get(), address.get(), state.get(), zipC.get(), em.get(), phone.get())).grid(column=2, row=12);
-        ttk.Button(self, text="save",
+        ttk.Button(self, text="Save",
                    command=lambda: self.add_contact(first_name.get(), last_name.get(), addr.get(), address2.get() , city.get(),
                                                     st.get(), zip_code.get(), em.get(), phone_number.get())).grid(column=2,
                                                                                                           row=12);
-        ttk.Button(self, text="cancel", command=lambda: controller.show_frame(StartPage)).grid(column=3, row=12);
+        ttk.Button(self, text="Cancel", command=lambda: controller.show_frame(StartPage)).grid(column=3, row=12);
 
         for child in self.winfo_children(): child.grid_configure(padx=5, pady=5);
 
@@ -981,11 +976,19 @@ class PageOne(tk.Frame):
         print(temp_list);
         list_with_skips = [x if not x == "" else "#skip" for x in temp_list]
         new_contact = AddressBookEntry(*list_with_skips, email=email);
+        #messagebox.showinfo("Contact added", "A new contact has been saved to your address book.")
+        msg="New contact \n" + fname + " " + lname + "\nhas been saved to address book "+self.controller.book_name;
+        messagebox.showinfo("Contact added", msg)   
         self.controller.book.addEntry(new_contact);
         self.controller.refresh_frame(StartPage);
         self.controller.show_frame(StartPage);
         set_last_book(self.controller.book_name);
         self.controller.book.saveToFile(self.controller.book_name);
+
+
+
+
+
 
 
 
@@ -1080,12 +1083,6 @@ class PageOne(tk.Frame):
 
 
 
-
-
-
-
-
-
 """
 Function defines how the first app ran in the main loop below will respond to hitting the x in the top right corner of the screen.
 ----------------------------------------------------------------------------------------------------------------------------------
@@ -1116,8 +1113,20 @@ the file KabyAddressBook/AddressBook/SavedAddressBook.kab will be recreated.
     side affects: None
 """
 def get_last_book():
-    with open('last_book.ini') as f:
-        lastbook = f.readline().split("=")[1].strip();
+    try:#Makes sure the ini file has not been deleted
+        with open('last_book.ini') as f:
+            try:#This makes sure the contents of ini file have not been modified
+                f.readline();
+                lastbook = f.readline().split("=")[1].strip();
+                try:#Makes sure last book is of appropriate type, else defaults 
+                    if(lastbook.split(".")[1]!="kab"):
+                        lastbook = "SavedAddressBook.kab"
+                except: 
+                    lastbook = "SavedAddressBook.kab" 
+            except:
+                lastbook = "SavedAddressBook.kab"
+    except:
+        lastbook = "SavedAddressBook.kab"
     
     return lastbook;
 
