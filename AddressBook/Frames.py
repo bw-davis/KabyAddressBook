@@ -34,7 +34,7 @@ class KabyAddrapp(tk.Tk):
 
         tk.Tk.__init__(self, *args, **kwargs);
         #self.top = tk.Toplevel(self);
-        
+        #self.withdraw();
         self.container = tk.Frame(self);
         self.status=[];
         #self.top = Toplevel(self.container);
@@ -332,9 +332,13 @@ class DeletePage(tk.Frame):
         # the function that will be evoked when user click Delete button in delete page
         index = 0
         count = 0
-        print("donsomething2");
-        print(self.controller.status);
+        #rint("donsomething2");
+        #print(self.controller.status);
+        avoidsRandomWindow = Tk();
+        avoidsRandomWindow.withdraw(); 
+
         if askokcancel("Delete", "Are you sure to permanently Delete the selected Data?"):
+        #if (True):
             # pop a dialog let user to confirm
             print("yes")
             # if yes, delete contacts
@@ -354,6 +358,8 @@ class DeletePage(tk.Frame):
         else:
             # if user cancels
             print("No")
+
+        avoidsRandomWindow.destroy();
 
 
 

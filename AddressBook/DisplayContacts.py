@@ -229,9 +229,8 @@ class VerticalScrolledFrame(tk.Frame):
             for attr in ["Delete", "FirstName", "LastName", "Address1", "Address2", "City", "State", "Zipcode", "Phone", "email"]:
                 t=entry.getAttribute(attr);
                 if attr=="Delete":
-                    v = StringVar()
-                    z = IntVar()
-                    v.set("L");
+                
+                   # v.set("L");
                     # b=Radiobutton(self, text="", variable=v);
                     b = Checkbutton(self.interior, width=14, text=row, command=(lambda i=index: self.onPress(
                         i)));  # create check buttons in when we create the table, bind to onPress funtion

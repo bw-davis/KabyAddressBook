@@ -1,23 +1,5 @@
-{'State': 'a', 'City': 'a', 'FirstName': 'a', 'LastName': 'a', 'Phone': 'a', 'Address1': 'a', 'Address2': 'a', 'Zipcode': 'a', 'email': 'a'}
-{'State': 'a', 'City': 'a', 'FirstName': 'a', 'LastName': 'a', 'Phone': 'a', 'Address1': 'a', 'Address2': 'a', 'Zipcode': 'a', 'email': 'a'}
-{'State': 'oregon', 'City': 'eugene', 'FirstName': 'andrew', 'LastName': 'andrew', 'Phone': '555555', 'Address1': '134 ho', 'Address2': 'apt1', 'Zipcode': '97477', 'email': 'ahill7@cs.edu'}
-{'State': 'b', 'City': 'b', 'FirstName': 'b', 'LastName': 'b', 'Phone': 'b', 'Address1': 'b', 'Address2': 'b', 'Zipcode': 'b', 'email': 'b'}
-{'State': 'b', 'City': 'b', 'FirstName': 'b', 'LastName': 'b', 'Phone': 'b', 'Address1': 'b', 'Address2': 'kjbjk', 'Zipcode': 'b', 'email': 'b'}
-{'State': 'b', 'City': 'b', 'FirstName': 'b', 'LastName': 'b', 'Phone': 'b', 'Address1': 'b', 'Address2': 'b', 'Zipcode': 'b', 'email': 'b'}
-{'State': 'c', 'City': 'c', 'FirstName': 'c', 'LastName': 'c', 'Phone': 'c', 'Address1': 'c', 'Address2': 'c', 'Zipcode': 'c', 'email': 'c'}
-{'State': 'c', 'City': 'c', 'FirstName': 'c', 'LastName': 'c', 'Phone': 'c', 'Address1': 'c', 'Address2': 'c', 'Zipcode': 'c', 'email': 'c'}
-{'State': 'c', 'City': 'c', 'FirstName': 'c', 'LastName': 'c', 'Phone': 'c', 'Address1': 'c', 'Address2': 'c', 'Zipcode': 'c', 'email': 'c'}
 {'Zipcode': '37138-1923', 'State': 'TN', 'FirstName': 'Claude', 'LastName': 'Caramel', 'City': 'Old Hickory', 'Address1': 'cur_val', 'Address2': 'None', 'Phone': '5411234567'}
 {'Zipcode': '37138-1923', 'State': 'TN', 'FirstName': 'Claude', 'LastName': 'Caramel', 'City': 'Old Hickory', 'Address1': 'cur_val', 'Address2': 'None', 'Phone': '5411234567'}
-{'Zipcode': '37138-1923', 'State': 'TN', 'FirstName': 'Claude', 'LastName': 'Caramel', 'City': 'Old Hickory', 'Address1': 'cur_val', 'Address2': 'None', 'Phone': '5411234567'}
-{'State': 'd', 'City': 'd', 'FirstName': 'd', 'LastName': 'd', 'Phone': 'd', 'Address1': 'd', 'Address2': 'd', 'Zipcode': 'd', 'email': 'd'}
-{'State': 'd', 'City': 'd', 'FirstName': 'd', 'LastName': 'd', 'Phone': 'd', 'Address1': 'd', 'Address2': 'd', 'Zipcode': 'd', 'email': 'd'}
-{'State': 'd', 'City': 'd', 'FirstName': 'd', 'LastName': 'd', 'Phone': 'd', 'Address1': 'd', 'Address2': 'd', 'Zipcode': 'd', 'email': 'd'}
-{'Zipcode': '199', 'State': 'MI', 'FirstName': 'John', 'LastName': 'Doe', 'City': 'Portville', 'Address1': '190 Sunny Lane', 'Address2': 'None', 'Phone': '5411234567'}
-{'Zipcode': '4', 'State': 'MI', 'FirstName': 'John', 'LastName': 'Doe', 'City': 'Portville', 'Address1': '190 Sunny Lane', 'Address2': '', 'Phone': '5411234567'}
-{'Zipcode': '100', 'State': 'MI', 'FirstName': 'John', 'LastName': 'Doe', 'City': 'Portville', 'Address1': '190 Sunny Lane', 'Address2': 'None', 'Phone': '5411234567', 'email': ''}
-{'Zipcode': '42', 'State': 'MI', 'FirstName': 'John', 'LastName': 'Doe', 'City': 'Portville', 'Address1': '190 Sunny Lane', 'Address2': '', 'Phone': '5411234567'}
-{'Zipcode': '32', 'State': 'MI', 'FirstName': 'John', 'LastName': 'Doe', 'City': 'Portville', 'Address1': '190 Sunny Lane', 'Address2': 'None', 'Phone': '5411234567'}
 {'Zipcode': '3', 'State': 'MI', 'FirstName': 'John', 'LastName': 'Doe', 'City': 'Portville', 'Address1': '190 Sunny Lane', 'Address2': '', 'Phone': '5411234567'}
 {'Zipcode': '97401', 'State': 'OR', 'FirstName': 'Alex', 'LastName': 'Good bye', 'City': 'Porhtn', 'Address1': '190 W 22nd Ave', 'Address2': 'Apt 1', 'Phone': '6155696366'}
 {'Zipcode': '97401', 'State': 'OR', 'FirstName': 'Alex', 'LastName': 'Good bye', 'City': 'Porhtn', 'Address1': '190 W 22nd Ave', 'Address2': 'Apt 1', 'Phone': '6155696366'}
@@ -140,3 +122,4 @@
 {'State': '#skip', 'email': 'ahill7@uoregon.edu', 'Phone': '#skip', 'Address2': '#skip', 'Zipcode': '#skip', 'FirstName': 'Andrew', 'LastName': 'Hill', 'Address1': '#skip', 'City': 'Eugene'}
 {'State': '#skip', 'email': 'John@john.John', 'Phone': '#skip', 'Address2': '#skip', 'Zipcode': '#skip', 'FirstName': 'John', 'LastName': 'John', 'Address1': '#skip', 'City': '#skip'}
 {'State': 'a', 'email': 'a', 'Phone': 'a', 'Address2': 'a', 'Zipcode': 'a', 'FirstName': 'a', 'LastName': 'a', 'Address1': 'a', 'City': 'a'}
+{'FirstName': 'a', 'LastName': 'a', 'Address1': 'a', 'Address2': '#skip', 'City': '#skip', 'State': '#skip', 'Zipcode': '#skip', 'Phone': '#skip', 'email': ''}
