@@ -3,7 +3,6 @@ This module containes the KabyAddrapp class maint tk wrapper for the kaby addres
 and the StarPage, AddContactPage, and Deltepage classes which make up all the different
 frames the app will use.
 """
-
 from pathlib import Path
 from tkinter import *
 import tkinter as tk
@@ -18,12 +17,7 @@ import os
 from platform import system as platform
 from DisplayContacts import *
 
-
 skip = "#skip"
-starttime = datetime.datetime.now()
-endtime = datetime.datetime.now()
-
-
 """
 Mayin Tk wrapper and driver class, every window will be dispalyed in the this classes
 self.container frame
@@ -31,8 +25,6 @@ self.container frame
 class KabyAddrapp(tk.Tk):
     def __init__(self, addrBook="SavedAddressBook.kab", kab_format=True, *args, **kwargs):
         
-       
-
         tk.Tk.__init__(self, *args, **kwargs);
         self.container = tk.Frame(self);
         self.status=[];
@@ -52,34 +44,28 @@ class KabyAddrapp(tk.Tk):
             kabFileName=file[0]+".kab";
             self.book_name=kabFileName;
 
-
+        #Setting title on window
         title_name=self.book_name.split("/");
         app_name=title_name[len(title_name)-1]
-
         self.title(app_name);
         self.search_contacts=[];
         self.dirty=False;
         self.checkit=[];
-
         self.frames = {};
-
         starttime = datetime.datetime.now()
-       
 
-
-
+        #initalizing StartPage
         frame = StartPage(self.container, self);
         self.frames[StartPage] = frame;
         frame.grid(row=0, column=0, sticky="nsew");
 
-        starttime = datetime.datetime.now()
         self.show_frame(StartPage);
         self.container.update_idletasks();
 
 
-
-        endtime = datetime.datetime.now()
-
+    #############################################################################
+                        ##### KabyAddrapp methods ######
+    #############################################################################
 
     def __enter__(self, *args, **kwargs):
         return self;
@@ -87,245 +73,36 @@ class KabyAddrapp(tk.Tk):
     def __exit__(self, *args, **kwargs):
         print("exiting")
 
+    """
+    Mehtod used to raise a frame to focuse
+    ------------------------------------------------------------------------------
+        argurmnts: cont => Frame to be shown
+
+        return: None
+
+        Side affects: Brings frame to focus, change frame of app.
+    """
     def show_frame(self, cont):
         frame = self.frames[cont];
         frame.tkraise();
 
  
+    """
+    Mehtod used to redraw frame
+    ----------------------------------------------------------
+        argument: F => frame to be redrawn
 
+        return: None
+
+        side affects: Reinitalizes and redraws frames contents in memory.
+    """
     def refresh_frame(self, F):
         frame = F(self.container, self);
         self.frames[F] = frame;
         frame.grid(row=0, column=0, sticky="nsew");
 
-    def add_contact(contact):
-        self.contacts.append(contact)
 
 
-
-
-"""
-Class used to display the results of a search on the 
-"""
-class SearchResultPage(tk.Frame):
-
-
-    """
-    Initializing function to create the SearchResultsPage, this method will display all contacts returned from
-    the search function. It also draws all buttons, text entry fields and labels on this screen.
-    """
-    def __init__(self, parent, controller):
-        starttime = datetime.datetime.now()
-
-        tk.Frame.__init__(self, parent)
-        self.parent = parent;
-        self.controller = controller; 
-
-        # Sort by meu
-        sort_label = ttk.Label(self, text="Sort by:");
-        sort_label.grid(row=0, column=6, stick="e");
-        var = StringVar(self);
-        options = ["Name", "Zip"];
-        var.set(options[0]);
-        dropdown = ttk.OptionMenu(self, var, options[0], *options, command=lambda cmd, var=var: self.sort(var.get()));
-        dropdown.grid(row=0, column=7, sticky="w");
-
-        search_frame=Frame(self);
-        search_frame.grid(row=0, column=0, columnspan=3);
-
-        #search menu
-        search_label = ttk.Label(search_frame, text="Search");
-        search_label.grid(row=0, column=0, sticky='e', padx=10, pady=5);
-        search_input = ttk.Entry(search_frame, width=15);
-        search_input.grid(row=0, column=1, sticky='w', pady=5);
-        search_button = ttk.Button(search_frame, text="Search", command=lambda  : self.serach_page_search(search_input.get()));
-        search_button.grid(row=0, column=3, sticky='e', padx=10);
-
-
-        #Field name displayed above contacts
-        contact_info = Frame(self, background='black');
-        contact_info.grid(row=1, column=0, columnspan=8, sticky='w', padx=75, pady=5);
-        row = 0;
-        column=0;
-        current_row=[];
-        for c in contacts: 
-            label = Text(contact_info, height=1, width=15);
-            label.insert(INSERT, c);
-            label.config(state=DISABLED);
-            label.grid(row=row, column=column, sticky='nsew', padx=1, pady=1);
-            column +=1;
-        row +=1;
-
-        #Displays contacts if there is at least 1 contact in address book.
-        if(len(self.controller.book) > 0):
-            f=VerticalScrolledFrame(self);
-            f.grid(row=2, column=0, columnspan=8, padx=75);
-            f.print_search_contacts(self.controller.search_contacts);
-        self.parent.update_idletasks();
-
-
-        endtime = datetime.datetime.now()
-        print (endtime - starttime)
-        print("now im here")
-
-
-
-    #########################################################################
-                    ### Methods of the search page class ###
-    #########################################################################
-    """
-    Handles when the user selects a sort option from the sort drop down menu
-
-    ----------------------------------------------------------------------------
-        arguments: var => 2 choices from the drop down menu;
-                            1.) Name: will call AddressBook method to sort the
-                                      address book by last name then display sorted
-                                      results.
-                            2.) Zip: will call AddressBook method to sort the
-                                     contacts by zip code with displays being
-                                     displayed on the screen.
-
-        returns: None
-
-        side affects: Contacts that were a result of the search function are 
-                      displayed in a sorted manner.
-    """
-    def sort(self, var):
-        print("var is {}".format(var));
-        if var == "Name":
-            print("sorting by name");
-            self.controller.book.sortByNameArray(self.controller.search_contacts);
-        else:
-            print("sorting by zip");
-
-            self.controller.book.sortByZipcodeArray(self.controller.search_contacts);
-        self.controller.refresh_frame(SearchResultPage);
-        self.controller.show_frame(SearchResultPage);
-
-
-    """
-    Method called when user clicks the search button at the top right of the corner of the app.
-
-    -------------------------------------------------------------------------------------------
-        arguments: name => the value gotten from the text field to the left of the search button.
-
-        returns: None
-
-        side affects: Calls the AddressBook class searchByAllFields method, which returns an array
-                      of contacts that have at least 1 field that contains the users search string.
-                      The search result page is then refreshed and brought into focus with
-                      the contacts being passed as an array to the VerticalScrolledFrame
-                      print_contact_search method. This displays the search results.
-
-                      If the entered search string(name) is the empty string or returns
-                      no matches then the entire address book is displayed again.
-    """
-    def serach_page_search(self, name):
-        print(name);
-        results = self.controller.book.searchByAllFields(name);
-        self.controller.search_contacts=[];
-
-        if(((len(results)) > 0) and name):
-            print(len(results))
-
-            for i in results:
-                self.controller.search_contacts.append(self.controller.book.getEntry(i));
-            
-            self.controller.refresh_frame(SearchResultPage);
-            print("Im staying on search page")
-            print("name = {}".format(name))
-            self.controller.show_frame(SearchResultPage)
-        else:
-            showerror("Error", "No contact matches\nRedisplaying all contacts");
-            self.controller.refresh_frame(StartPage)
-            self.controller.show_frame(StartPage)
-
-
-
-
-"""
-Class that is used to display all the contacts with a check box next to each contect to allow you to select
-which contacts you want to delte.
-"""
-class DeletePage(tk.Frame):
-    # the function that will be invoked when user click Delete button in delete page
-    def __init__(self, parent, controller):
-        print("im in DeletePage");
-        tk.Frame.__init__(self, parent)
-        self.parent = parent;
-        self.controller = controller;
-
-        contact_info = Frame(self, background='black');
-        contact_info.grid(row=1, column=0, columnspan=8, sticky='w', padx=20, pady=5);
-        row = 0;
-        column=0;
-        current_row=[];
-        for c in ["Delete", "FirstName", "LastName", "Address1", "Address2", "City", "State", "Zipcode", "Phone", "Email"]: 
-            label = Text(contact_info, height=1, width=15);
-            label.insert(INSERT, c);
-            label.config(state=DISABLED);
-            label.grid(row=row, column=column, sticky='nsew', padx=1, pady=1);
-            column +=1;
-        row +=1;
-
-
-        if(len(self.controller.book) > 0):
-            f=VerticalScrolledFrame(self);
-            f.grid(row=2, column=0, columnspan=8, padx=20);
-            f.print_delete_contact_page(contacts);
-        self.parent.update_idletasks();
-
-        ttk.Button(self, text="Delete", command=lambda: self.delete_confirm()).grid(row=3, column=2, stick='e');
-        # ttk.Button(self, text="Cancel", command=).grid(row=3, column=2);
-        ttk.Button(self, text="Cancel", command=lambda: controller.show_frame(StartPage)).grid(column=3, row=3,
-                                                                                               stick='w');
-    
-   
-
-    #########################################################################
-                    ### Methods of the delete page class ###
-    #########################################################################
-
-    """
-    Mehtod used to remove the selected contacts from the address book and the display.
-    ----------------------------------------------------------------------------------
-        arguments: None
-
-        return: None
-
-        side affects: Deletes the selected contacts from the address book, then redraws the
-                      start page with the contacts deleted.
-    """
-    def delete_confirm(self):
-        # the function that will be evoked when user click Delete button in delete page
-        index = 0
-        count = 0
-        avoidsRandomWindow = Tk();
-        avoidsRandomWindow.withdraw(); 
-
-        if askokcancel("Delete", "Are you sure to permanently Delete the selected Data?"):
-            print("yes")
-            for i in self.controller.status:
-                if i != 0:
-                    print("should delete No.")
-                    print(index + 1)
-                    self.controller.book.removeEntry(index - count);
-                    count += 1
-                index += 1;
-
-            set_last_book(self.controller.book_name);
-            self.controller.book.saveToFile(self.controller.book_name);
-            self.controller.refresh_frame(StartPage);
-            self.controller.show_frame(StartPage);
-            self.controller.delete_status=[]
-        else:
-            print("No")
-        avoidsRandomWindow.destroy();
-
-
-
-
- 
 
 """
 Class that represents the initial or home page of the app. This class displays all contacts in the specified
@@ -340,13 +117,11 @@ class StartPage(tk.Frame):
     def __init__(self, parent, controller):
         starttime = datetime.datetime.now()
 
-        print("im in StartPage");
-
         tk.Frame.__init__(self, parent)
         self.parent = parent;
         self.controller = controller; 
 
-        print(self.controller.status)
+        #Setting up menubar for file and tab on main window.
         menubar = Menu(parent.master);
         parent.master.config(menu=menubar);
         filemenu = Menu(menubar, tearoff=0);
@@ -376,8 +151,6 @@ class StartPage(tk.Frame):
         dropdown = ttk.OptionMenu(self, var, options[0], *options, command=lambda cmd, var=var: self.sort(var.get()));
         dropdown.grid(row=0, column=7, sticky="w");
 
-        
-
         #search menu
         search_frame=Frame(self);
         search_frame.grid(row=0, column=0, columnspan=3);
@@ -388,6 +161,7 @@ class StartPage(tk.Frame):
         search_button = ttk.Button(search_frame, text="Search", command=lambda  : self.start_page_search(search_input.get()));
         search_button.grid(row=0, column=3, sticky='e', padx=10);
 
+        #Diesplaying labels for contacts
         contact_info = Frame(self, background='black');
         contact_info.grid(row=1, column=0, columnspan=8, sticky='w', padx=75, pady=5);
         row = 0;
@@ -402,17 +176,12 @@ class StartPage(tk.Frame):
         row +=1;
 
 
-        
+        #Draw scroll bar only if there is at least 1 contact.
         if(len(self.controller.book) > 0):
             f=VerticalScrolledFrame(self);
             f.grid(row=2, column=0, columnspan=8, padx=75);
             f.print_contacts(contacts);
         self.parent.update_idletasks();
-
-
-        endtime = datetime.datetime.now()
-        print (endtime - starttime)
-        print("now im here")
 
 
 
@@ -992,9 +761,6 @@ class NewContactPage(tk.Frame):
 
 
 
-
-
-
     #########################################################################
                     ### Methods of the new contact page class ###
     #########################################################################
@@ -1087,6 +853,230 @@ class NewContactPage(tk.Frame):
 
 
 """
+Class used to display the results of a search on the 
+"""
+class SearchResultPage(tk.Frame):
+
+
+    """
+    Initializing function to create the SearchResultsPage, this method will display all contacts returned from
+    the search function. It also draws all buttons, text entry fields and labels on this screen.
+    """
+    def __init__(self, parent, controller):
+        starttime = datetime.datetime.now()
+
+        tk.Frame.__init__(self, parent)
+        self.parent = parent;
+        self.controller = controller; 
+
+        # Sort by meu
+        sort_label = ttk.Label(self, text="Sort by:");
+        sort_label.grid(row=0, column=6, stick="e");
+        var = StringVar(self);
+        options = ["Name", "Zip"];
+        var.set(options[0]);
+        dropdown = ttk.OptionMenu(self, var, options[0], *options, command=lambda cmd, var=var: self.sort(var.get()));
+        dropdown.grid(row=0, column=7, sticky="w");
+
+        search_frame=Frame(self);
+        search_frame.grid(row=0, column=0, columnspan=3);
+
+        #search menu
+        search_label = ttk.Label(search_frame, text="Search");
+        search_label.grid(row=0, column=0, sticky='e', padx=10, pady=5);
+        search_input = ttk.Entry(search_frame, width=15);
+        search_input.grid(row=0, column=1, sticky='w', pady=5);
+        search_button = ttk.Button(search_frame, text="Search", command=lambda  : self.serach_page_search(search_input.get()));
+        search_button.grid(row=0, column=3, sticky='e', padx=10);
+
+
+        #Field name displayed above contacts
+        contact_info = Frame(self, background='black');
+        contact_info.grid(row=1, column=0, columnspan=8, sticky='w', padx=75, pady=5);
+        row = 0;
+        column=0;
+        current_row=[];
+        for c in contacts: 
+            label = Text(contact_info, height=1, width=15);
+            label.insert(INSERT, c);
+            label.config(state=DISABLED);
+            label.grid(row=row, column=column, sticky='nsew', padx=1, pady=1);
+            column +=1;
+        row +=1;
+
+        #Displays contacts if there is at least 1 contact in address book.
+        if(len(self.controller.book) > 0):
+            f=VerticalScrolledFrame(self);
+            f.grid(row=2, column=0, columnspan=8, padx=75);
+            f.print_search_contacts(self.controller.search_contacts);
+        self.parent.update_idletasks();
+
+
+        endtime = datetime.datetime.now()
+        print (endtime - starttime)
+        print("now im here")
+
+
+
+    #########################################################################
+                    ### Methods of the search page class ###
+    #########################################################################
+    """
+    Handles when the user selects a sort option from the sort drop down menu
+
+    ----------------------------------------------------------------------------
+        arguments: var => 2 choices from the drop down menu;
+                            1.) Name: will call AddressBook method to sort the
+                                      address book by last name then display sorted
+                                      results.
+                            2.) Zip: will call AddressBook method to sort the
+                                     contacts by zip code with displays being
+                                     displayed on the screen.
+
+        returns: None
+
+        side affects: Contacts that were a result of the search function are 
+                      displayed in a sorted manner.
+    """
+    def sort(self, var):
+        print("var is {}".format(var));
+        if var == "Name":
+            print("sorting by name");
+            self.controller.book.sortByNameArray(self.controller.search_contacts);
+        else:
+            print("sorting by zip");
+
+            self.controller.book.sortByZipcodeArray(self.controller.search_contacts);
+        self.controller.refresh_frame(SearchResultPage);
+        self.controller.show_frame(SearchResultPage);
+
+
+    """
+    Method called when user clicks the search button at the top right of the corner of the app.
+
+    -------------------------------------------------------------------------------------------
+        arguments: name => the value gotten from the text field to the left of the search button.
+
+        returns: None
+
+        side affects: Calls the AddressBook class searchByAllFields method, which returns an array
+                      of contacts that have at least 1 field that contains the users search string.
+                      The search result page is then refreshed and brought into focus with
+                      the contacts being passed as an array to the VerticalScrolledFrame
+                      print_contact_search method. This displays the search results.
+
+                      If the entered search string(name) is the empty string or returns
+                      no matches then the entire address book is displayed again.
+    """
+    def serach_page_search(self, name):
+        print(name);
+        results = self.controller.book.searchByAllFields(name);
+        self.controller.search_contacts=[];
+
+        if(((len(results)) > 0) and name):
+            print(len(results))
+
+            for i in results:
+                self.controller.search_contacts.append(self.controller.book.getEntry(i));
+            
+            self.controller.refresh_frame(SearchResultPage);
+            print("Im staying on search page")
+            print("name = {}".format(name))
+            self.controller.show_frame(SearchResultPage)
+        else:
+            showerror("Error", "No contact matches\nRedisplaying all contacts");
+            self.controller.refresh_frame(StartPage)
+            self.controller.show_frame(StartPage)
+
+
+
+
+"""
+Class that is used to display all the contacts with a check box next to each contect to allow you to select
+which contacts you want to delte.
+"""
+class DeletePage(tk.Frame):
+    # the function that will be invoked when user click Delete button in delete page
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        self.parent = parent;
+        self.controller = controller;
+
+        contact_info = Frame(self, background='black');
+        contact_info.grid(row=1, column=0, columnspan=8, sticky='w', padx=20, pady=5);
+        row = 0;
+        column=0;
+        current_row=[];
+        for c in ["Delete", "FirstName", "LastName", "Address1", "Address2", "City", "State", "Zipcode", "Phone", "Email"]: 
+            label = Text(contact_info, height=1, width=15);
+            label.insert(INSERT, c);
+            label.config(state=DISABLED);
+            label.grid(row=row, column=column, sticky='nsew', padx=1, pady=1);
+            column +=1;
+        row +=1;
+
+
+        if(len(self.controller.book) > 0):
+            f=VerticalScrolledFrame(self);
+            f.grid(row=2, column=0, columnspan=8, padx=20);
+            f.print_delete_contact_page(contacts);
+        self.parent.update_idletasks();
+
+        ttk.Button(self, text="Delete", command=lambda: self.delete_confirm()).grid(row=3, column=2, stick='e');
+        # ttk.Button(self, text="Cancel", command=).grid(row=3, column=2);
+        ttk.Button(self, text="Cancel", command=lambda: controller.show_frame(StartPage)).grid(column=3, row=3,
+                                                                                               stick='w');
+    
+   
+
+    #########################################################################
+                    ### Methods of the delete page class ###
+    #########################################################################
+
+    """
+    Mehtod used to remove the selected contacts from the address book and the display.
+    ----------------------------------------------------------------------------------
+        arguments: None
+
+        return: None
+
+        side affects: Deletes the selected contacts from the address book, then redraws the
+                      start page with the contacts deleted.
+    """
+    def delete_confirm(self):
+        # the function that will be evoked when user click Delete button in delete page
+        index = 0
+        count = 0
+        avoidsRandomWindow = Tk();
+        avoidsRandomWindow.withdraw(); 
+
+        if askokcancel("Delete", "Are you sure to permanently Delete the selected Data?"):
+            print("yes")
+            for i in self.controller.status:
+                if i != 0:
+                    print("should delete No.")
+                    print(index + 1)
+                    self.controller.book.removeEntry(index - count);
+                    count += 1
+                index += 1;
+
+            set_last_book(self.controller.book_name);
+            self.controller.book.saveToFile(self.controller.book_name);
+            self.controller.refresh_frame(StartPage);
+            self.controller.show_frame(StartPage);
+            self.controller.status=[]
+        avoidsRandomWindow.destroy();
+
+
+
+
+ 
+
+
+
+
+
+"""
 Function defines how the first app ran in the main loop below will respond to hitting the x in the top right corner of the screen.
 ----------------------------------------------------------------------------------------------------------------------------------
     paramters: root => KabyAddrapp book instance being manipulated.
@@ -1124,7 +1114,7 @@ def get_last_book():
         f = open(default_book, "w");
         f.close();
     try:#Makes sure the ini file has not been deleted
-        with open('last_book.ini') as f:
+        with open("config.txt", "r") as f:
             try:#This makes sure the contents of ini file have not been modified
                 f.readline();
                 lastbook = f.readline().split("=")[1].strip();
@@ -1159,7 +1149,6 @@ def set_last_book(new_book):
         lines.append('#do no modify this page\n');
         lines.append(to_write);
 
-
-        with open("last_book.ini", "w") as file:
+        with open("config.txt", "w") as file:
             for line in lines:
                 file.write(line)

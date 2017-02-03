@@ -235,13 +235,14 @@ class VerticalScrolledFrame(tk.Frame):
                     b = Checkbutton(self.interior, width=14, text=row, command=(lambda i=index: self.onPress(
                         i)));  # create check buttons in when we create the table, bind to onPress funtion
                     b.grid(row=row, column=column, sticky="nsew", padx=1, pady=1);
+                    b.deselect();
                     self.parent.controller.status.append(0);
                 else:
                     t = entry.getAttribute(attr);
                     label = Text(self.interior, height=1, width=15);
                     if t == skip:
                         label.insert(INSERT, "");
-                        label.config(state=DISABLED);
+                        #label.config(state=DISABLED);
                     else:
                         label.insert(INSERT, t);
                     label.grid(row=row, column=column, sticky="nsew", padx=1, pady=1)
