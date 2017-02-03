@@ -455,7 +455,7 @@ class StartPage(tk.Frame):
     def exit_app(self, root):
         #print("\n\nexiting app={}\n\n".format(self.controller.book_name))
         if(root.dirty):
-            if messagebox.askokcancel("Quit", "Want to save unsaved data?"):
+            if messagebox.askyesno("Save", "Want to save unsaved data?"):
                 root.book.saveToFile(root.book_name);
                 set_last_book(root.book_name);
                 root.destroy();
@@ -1101,11 +1101,9 @@ Function defines how the first app ran in the main loop below will respond to hi
 """
 def on_closing(root):
     if(root.dirty):
-            if messagebox.askokcancel("Quit", "Want to save unsaved data?"):
-                root.destroy();
-    else:
-        #print("Nothing to save, quiting")
-        root.destroy();
+            if messagebox.askyesno("Save", "Want to save unsaved data?"):
+                root.book.saveToFile(root.book_name);
+    root.destroy();
 
 
 """
