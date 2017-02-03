@@ -94,50 +94,49 @@ class VerticalScrolledFrame(tk.Frame):
     Method used to handle if the user clicks the enter button after editing a contact info.
     ---------------------------------------------------------------------------------------
         arguments: row => the row this entry appears on in the displayed table
-                   col
+                   col => colunm the entry appears in
+                   entry => the entry to be modified.
+
+        reutrn: None
+
+        side affects: Edits the specified attribute for a contact and redraws this 
+                      attribute highlighted in blue.
     """
     def update_contact(self, row, col, entry):
-        #Up date contact
-        #Change the background of the field
         attr = col_name[col];  # The contact attribute to be replaceed
         contact = self.parent.controller.book.getEntry(row);  # Contact to be modified
         contact_attr = contact.getAttribute(attr);  # The contact attribute to be replaced
-        # print(contact_attr);
         new_contact_data = entry.get("1.0", END).replace('\n','');  # The text that has been entered in the Text widget. The end-1c ignores newline charater
-        print(new_contact_data);
-        #entry = Text(self.interior, height=1, width=15);
         entry.delete("1.0", END);
         entry.delete("2.0", END);
         entry.insert(INSERT, new_contact_data);
-        # print(new_contact_data);
         entry.tag_add("a", "1.0", END);
         entry.tag_configure("a", background="skyblue");
-        # entry.insert(INSERT, new_contact_data);
-        #dirty.append([entry, row, col]);  # Keeping track of all unsaved entries.
         contact.setAttribute(attr, new_contact_data);
         self.parent.controller.dirty=True;
-        #self.parent.controller.book.saveToFile(self.parent.controller.book_name);
         
-       
+    """
+    Method used to check if contact info has been updated after a user clicks out of cell
+    -------------------------------------------------------------------------------------
+        arguments: r => the row this entry appears on in the displayed table
+                   c => colunm the entry appears in
+                   entry => the entry to be modified.
+
+        reutrn: None
+
+        side affects: Edits the specified attribute for a contact and redraws this 
+                      attribute highlighted in blue.
+    """  
     def redraw_entry(self, r, c, entry):
-        #For editing update.
-        #Redraw the blank
         val=entry.get("1.0", END);
         if(self.parent.controller.checkit):
-            #print(self.parent.controller.checkit);
             last_entry, row, col = self.parent.controller.checkit.pop();
             cur_val=last_entry.get("1.0", END).replace('\n','');
             if(len(cur_val.strip())==0):
                 cur_val=skip;
-            print("not empty")
-            print("need to redraw")
             old_entry=self.parent.controller.book.getEntry(row).getAttribute(col_name[col])
-            print("old entry= {} | cur val= {}".format(old_entry, cur_val));
-            print("old entry type = {} | cur val type = {}".format(type(old_entry), type(cur_val)));
-            print("old_entry==cur_val={}".format(old_entry.strip()==cur_val.strip()));
             if(not (old_entry.strip()==cur_val.strip())):
                 last_entry.delete("2.0", END);
-                #last_entry.delete("1.0", END);
                 last_entry.tag_add("a", "1.0", END);
                 last_entry.tag_configure("a", background="skyblue");
                 contact = self.parent.controller.book.getEntry(row);
@@ -145,17 +144,10 @@ class VerticalScrolledFrame(tk.Frame):
                 contact.setAttribute(attr, cur_val);
                 self.parent.controller.dirty=True;
                 
-
-        else:
-            print("empty")
-
-        print("Appending{}".format(val));
         self.parent.controller.checkit.append([entry,r,c]);
         
 
     def print_contacts(self, contacts):
-        #For search result
-        #print contacts into the table
         starttime = datetime.datetime.now()
 
         row = 0;
@@ -178,15 +170,20 @@ class VerticalScrolledFrame(tk.Frame):
                 column += 1;
 
             row +=1;
-
         endtime = datetime.datetime.now()
-        print (endtime - starttime)
-        print("print entry time")
 
+    """
+    Method used to print the resultf of a search
+    -------------------------------------------------------------------------------
+        arguments: contacts => and array returned from the search all fileds method
+                               containing indexs for all contacts that match search.
+        return: None
+
+        side affects: Displays a sub set of the contacts, those that have 1 or more
+                      filed that contained the search string.
+    """
     def print_search_contacts(self, contacts):
-        #For search result
-        #print contacts into the table
-        #print checkbox widgets
+
         starttime = datetime.datetime.now()
 
         row = 0;
@@ -194,7 +191,7 @@ class VerticalScrolledFrame(tk.Frame):
         for entry in self.parent.controller.search_contacts:
             column=0;
             current_row=[];
-            #sentry=self.parent.controller.book.getEntry(e);
+
             for attr in col_name: 
                 t = entry.getAttribute(attr);
                 label = Text(self.interior, height=1, width=15);
@@ -212,15 +209,21 @@ class VerticalScrolledFrame(tk.Frame):
             row +=1;
 
         endtime = datetime.datetime.now()
-        print (endtime - starttime)
-        print("print entry time")
 
 
 
 
+    """
+    Method used to print the contacts for the delete page
+    -------------------------------------------------------------------------------
+        arguments: contacts => address book enerires array
 
+        return: None
+
+        side affects: Displays all the contacts in an address book with a check box next
+                      to that contact to allow the user select which contacts to delete.
+    """
     def print_delete_contact_page(self, contacts):
-    #DeletePage Frame
         row=0;
         index=0;
         for entry in self.parent.controller.book:
@@ -229,27 +232,22 @@ class VerticalScrolledFrame(tk.Frame):
             for attr in ["Delete", "FirstName", "LastName", "Address1", "Address2", "City", "State", "Zipcode", "Phone", "email"]:
                 t=entry.getAttribute(attr);
                 if attr=="Delete":
-                
-                   # v.set("L");
-                    # b=Radiobutton(self, text="", variable=v);
                     b = Checkbutton(self.interior, width=14, text=row, command=(lambda i=index: self.onPress(
                         i)));  # create check buttons in when we create the table, bind to onPress funtion
                     b.grid(row=row, column=column, sticky="nsew", padx=1, pady=1);
                     self.parent.controller.status.append(0);
-                    #print("now i am appending")
                 else:
                     t = entry.getAttribute(attr);
-                    #print("{} {} {}".format(t, row, column));
                     label = Text(self.interior, height=1, width=15);
                     if t == skip:
                         label.insert(INSERT, "");
+                        label.config(state=DISABLED);
                     else:
                         label.insert(INSERT, t);
                     label.grid(row=row, column=column, sticky="nsew", padx=1, pady=1)
                     current_row.append(label)
 
                 column += 1;
-            #self._widgets.append(current_row)
             index += 1;
             row += 1;
 

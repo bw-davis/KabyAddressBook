@@ -1,14 +1,8 @@
 """
-This module containes the KabyAddrapp class, when this class is executed a KabyAddrapp instance is created and
-the last edited address book.
+Module used to start the kabby address book application.
 """
 
 from Frames import *
-#from DisplayContacts import *
-
-
-
-
 
 
 """
@@ -16,7 +10,6 @@ Function that executes when the KabyLauncer.py file is executed. This creates th
 """
 def main():
     lastbook = get_last_book();
-    print(lastbook);
 
 
     app = KabyAddrapp(lastbook);
@@ -26,7 +19,6 @@ def main():
     app.mainloop();
     #set_last_book(lastbook);
     endtime = datetime.datetime.now()
-    print (endtime - starttime)
 
 """
 Executes main function when this file is executed.

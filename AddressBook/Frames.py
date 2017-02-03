@@ -1,6 +1,7 @@
 """
-This module containes the KabyAddrapp class, when this class is executed a KabyAddrapp instance is created and
-the last edited address book.
+This module containes the KabyAddrapp class maint tk wrapper for the kaby address book
+and the StarPage, AddContactPage, and Deltepage classes which make up all the different
+frames the app will use.
 """
 
 from pathlib import Path
@@ -15,7 +16,6 @@ import re
 import datetime
 import os
 from platform import system as platform
-#import Frames
 from DisplayContacts import *
 
 
@@ -25,19 +25,17 @@ endtime = datetime.datetime.now()
 
 
 """
+Mayin Tk wrapper and driver class, every window will be dispalyed in the this classes
+self.container frame
 """
 class KabyAddrapp(tk.Tk):
-    #Main frame
     def __init__(self, addrBook="SavedAddressBook.kab", kab_format=True, *args, **kwargs):
         
        
 
         tk.Tk.__init__(self, *args, **kwargs);
-        #self.top = tk.Toplevel(self);
-        #self.withdraw();
         self.container = tk.Frame(self);
         self.status=[];
-        #self.top = Toplevel(self.container);
 
         self.container.grid(row=0, ipadx=25, ipady=10);
 
@@ -48,10 +46,7 @@ class KabyAddrapp(tk.Tk):
             self.book.openFromFile(addrBook);
             self.book_name=addrBook;
         else:
-
-            ##fix here
             self.book.importFromFile(addrBook,True);
-            #self.book.importFromFile(addrBook);
             fileNameSplit = addrBook.strip().split("/")
             file = fileNameSplit[-1].strip().split(".");
             kabFileName=file[0]+".kab";
@@ -68,17 +63,11 @@ class KabyAddrapp(tk.Tk):
 
         self.frames = {};
 
-        #for F in (StartPage, PageOne):
         starttime = datetime.datetime.now()
        
 
-        endtime = datetime.datetime.now()
-        print (endtime - starttime)
-
-        print("StartPage initialize time")
 
 
-       # for F in (PageOne, DeletePage, StartPage):
         frame = StartPage(self.container, self);
         self.frames[StartPage] = frame;
         frame.grid(row=0, column=0, sticky="nsew");
@@ -90,8 +79,6 @@ class KabyAddrapp(tk.Tk):
 
 
         endtime = datetime.datetime.now()
-        print (endtime - starttime)
-        print ("first time")
 
 
     def __enter__(self, *args, **kwargs):
@@ -104,22 +91,9 @@ class KabyAddrapp(tk.Tk):
         frame = self.frames[cont];
         frame.tkraise();
 
-    def refresh_PageOne(self):
-        if self.frames[PageOne] is not None:
-            self.frames[PageOne].destroy();
-        frame = PageOne(self.controller, self);
-        self.frames[PageOne]=frame;
-        frame.grid(row=0, column=0, sticky="nsew");
-
-        #if self.frames[cont] is not None:
-           #self.frames[cont].destroy()
-        #frame = cont(self.container, self)
-        #self.frames[cont]=frame;
-        #frame .grid(row=0, column=0, sticky="nsew");
+ 
 
     def refresh_frame(self, F):
-        print("\n\n\nself.frames={}".format(self.frames));
-        print("\n\n\nself.container={}".format(self.container));
         frame = F(self.container, self);
         self.frames[F] = frame;
         frame.grid(row=0, column=0, sticky="nsew");
@@ -142,8 +116,6 @@ class SearchResultPage(tk.Frame):
     """
     def __init__(self, parent, controller):
         starttime = datetime.datetime.now()
-
-        print("im in StartPage");
 
         tk.Frame.__init__(self, parent)
         self.parent = parent;
@@ -170,6 +142,7 @@ class SearchResultPage(tk.Frame):
         search_button.grid(row=0, column=3, sticky='e', padx=10);
 
 
+        #Field name displayed above contacts
         contact_info = Frame(self, background='black');
         contact_info.grid(row=1, column=0, columnspan=8, sticky='w', padx=75, pady=5);
         row = 0;
@@ -182,8 +155,6 @@ class SearchResultPage(tk.Frame):
             label.grid(row=row, column=column, sticky='nsew', padx=1, pady=1);
             column +=1;
         row +=1;
-
-        #print(self.controller.search_contacts);
 
         #Displays contacts if there is at least 1 contact in address book.
         if(len(self.controller.book) > 0):
@@ -258,8 +229,6 @@ class SearchResultPage(tk.Frame):
             print(len(results))
 
             for i in results:
-                #print(i);
-                #print(self.controller.book.getEntry(i));
                 self.controller.search_contacts.append(self.controller.book.getEntry(i));
             
             self.controller.refresh_frame(SearchResultPage);
@@ -267,7 +236,6 @@ class SearchResultPage(tk.Frame):
             print("name = {}".format(name))
             self.controller.show_frame(SearchResultPage)
         else:
-            #print("Going home");
             showerror("Error", "No contact matches\nRedisplaying all contacts");
             self.controller.refresh_frame(StartPage)
             self.controller.show_frame(StartPage)
@@ -332,16 +300,11 @@ class DeletePage(tk.Frame):
         # the function that will be evoked when user click Delete button in delete page
         index = 0
         count = 0
-        #rint("donsomething2");
-        #print(self.controller.status);
         avoidsRandomWindow = Tk();
         avoidsRandomWindow.withdraw(); 
 
         if askokcancel("Delete", "Are you sure to permanently Delete the selected Data?"):
-        #if (True):
-            # pop a dialog let user to confirm
             print("yes")
-            # if yes, delete contacts
             for i in self.controller.status:
                 if i != 0:
                     print("should delete No.")
@@ -356,7 +319,6 @@ class DeletePage(tk.Frame):
             self.controller.show_frame(StartPage);
             self.controller.delete_status=[]
         else:
-            # if user cancels
             print("No")
         avoidsRandomWindow.destroy();
 
@@ -477,7 +439,6 @@ class StartPage(tk.Frame):
                       book is closed.
     """
     def exit_app(self, root):
-        #print("\n\nexiting app={}\n\n".format(self.controller.book_name))
         if(root.dirty):
             avoidsRandomWindow = Tk();
             avoidsRandomWindow.withdraw(); 
@@ -512,7 +473,6 @@ class StartPage(tk.Frame):
                       book is closed.
     """
     def exit_app_option(self):
-        #print("\n\nexiting app={}\n\n".format(self.controller.book_name))
         if(self.controller.dirty):
             avoidsRandomWindow = Tk();
             avoidsRandomWindow.withdraw(); 
@@ -547,13 +507,9 @@ class StartPage(tk.Frame):
                       sort drop down menu.
     """
     def sort(self, var):
-        #Sorting method 
-        #print("var is {}".format(var));
         if var == "Name":
-            #print("sorting by name");
             self.controller.book.sortByName();
         else:
-            print("sorting by zip");
             self.controller.book.sortByZipcode();
         self.controller.refresh_frame(StartPage);
         self.controller.show_frame(StartPage);
@@ -570,18 +526,14 @@ class StartPage(tk.Frame):
         side affects: Refreshes then displays the delete page.
     """
     def to_delete_page(self):
-        # click delete in menu bar
-        #global states
         self.controller.status = []  # record delete index
-        print("I cleaned states 7");
         self.controller.refresh_frame(DeletePage);
-        print("Im going to the delete page")
         self.controller.show_frame(DeletePage)
 
 
     def to_add_contact_page(self):
-        self.controller.refresh_frame(PageOne);
-        self.controller.show_frame(PageOne);
+        self.controller.refresh_frame(NewContactPage);
+        self.controller.show_frame(NewContactPage);
 
 
     """
@@ -602,7 +554,6 @@ class StartPage(tk.Frame):
                          and closes pop up window.
     """
     def newBook(self):
-        print("donothing");
         avoidsRandomWindow = Tk();
         avoidsRandomWindow.withdraw(); 
         FileName = tk.filedialog.asksaveasfilename(filetypes=[("text", ".kab")])
@@ -611,7 +562,6 @@ class StartPage(tk.Frame):
             self.controller.book.saveNewFile(FileName);
             newApp = KabyAddrapp(FileName);
             newApp.mainloop();
-        print(FileName)
         avoidsRandomWindow.destroy()
 
 
@@ -645,7 +595,6 @@ class StartPage(tk.Frame):
     """
     def importFile(self):
         # To import a .tsv file
-        print("dosomething");
         avoidsRandomWindow = Tk();
         avoidsRandomWindow.withdraw(); 
         importFileName = tkinter.filedialog.askopenfilename()
@@ -654,14 +603,11 @@ class StartPage(tk.Frame):
              fileNameSplit = importFileName.strip().split("/")
              file = fileNameSplit[-1].strip().split(".");
              kabFileName=file[0]+".kab";
-             print(fileNameSplit[-1]);
-             print("Kab file {}".format(kabFileName));
  
              try:
                  self.controller.book.importFromFile(importFileName);
 
 
-                 print("im here")
              except:   
                 avoidsRandomWindow = Tk();
                 avoidsRandomWindow.withdraw();      
@@ -672,7 +618,6 @@ class StartPage(tk.Frame):
                         self.book.importFromFile(addrBook,True);
 
                     except:
-                        print("This is an invalid .tsv file")
                         avoidsRandomWindow = Tk();
                         avoidsRandomWindow.withdraw(); 
                         showerror("Error","This is an invalid .tsv file")
@@ -740,21 +685,15 @@ class StartPage(tk.Frame):
                          and closes pop up window.
     """
     def openAddressBook(self):
-        #to open an existing  .kab file\
         avoidsRandomWindow = Tk();
         avoidsRandomWindow.withdraw(); 
         AddressbookName = tkinter.filedialog.askopenfilename()
+
         if AddressbookName!="":
             try:
                 self.controller.book.openFromFile(AddressbookName);
-                #app2 = KabyAddrapp(AddressbookName);
-                #app2.protocol("WM_DELETE_WINDOW", lambda: self.exit_app(app2));
-                #app2.mainloop();
-                print('I tried here')
-                #print(AddressbookName)
                 avoidsRandomWindow.destroy()
             except:
-                    #print("This is an invalid .tsv file")
                     showerror("Error","This is an invalid .kab file")
                     avoidsRandomWindow.destroy()
 
@@ -762,9 +701,11 @@ class StartPage(tk.Frame):
                 app2 = KabyAddrapp(AddressbookName);
                 app2.protocol("WM_DELETE_WINDOW", lambda: self.exit_app(app2));
                 app2.mainloop();
-                print(AddressbookName)
+        
                 #avoidsRandomWindow.destroy()
 
+        else:
+            avoidsRandomWindow.destroy()
     """
     Method called when user clicks save option under file menu tab.
 
@@ -777,10 +718,6 @@ class StartPage(tk.Frame):
                        .kab file
     """
     def save(self):
-        #Save the all of the editing
-        # print("dosomething");
-        # print("dosomething");
-        #print("\n\nsaving to = {}\n\n".format(self.controller.book_name))
         self.controller.book.saveToFile(self.controller.book_name);
         self.controller.refresh_frame(StartPage)
         self.controller.show_frame(StartPage)
@@ -843,21 +780,16 @@ class StartPage(tk.Frame):
                       no matches then the entire address book is displayed again.
     """
     def start_page_search(self, name):
-        #searching function on StartPage
-        print(name);
         results = self.controller.book.searchByAllFields(name);
         self.controller.search_contacts=[];
 
 
         if(((len(results)) > 0) and name):
-            print(len(results))
 
             for i in results:
                 self.controller.search_contacts.append(self.controller.book.getEntry(i));
             
             self.controller.refresh_frame(SearchResultPage);
-            print("Im going to the search page")
-            print("name = {}".format(name))
             self.controller.refresh_frame(SearchResultPage);
             self.controller.show_frame(SearchResultPage)
         else:
@@ -874,9 +806,8 @@ class StartPage(tk.Frame):
 """
 The page that dspalys the page with the fields for you to enter the data about a new contact.
 """
-class PageOne(tk.Frame):
+class NewContactPage(tk.Frame):
     def __init__(self, parent, controller):
-        print("im in PageOne");
         tk.Frame.__init__(self, parent)
         self.parent = parent;
         self.controller = controller;
@@ -886,7 +817,6 @@ class PageOne(tk.Frame):
         # Collect first name from user.
         tk.Label(self, text="First name").grid(column=2, row=2, sticky=(W, E))
         first_name = ttk.Entry(self, width=7);
-        #first_name.insert(INSERT, "");
         first_name.grid(column=2, row=3, sticky=(W, E));
 
         # Collect last name from user.
@@ -984,21 +914,13 @@ class PageOne(tk.Frame):
         # Check to make sure we have at least one name (either first or last) and at least one other field
 
         temp_list = [fname, lname, address1, address2, city, state, zipC, phone];
-        #print("\n\ntemp list {}".format(temp_list))
         
 
         len_list=[len(x) for x in temp_list]
-        print("temp list before checks", end=" ");
-        print(temp_list);
-        if len_list[0]+len_list[1] > 0:
-            print("we have a name")
 
-        if sum(len_list[2:])+len(email)>0:
-            print("we have another field")
 
 
         if not ((len_list[0]+len_list[1] > 0) and (sum(len_list[2:])+len(email)>0)):
-            print("we don't have both a name and an additional field")
             avoidsRandomWindow = Tk();
             avoidsRandomWindow.withdraw(); 
             showerror("Error","Error: Please enter a name (at least first or last) AND one additional field.\nPlease fix this before saving.")
@@ -1013,8 +935,7 @@ class PageOne(tk.Frame):
 
             valid_phone_number=self.valid_phone_number(temp_list[-1])
 
-            print("phone number={} is valid: {}".format(temp_list[-1],str(valid_phone_number)));
-
+        
             if not valid_phone_number:
                 avoidsRandomWindow = Tk();
                 avoidsRandomWindow.withdraw(); 
@@ -1028,7 +949,6 @@ class PageOne(tk.Frame):
 
             valid_zip = self.valid_zip(temp_list[-2])
 
-            print("zip={} is valid: {}".format(temp_list[-2], str(valid_zip)));
 
             if not valid_zip:
                 avoidsRandomWindow = Tk();
@@ -1043,8 +963,6 @@ class PageOne(tk.Frame):
         if len(email)>0: # don't check if we don't get an email passed as an arg
             valid_email = self.valid_email(email)
 
-            print("email={} is valid: {}".format(temp_list[-1], str(valid_email)));
-
             if not valid_email:
                 avoidsRandomWindow = Tk();
                 avoidsRandomWindow.withdraw(); 
@@ -1056,10 +974,6 @@ class PageOne(tk.Frame):
                     return
 
 
-        # new_contact=AddressBookEntry(fname, lname, address1, address2, city, state, zipC, phone);
-        #print(list_with_skips);
-        print("temp list after checks", end=" ");
-        print(temp_list);
         list_with_skips = [x if not x == "" else "#skip" for x in temp_list]
         new_contact = AddressBookEntry(*list_with_skips, email=email);
         #messagebox.showinfo("Contact added", "A new contact has been saved to your address book.")
@@ -1240,8 +1154,6 @@ the app runs.
     side affects: Changes the value of the lastbook in the inilitizer file for the app to the last edited addressbook.
 """
 def set_last_book(new_book):
-        #print("\n\n new book ={}".format(new_book))
-       # f = open(, "r")
         lines=[];
         to_write="last_book={}".format(new_book);
         lines.append('#do no modify this page\n');
@@ -1251,31 +1163,3 @@ def set_last_book(new_book):
         with open("last_book.ini", "w") as file:
             for line in lines:
                 file.write(line)
-        print(to_write)
-
-
-
-
-"""
-Function that executes when the KabyLauncer.py file is executed. This creates the first KabyAddrapp instances.
-"""
-def main():
-    #lastbook = get_last_book();
-
-
-    app = KabyAddrapp();
-    app.protocol("WM_DELETE_WINDOW", lambda: on_closing(app));
-    starttime = datetime.datetime.now()
-
-    app.mainloop();
-    #set_last_book(lastbook);
-    endtime = datetime.datetime.now()
-    print (endtime - starttime)
-
-"""
-Executes main function when this file is executed.
-"""
-if __name__ == "__main__":
-    main() 
-
-
