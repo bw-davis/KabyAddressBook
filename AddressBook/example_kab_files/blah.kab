@@ -1,5 +1,0 @@
-{'FirstName': 'first', 'LastName': 'first', 'Address1': '#skip', 'Address2': 'first', 'City': 'first', 'State': '#skip', 'Zipcode': '#skip', 'Phone': '#skip', 'email': 'firrst'}
-{'FirstName': 'andrew', 'LastName': 'hill', 'Address1': '#skip', 'Address2': '#skip', 'City': 'Eugene', 'State': '#skip', 'Zipcode': '#skip', 'Phone': '#skip', 'email': 'ahill7@cs.uoregon.edu'}
-{'FirstName': 'a', 'LastName': 'a', 'Address1': '#skip', 'Address2': 'a', 'City': 'a', 'State': '#skip', 'Zipcode': '#skip', 'Phone': '#skip', 'email': 'a'}
-{'FirstName': 'Josh', 'LastName': 'b', 'Address1': 'b', 'Address2': 'b', 'City': 'b', 'State': 'b', 'Zipcode': 'b', 'Phone': 'b', 'email': 'b'}
-{'FirstName': 'a', 'LastName': 'a', 'Address1': 'a', 'Address2': 'a', 'City': 'a', 'State': 'a', 'Zipcode': 'a', 'Phone': 'a', 'email': 'a'}

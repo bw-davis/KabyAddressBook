@@ -1,34 +1,34 @@
-{'FirstName': 'Gregory', 'LastName': 'Lawrence', 'Address1': '11146 Schiller Drive', 'Address2': '', 'City': 'Portsmouth', 'State': 'NH', 'Zipcode': '214', 'Phone': '1-(603)437-8450'}
+{'FirstName': 'Gregory', 'LastName': 'Lawrence', 'Address1': '11146 Schiller Drive', 'Address2': '', 'City': 'Portsmouth', 'State': 'NH', 'Zipcode': '214', 'Phone': '1-(603)437-8450', 'email': 'gl1234@gmail.com'}
 {'FirstName': 'Benjamin', 'LastName': 'Young', 'Address1': '539 Summit Avenue', 'Address2': '', 'City': 'Portsmouth', 'State': 'NH', 'Zipcode': '214', 'Phone': '1-(603)935-3606'}
-{'FirstName': 'Gloria', 'LastName': 'Brooks', 'Address1': '395 Esker Plaza', 'Address2': '', 'City': 'Springfield', 'State': 'MA', 'Zipcode': '1105', 'Phone': '1-(413)500-8548'}
-{'FirstName': 'Angela', 'LastName': 'Lewis', 'Address1': '03723 Golden Leaf Crossing', 'Address2': '', 'City': 'Springfield', 'State': 'MA', 'Zipcode': '1152', 'Phone': '1-(413)583-9809'}
-{'FirstName': 'Melissa', 'LastName': 'Nelson', 'Address1': '4204 Calypso Pass', 'Address2': '', 'City': 'Springfield', 'State': 'MA', 'Zipcode': '1152', 'Phone': '1-(413)631-7886'}
+{'FirstName': 'Gloria', 'LastName': 'Brooks', 'Address1': '395 Esker Plaza', 'Address2': 'apt #101', 'City': 'Springfield', 'State': 'MA', 'Zipcode': '1105', 'Phone': '1-(413)500-8548', 'email': 'Gloria@yahoo.com'}
+{'FirstName': 'Angela', 'LastName': 'Lewis', 'Address1': '03723 Golden Leaf Crossing', 'Address2': '', 'City': 'Springfield', 'State': 'MA', 'Zipcode': '1152', 'Phone': '1-(413)583-9809', 'email': 'AngelaL23@hotmail.com'}
+{'FirstName': 'Melissa', 'LastName': 'Nelson', 'Address1': '4204 Calypso Pass', 'Address2': '#skip', 'City': 'Springfield', 'State': 'MA', 'Zipcode': '1152', 'Phone': '1-(413)631-7886'}
 {'FirstName': 'Sarah', 'LastName': 'Johnston', 'Address1': '1482 Cherokee Road', 'Address2': '#skip', 'City': 'Woburn', 'State': 'MA', 'Zipcode': '1813', 'Phone': '1-(339)341-6407'}
-{'FirstName': 'Clarence', 'LastName': 'Matthews', 'Address1': '93 Hayes Drive', 'Address2': '', 'City': 'Lynn', 'State': 'MA', 'Zipcode': '1905', 'Phone': '1-(781)311-7822'}
+{'FirstName': 'Clarence', 'LastName': 'Matthews', 'Address1': '93 Hayes Drive', 'Address2': '', 'City': 'Lynn', 'State': 'MA', 'Zipcode': '1905', 'Phone': '1-(781)311-7822', 'email': 'Clarence55@msn.com'}
 {'FirstName': 'Alan', 'LastName': 'Parker', 'Address1': '46422 Spaight Place', 'Address2': '', 'City': 'Lynn', 'State': 'MA', 'Zipcode': '1905', 'Phone': '1-(339)504-7047'}
-{'FirstName': 'Shirley', 'LastName': 'Wagner', 'Address1': '8043 Bay Court', 'Address2': '', 'City': 'Boston', 'State': 'MA', 'Zipcode': '2109', 'Phone': '1-(617)115-6619'}
+{'FirstName': 'Shirley', 'LastName': 'Wagner', 'Address1': '8043 Bay Court', 'Address2': 'apt #2', 'City': 'Boston', 'State': 'MA', 'Zipcode': '2109', 'Phone': '1-(617)115-6619', 'email': 'wagner@cs.uoregon.edu'}
 {'FirstName': 'John', 'LastName': 'Armstrong', 'Address1': '4034 Scott Way', 'Address2': '', 'City': 'Boston', 'State': 'MA', 'Zipcode': '2119', 'Phone': '1-(978)239-2619'}
 {'FirstName': 'Antonio', 'LastName': 'Carroll', 'Address1': '08 Mallory Street', 'Address2': '', 'City': 'Boston', 'State': 'MA', 'Zipcode': '2119', 'Phone': '1-(508)306-8367'}
 {'FirstName': 'Anthony', 'LastName': 'Cole', 'Address1': '8 Monterey Street', 'Address2': '', 'City': 'Boston', 'State': 'MA', 'Zipcode': '2119', 'Phone': '1-(978)468-7203'}
 {'FirstName': 'Scott', 'LastName': 'Johnson', 'Address1': '6 Warner Lane', 'Address2': '', 'City': 'Boston', 'State': 'MA', 'Zipcode': '2163', 'Phone': '1-(857)203-0042'}
 {'FirstName': 'Nancy', 'LastName': 'Palmer', 'Address1': '9973 Glendale Junction', 'Address2': '', 'City': 'Boston', 'State': 'MA', 'Zipcode': '2203', 'Phone': '1-(617)567-3481'}
 {'FirstName': 'Shirley', 'LastName': 'Freeman', 'Address1': '4 Warner Circle', 'Address2': '', 'City': 'Boston', 'State': 'MA', 'Zipcode': '2208', 'Phone': '1-(617)215-8187'}
-{'FirstName': 'Lisa', 'LastName': 'Hunt', 'Address1': '8 1st Court', 'Address2': '', 'City': 'Boston', 'State': 'MA', 'Zipcode': '2216', 'Phone': '1-(617)297-6600'}
+{'FirstName': 'Lisa', 'LastName': 'Hunt', 'Address1': '8 1st Court', 'Address2': '', 'City': 'Boston', 'State': 'MA', 'Zipcode': '2216', 'Phone': '1-(617)297-6600', 'email': 'LisaH@msn.co.uk'}
 {'FirstName': 'Emily', 'LastName': 'Hamilton', 'Address1': '31 Clarendon Alley', 'Address2': '', 'City': 'Boston', 'State': 'MA', 'Zipcode': '2283', 'Phone': '1-(617)780-1065'}
 {'FirstName': 'Antonio', 'LastName': 'Hudson', 'Address1': '45194 Artisan Drive', 'Address2': '', 'City': 'Brockton', 'State': 'MA', 'Zipcode': '2405', 'Phone': '1-(508)157-4687'}
 {'FirstName': 'Clarence', 'LastName': 'Murray', 'Address1': '4778 Lien Park', 'Address2': '', 'City': 'Brockton', 'State': 'MA', 'Zipcode': '2405', 'Phone': '1-(508)406-9279'}
-{'FirstName': 'Denise', 'LastName': 'Peters', 'Address1': '2 Nancy Drive', 'Address2': '', 'City': 'Watertown', 'State': 'MA', 'Zipcode': '2472', 'Phone': '1-(978)425-7527'}
+{'FirstName': 'Denise', 'LastName': 'Peters', 'Address1': '2 Nancy Drive', 'Address2': 'apt #33', 'City': 'Watertown', 'State': 'MA', 'Zipcode': '2472', 'Phone': '1-(978)425-7527'}
 {'FirstName': 'Gerald', 'LastName': 'Willis', 'Address1': '09 Brown Court', 'Address2': '', 'City': 'New Bedford', 'State': 'MA', 'Zipcode': '2745', 'Phone': '1-(508)706-9930'}
-{'FirstName': 'Jose', 'LastName': 'Cook', 'Address1': '57136 David Lane', 'Address2': '', 'City': 'Providence', 'State': 'RI', 'Zipcode': '2905', 'Phone': '1-(401)972-4030'}
+{'FirstName': 'Jose', 'LastName': 'Cook', 'Address1': '57136 David Lane', 'Address2': '', 'City': 'Providence', 'State': 'RI', 'Zipcode': '2905', 'Phone': '1-(401)972-4030', 'email': 'JCook@aol.com'}
 {'FirstName': 'Roy', 'LastName': 'Howell', 'Address1': '7 David Parkway', 'Address2': '', 'City': 'Providence', 'State': 'RI', 'Zipcode': '2912', 'Phone': '1-(401)105-1858'}
 {'FirstName': 'Harry', 'LastName': 'Snyder', 'Address1': '80597 Graceland Road', 'Address2': '', 'City': 'Providence', 'State': 'RI', 'Zipcode': '2912', 'Phone': '1-(401)683-0259'}
 {'FirstName': 'Norma', 'LastName': 'Morgan', 'Address1': '66 Fuller Plaza', 'Address2': '', 'City': 'Portland', 'State': 'ME', 'Zipcode': '4109', 'Phone': '1-(207)927-5049'}
 {'FirstName': 'Howard', 'LastName': 'Thompson', 'Address1': '58 North Circle', 'Address2': '', 'City': 'Montpelier', 'State': 'VT', 'Zipcode': '5609', 'Phone': '1-(802)468-9906'}
-{'FirstName': 'Randy', 'LastName': 'Carter', 'Address1': '4 John Wall Crossing', 'Address2': '', 'City': 'Hartford', 'State': 'CT', 'Zipcode': '6120', 'Phone': '1-(860)892-5343'}
+{'FirstName': 'Randy', 'LastName': 'Carter', 'Address1': '4 John Wall Crossing', 'Address2': 'apt 3', 'City': 'Hartford', 'State': 'CT', 'Zipcode': '6120', 'Phone': '1-(860)892-5343'}
 {'FirstName': 'Kathleen', 'LastName': 'Oliver', 'Address1': '1 Stuart Place', 'Address2': '', 'City': 'West Hartford', 'State': 'CT', 'Zipcode': '6127', 'Phone': '1-(860)943-3712'}
 {'FirstName': 'Betty', 'LastName': 'Reed', 'Address1': '0 Mosinee Park', 'Address2': '', 'City': 'Hartford', 'State': 'CT', 'Zipcode': '6140', 'Phone': '1-(860)491-4937'}
 {'FirstName': 'Judith', 'LastName': 'Clark', 'Address1': '3 Myrtle Terrace', 'Address2': '', 'City': 'Hartford', 'State': 'CT', 'Zipcode': '6183', 'Phone': '1-(860)665-0205'}
-{'FirstName': 'Peter', 'LastName': 'Gilbert', 'Address1': '790 Roxbury Avenue', 'Address2': '', 'City': 'New Haven', 'State': 'CT', 'Zipcode': '6505', 'Phone': '1-(203)191-2514'}
+{'FirstName': 'Peter', 'LastName': 'Gilbert', 'Address1': '790 Roxbury Avenue', 'Address2': '', 'City': 'New Haven', 'State': 'CT', 'Zipcode': '6505', 'Phone': '1-(203)191-2514', 'email': 'Peter@gmail.com'}
 {'FirstName': 'Sara', 'LastName': 'Jackson', 'Address1': '1634 Nelson Alley', 'Address2': '', 'City': 'New Haven', 'State': 'CT', 'Zipcode': '6510', 'Phone': '1-(203)936-3743'}
 {'FirstName': 'Carol', 'LastName': 'Rogers', 'Address1': '11 Valley Edge Road', 'Address2': '', 'City': 'New Haven', 'State': 'CT', 'Zipcode': '6510', 'Phone': '1-(203)618-7597'}
 {'FirstName': 'Chris', 'LastName': 'Hawkins', 'Address1': '23 Cambridge Pass', 'Address2': '', 'City': 'New Haven', 'State': 'CT', 'Zipcode': '6520', 'Phone': '1-(203)358-3634'}
