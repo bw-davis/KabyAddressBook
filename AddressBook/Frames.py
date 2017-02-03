@@ -1040,7 +1040,7 @@ class DeletePage(tk.Frame):
         avoidsRandomWindow = Tk();
         avoidsRandomWindow.withdraw(); 
 
-        if askokcancel("Delete", "Are you sure to permanently Delete the selected Data?"):
+        if askokcancel("Delete", "Are you sure you want to permanently delete the selected data?"):
             for i in self.controller.status:
                 if i != 0:
                     self.controller.book.removeEntry(index - count);
