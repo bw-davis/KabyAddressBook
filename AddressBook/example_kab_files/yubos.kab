@@ -1,3 +1,5 @@
 {'State': '#skip', 'email': 'ahill7@uoregon.edu', 'Phone': '#skip', 'Address2': '#skip', 'Zipcode': '#skip', 'FirstName': 'Andrew', 'LastName': 'Hill', 'Address1': '#skip', 'City': 'Eugene'}
 {'State': '#skip', 'email': 'John@john.John', 'Phone': '#skip', 'Address2': '#skip', 'Zipcode': '#skip', 'FirstName': 'John', 'LastName': 'John', 'Address1': '#skip', 'City': '#skip'}
-{'State': 'a', 'email': 'a', 'Phone': 'a', 'Address2': 'a', 'Zipcode': 'a', 'FirstName': 'a', 'LastName': 'a', 'Address1': 'a', 'City': 'a'}
+{'State': 'a', 'email': 'a', 'Phone': 'a', 'Address2': 'a', 'Zipcode': 'a', 'FirstName': 'a', 'LastName': 'a', 'Address1': 'a', 'City': 'jbb'}
+{'FirstName': 'a', 'LastName': 'a', 'Address1': 'a', 'Address2': '#skip', 'City': '#skip', 'State': '#skip', 'Zipcode': '#skip', 'Phone': '#skip', 'email': ''}
+{'FirstName': 'lflfjlahf', 'LastName': 'adhf;iahf', 'Address1': '555', 'Address2': '#skip', 'City': '#skip', 'State': '#skip', 'Zipcode': '#skip', 'Phone': '#skip', 'email': ''}

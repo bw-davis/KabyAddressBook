@@ -70,9 +70,7 @@ class KabyAddrapp(tk.Tk):
 
         #for F in (StartPage, PageOne):
         starttime = datetime.datetime.now()
-        frame = StartPage(self.container, self);
-        self.frames[StartPage] = frame;
-        frame.grid(row=0, column=0, sticky="nsew");
+       
 
         endtime = datetime.datetime.now()
         print (endtime - starttime)
@@ -80,9 +78,14 @@ class KabyAddrapp(tk.Tk):
         print("StartPage initialize time")
 
 
+       # for F in (PageOne, DeletePage, StartPage):
+        frame = StartPage(self.container, self);
+        self.frames[StartPage] = frame;
+        frame.grid(row=0, column=0, sticky="nsew");
 
         starttime = datetime.datetime.now()
         self.show_frame(StartPage);
+
 
 
 
@@ -101,7 +104,22 @@ class KabyAddrapp(tk.Tk):
         frame = self.frames[cont];
         frame.tkraise();
 
+    def refresh_PageOne(self):
+        if self.frames[PageOne] is not None:
+            self.frames[PageOne].destroy();
+        frame = PageOne(self.controller, self);
+        self.frames[PageOne]=frame;
+        frame.grid(row=0, column=0, sticky="nsew");
+
+        #if self.frames[cont] is not None:
+           #self.frames[cont].destroy()
+        #frame = cont(self.container, self)
+        #self.frames[cont]=frame;
+        #frame .grid(row=0, column=0, sticky="nsew");
+
     def refresh_frame(self, F):
+        print("\n\n\nself.frames={}".format(self.frames));
+        print("\n\n\nself.container={}".format(self.container));
         frame = F(self.container, self);
         self.frames[F] = frame;
         frame.grid(row=0, column=0, sticky="nsew");
@@ -810,29 +828,21 @@ class PageOne(tk.Frame):
 
         new_contact = []
 
-        fname = StringVar();
-        lname = StringVar();
-        email = StringVar();
-        address = StringVar();
-        state = StringVar();
-        zipC = StringVar();
-        phone = StringVar();
-
         # Collect first name from user.
         tk.Label(self, text="First name").grid(column=2, row=2, sticky=(W, E))
-        first_name = ttk.Entry(self, width=7, textvariable=fname);
-        first_name.insert(INSERT, "");
+        first_name = ttk.Entry(self, width=7);
+        #first_name.insert(INSERT, "");
         first_name.grid(column=2, row=3, sticky=(W, E));
 
         # Collect last name from user.
         tk.Label(self, text="Last name").grid(column=3, row=2, sticky=(W, E))
-        last_name = ttk.Entry(self, width=7, textvariable=lname);
+        last_name = ttk.Entry(self, width=7);
         last_name.grid(column=3, row=3, sticky=(W, E));
 
 
         # Collect address from user
         tk.Label(self, text="Address").grid(column=2, row=4, sticky=(W, E))
-        addr = ttk.Entry(self, width=7, textvariable=address);
+        addr = ttk.Entry(self, width=7);
         addr.grid(column=2, row=5, sticky=(W, E));
 
         # new_contact.append(phone);
@@ -847,22 +857,22 @@ class PageOne(tk.Frame):
 
         # Collect state from user
         tk.Label(self, text="State").grid(column=3, row=6, sticky=(W, E))
-        st = ttk.Entry(self, width=25, textvariable=state);
+        st = ttk.Entry(self, width=25);
         st.grid(column=3, row=7, sticky=(W, E));
 
         # Collect zip from user
         tk.Label(self, text="Zip Code").grid(column=2, row=8, sticky=(W, E))
-        zip_code = ttk.Entry(self, width=25, textvariable=zipC);
+        zip_code = ttk.Entry(self, width=25);
         zip_code.grid(column=2, row=9, sticky=(W, E));
 
         # Collect zip from user
         tk.Label(self, text="Phone Number").grid(column=2, row=10, sticky=(W, E))
-        phone_number= ttk.Entry(self, width=25, textvariable=phone);
+        phone_number= ttk.Entry(self, width=25);
         phone_number.grid(column=2, row=11, sticky=(W, E));
 
         # Collect email from user.
         tk.Label(self, text="Email").grid(column=3, row=10, sticky=(W, E))
-        em = ttk.Entry(self, width=7, textvariable=email);
+        em = ttk.Entry(self, width=7);
         em.grid(column=3, row=11, sticky=(W, E));
 
         # Bind Enter to create customer as well.
@@ -1167,3 +1177,30 @@ def set_last_book(new_book):
             for line in lines:
                 file.write(line)
         print(to_write)
+
+
+
+
+"""
+Function that executes when the KabyLauncer.py file is executed. This creates the first KabyAddrapp instances.
+"""
+def main():
+    #lastbook = get_last_book();
+
+
+    app = KabyAddrapp();
+    app.protocol("WM_DELETE_WINDOW", lambda: on_closing(app));
+    starttime = datetime.datetime.now()
+
+    app.mainloop();
+    #set_last_book(lastbook);
+    endtime = datetime.datetime.now()
+    print (endtime - starttime)
+
+"""
+Executes main function when this file is executed.
+"""
+if __name__ == "__main__":
+    main() 
+
+
