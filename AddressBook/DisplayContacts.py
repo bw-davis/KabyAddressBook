@@ -204,6 +204,8 @@ class VerticalScrolledFrame(tk.Frame):
                     label.insert(INSERT, t);
 
                 label.grid(row=row, column=column, sticky="nsew", padx=1, pady=1);
+                label.bind("<KeyRelease-Return>", lambda cmd, row=row, column=column, entry=label: self.update_contact(row, column, entry));
+                label.bind("<Button-1>", lambda cmd, row=row, column=column, entry=label: self.redraw_entry(row, column, entry))
                 current_row.append(label);
                 column += 1;
 

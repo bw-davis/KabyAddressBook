@@ -208,7 +208,8 @@ class SearchResultPage(tk.Frame):
             self.controller.book.sortByNameArray(self.controller.search_contacts);
         else:
             print("sorting by zip");
-            self.controller.book.sortByZipcode();
+
+            self.controller.book.sortByZipcodeArray(self.controller.search_contacts);
         self.controller.refresh_frame(SearchResultPage);
         self.controller.show_frame(SearchResultPage);
 
