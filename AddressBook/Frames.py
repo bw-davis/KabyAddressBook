@@ -58,7 +58,10 @@ class KabyAddrapp(tk.Tk):
             self.book_name=kabFileName;
 
 
-        
+        title_name=self.book_name.split("/");
+        app_name=title_name[len(title_name)-1]
+
+        self.title(app_name);
         self.search_contacts=[];
         self.dirty=False;
         self.checkit=[];
