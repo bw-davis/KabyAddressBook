@@ -1,126 +1,35 @@
-{'Zipcode': '37138-1923', 'State': 'TN', 'FirstName': 'Claude', 'LastName': 'Caramel', 'City': 'Old Hickory', 'Address1': 'cur_val', 'Address2': 'None', 'Phone': '5411234567'}
-{'Zipcode': '37138-1923', 'State': 'TN', 'FirstName': 'Claude', 'LastName': 'Caramel', 'City': 'Old Hickory', 'Address1': 'cur_val', 'Address2': 'None', 'Phone': '5411234567'}
-{'Zipcode': '3', 'State': 'MI', 'FirstName': 'John', 'LastName': 'Doe', 'City': 'Portville', 'Address1': '190 Sunny Lane', 'Address2': '', 'Phone': '5411234567'}
-{'Zipcode': '97401', 'State': 'OR', 'FirstName': 'Alex', 'LastName': 'Good bye', 'City': 'Porhtn', 'Address1': '190 W 22nd Ave', 'Address2': 'Apt 1', 'Phone': '6155696366'}
-{'Zipcode': '97401', 'State': 'OR', 'FirstName': 'Alex', 'LastName': 'Good bye', 'City': 'Porhtn', 'Address1': '190 W 22nd Ave', 'Address2': 'Apt 1', 'Phone': '6155696366'}
-{'Zipcode': '97401', 'State': 'OR', 'FirstName': 'Alex', 'LastName': 'Good bye', 'City': 'Porhtn', 'Address1': '190 W 22nd Ave', 'Address2': 'Apthbj1', 'Phone': '6155696366'}
-{'State': '#skip', 'City': '#skip', 'FirstName': 'andrew', 'LastName': 'joe', 'Phone': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Zipcode': '#skip', 'email': 'sure'}
-{'State': '#skip', 'City': '#skip', 'FirstName': 'andrew', 'LastName': 'john', 'Phone': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Zipcode': '#skip', 'email': 'sure'}
-{'State': '#skip', 'City': '#skip', 'FirstName': 'andrew', 'LastName': 'joe', 'Phone': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Zipcode': '#skip', 'email': 'sure'}
-{'State': '#skip', 'City': '#skip', 'FirstName': 'John', 'LastName': 'John', 'Phone': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Zipcode': '#skip', 'email': 'Nope@bla .com'}
-{'State': '#skip', 'City': '#skip', 'FirstName': 'John', 'LastName': 'John', 'Phone': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Zipcode': '#skip', 'email': 'John@John.jon'}
-{'State': '#skip', 'City': '#skip', 'FirstName': 'John', 'LastName': 'John', 'Phone': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Zipcode': '#skip', 'email': 'Nope@bla .com'}
-{'State': '#skip', 'City': '#skip', 'FirstName': 'John', 'LastName': 'John', 'Phone': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Zipcode': '#skip', 'email': 'John@John.jon'}
-{'State': '#skip', 'City': '#skip', 'FirstName': 'John', 'LastName': 'John', 'Phone': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Zipcode': '#skip', 'email': 'Nope@bla .com'}
-{'State': '#skip', 'City': '#skip', 'FirstName': 'John', 'LastName': 'John', 'Phone': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Zipcode': '#skip', 'email': 'John@John.jon'}
-{'Zipcode': '1', 'City': 'Portville', 'State': 'MI', 'FirstName': 'John', 'LastName': 'Smith', 'Address1': '190 Sunny Lane', 'Address2': '', 'Phone': '5411234567'}
-{'Zipcode': '33', 'City': 'Portville', 'State': 'MI', 'FirstName': 'John', 'LastName': 'Smith', 'Address1': '190 Sunny Lane', 'Address2': '', 'Phone': '5411234567'}
-{'State': '#skip', 'City': '#skip', 'FirstName': 'John', 'LastName': 'Smith', 'Phone': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Zipcode': '#skip', 'email': 'Johnny@cs.edu'}
-{'State': '#skip', 'City': '#skip', 'FirstName': 'John', 'LastName': 'Smith', 'Phone': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Zipcode': '#skip', 'email': 'Johnny@cs.edu'}
-{'State': '#skip', 'City': '#skip', 'FirstName': 'John', 'LastName': 'Smith', 'Phone': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Zipcode': '#skip', 'email': 'Johnny@cs.edu'}
-{'Zipcode': '01404', 'State': 'MI', 'FirstName': 'Joe', 'LastName': 'Yubo', 'City': 'Portville', 'Address1': '190 Suny Lane', 'Address2': '', 'Phone': '5411234567'}
-{'Zipcode': '01404', 'State': 'MI', 'FirstName': 'Joe', 'LastName': 'Yubo', 'City': 'Portville', 'Address1': '190 Suny Lane', 'Address2': '', 'Phone': '5411234567'}
-{'Zipcode': '01404', 'State': 'MI', 'FirstName': 'Joe', 'LastName': 'Yubo', 'City': 'Portville', 'Address1': '190 Suny Lane', 'Address2': '', 'Phone': '5411234567'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'aue', 'LastName': '', 'City': '#skip', 'Address1': '', 'Address2': '#skip', 'Phone': '123456789141'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'aue', 'LastName': '', 'City': '#skip', 'Address1': '', 'Address2': '#skip', 'Phone': '123456789141'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'aue', 'LastName': '', 'City': '#skip', 'Address1': '', 'Address2': '#skip', 'Phone': '123456789141'}
-{'State': '#skip', 'City': '#skip', 'FirstName': 'a', 'LastName': '#skip', 'Phone': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Zipcode': '#skip', 'email': 'a'}
-{'State': '#skip', 'City': '#skip', 'FirstName': 'a', 'LastName': '#skip', 'Phone': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Zipcode': '#skip', 'email': 'a'}
-{'State': '#skip', 'City': '#skip', 'FirstName': 'a', 'LastName': '#skip', 'Phone': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Zipcode': '#skip', 'email': 'a'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'aue', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '123'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'aue', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '1234567'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'aue', 'LastName': '#skip', 'City': '#skip', 'Address1': 'andrew', 'Address2': '#skip', 'Phone': '1234567891'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'aue', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '123'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'aue', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '1234567'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'aue', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '1234567891'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'aue', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '123456789141'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'aue', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '123'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'aue', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '1234567'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'aue', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '1234567891'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'aue', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '123456789141'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'aue', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '123'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'aue', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '1234567'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'aue', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '1234567891'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'aue', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '123456789141'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'aue', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '123'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'aue', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '1234567'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'aue', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '1234567891'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'aue', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '123'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'aue', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '1234567'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'aue', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '1234567891'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'aue', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '123456789141'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'aue', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '123'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'aue', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '1234567'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'aue', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '1234567891'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'aue', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '123456789141'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'aue', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '123'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'aue', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '1234567'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'aue', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '1234567891'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'aue', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '123456789141'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'aue', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '123'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'aue', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '1234567'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'aue', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '1234567891'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'aue', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '123'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'aue', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '1234567'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'aue', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '1234567891'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'aue', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '123456789141'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'aue', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '123'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'aue', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '1234567'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'aue', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '1234567891'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'aue', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '123456789141'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'aue', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '123'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'aue', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '1234567'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'aue', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '1234567891'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'aue', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '123456789141'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'eu', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '12'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'eu', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '1234567'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'eu', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '12'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'eu', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '1234567'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'eu', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '12'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'eu', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '1234567'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'eu', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '12'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'eu', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '1234567'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'eu', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '12'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'eu', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '1234567'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'eu', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '12'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'eu', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '1234567'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'eu', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '12'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'eu', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '1234567'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'eu', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '12'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'eu', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '1234567'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'eu', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '12'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'eu', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '1234567'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'eu', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '12'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'eu', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '1234567'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'eu', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '12'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'eu', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '1234567'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'eu', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '12'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'eu', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '1234567'}
-{'State': '#skip', 'City': '#skip', 'FirstName': 'j', 'LastName': '#skip', 'Phone': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Zipcode': '#skip', 'email': 'Yup@dont.care'}
-{'State': '#skip', 'City': '#skip', 'FirstName': 'j', 'LastName': '#skip', 'Phone': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Zipcode': '#skip', 'email': 'Yup@dont.care'}
-{'State': '#skip', 'City': '#skip', 'FirstName': 'j', 'LastName': '#skip', 'Phone': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Zipcode': '#skip', 'email': 'Yup@dont.care'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'kayla', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '12345'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'kayla', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '12345'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'kayla', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '12345'}
-{'State': '#skip', 'City': 'Gettysburg', 'FirstName': 'Michal', 'LastName': '#skip', 'Phone': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Zipcode': '#skip', 'email': ''}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'oe', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '12'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'oe', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '12'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'oe', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '12'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'oe', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '12'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'oe', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '12'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'oe', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '12'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'oe', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '12'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'oe', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '12'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'oe', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '12'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'oe', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '12'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'oe', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '12'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'oe', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '12'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'oe', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '12'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'oe', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '12'}
-{'Zipcode': '#skip', 'State': '#skip', 'FirstName': 'oe', 'LastName': '#skip', 'City': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Phone': '12'}
-{'FirstName': 'a', 'LastName': 'a', 'Address1': 'a', 'Address2': '#skip', 'City': '#skip', 'State': '#skip', 'Zipcode': '#skip', 'Phone': '#skip', 'email': ''}
-{'State': '#skip', 'email': 'ahill7@uoregon.edu', 'Phone': '#skip', 'Address2': '#skip', 'Zipcode': '#skip', 'FirstName': 'Andrew', 'LastName': 'Hill', 'Address1': '#skip', 'City': 'Eugene'}
-{'State': '#skip', 'email': 'John@john.John', 'Phone': '#skip', 'Address2': '#skip', 'Zipcode': '#skip', 'FirstName': 'John', 'LastName': 'John', 'Address1': '#skip', 'City': '#skip'}
-{'State': 'a', 'email': 'a', 'Phone': 'a', 'Address2': 'a', 'Zipcode': 'a', 'FirstName': 'a', 'LastName': 'a', 'Address1': 'a', 'City': 'a'}
-{'FirstName': 'a', 'LastName': 'a', 'Address1': 'a', 'Address2': '#skip', 'City': '#skip', 'State': '#skip', 'Zipcode': '#skip', 'Phone': '#skip', 'email': ''}
-{'FirstName': 'sam', 'LastName': '#skip', 'Address1': 'idk', 'Address2': '#skip', 'City': '#skip', 'State': '#skip', 'Zipcode': '#skip', 'Phone': '#skip', 'email': ''}
+{'FirstName': 'Gregory', 'LastName': 'Lawrence', 'Address1': '11146 Schiller Drive', 'Address2': '', 'City': 'Portsmouth', 'State': 'NH', 'Zipcode': '214', 'Phone': '1-(603)437-8450'}
+{'FirstName': 'Benjamin', 'LastName': 'Young', 'Address1': '539 Summit Avenue', 'Address2': '', 'City': 'Portsmouth', 'State': 'NH', 'Zipcode': '214', 'Phone': '1-(603)935-3606'}
+{'FirstName': 'Gloria', 'LastName': 'Brooks', 'Address1': '395 Esker Plaza', 'Address2': '', 'City': 'Springfield', 'State': 'MA', 'Zipcode': '1105', 'Phone': '1-(413)500-8548'}
+{'FirstName': 'Angela', 'LastName': 'Lewis', 'Address1': '03723 Golden Leaf Crossing', 'Address2': '', 'City': 'Springfield', 'State': 'MA', 'Zipcode': '1152', 'Phone': '1-(413)583-9809'}
+{'FirstName': 'Melissa', 'LastName': 'Nelson', 'Address1': '4204 Calypso Pass', 'Address2': '', 'City': 'Springfield', 'State': 'MA', 'Zipcode': '1152', 'Phone': '1-(413)631-7886'}
+{'FirstName': 'Sarah', 'LastName': 'Johnston', 'Address1': '1482 Cherokee Road', 'Address2': '#skip', 'City': 'Woburn', 'State': 'MA', 'Zipcode': '1813', 'Phone': '1-(339)341-6407'}
+{'FirstName': 'Clarence', 'LastName': 'Matthews', 'Address1': '93 Hayes Drive', 'Address2': '', 'City': 'Lynn', 'State': 'MA', 'Zipcode': '1905', 'Phone': '1-(781)311-7822'}
+{'FirstName': 'Alan', 'LastName': 'Parker', 'Address1': '46422 Spaight Place', 'Address2': '', 'City': 'Lynn', 'State': 'MA', 'Zipcode': '1905', 'Phone': '1-(339)504-7047'}
+{'FirstName': 'Shirley', 'LastName': 'Wagner', 'Address1': '8043 Bay Court', 'Address2': '', 'City': 'Boston', 'State': 'MA', 'Zipcode': '2109', 'Phone': '1-(617)115-6619'}
+{'FirstName': 'John', 'LastName': 'Armstrong', 'Address1': '4034 Scott Way', 'Address2': '', 'City': 'Boston', 'State': 'MA', 'Zipcode': '2119', 'Phone': '1-(978)239-2619'}
+{'FirstName': 'Antonio', 'LastName': 'Carroll', 'Address1': '08 Mallory Street', 'Address2': '', 'City': 'Boston', 'State': 'MA', 'Zipcode': '2119', 'Phone': '1-(508)306-8367'}
+{'FirstName': 'Anthony', 'LastName': 'Cole', 'Address1': '8 Monterey Street', 'Address2': '', 'City': 'Boston', 'State': 'MA', 'Zipcode': '2119', 'Phone': '1-(978)468-7203'}
+{'FirstName': 'Scott', 'LastName': 'Johnson', 'Address1': '6 Warner Lane', 'Address2': '', 'City': 'Boston', 'State': 'MA', 'Zipcode': '2163', 'Phone': '1-(857)203-0042'}
+{'FirstName': 'Nancy', 'LastName': 'Palmer', 'Address1': '9973 Glendale Junction', 'Address2': '', 'City': 'Boston', 'State': 'MA', 'Zipcode': '2203', 'Phone': '1-(617)567-3481'}
+{'FirstName': 'Shirley', 'LastName': 'Freeman', 'Address1': '4 Warner Circle', 'Address2': '', 'City': 'Boston', 'State': 'MA', 'Zipcode': '2208', 'Phone': '1-(617)215-8187'}
+{'FirstName': 'Lisa', 'LastName': 'Hunt', 'Address1': '8 1st Court', 'Address2': '', 'City': 'Boston', 'State': 'MA', 'Zipcode': '2216', 'Phone': '1-(617)297-6600'}
+{'FirstName': 'Emily', 'LastName': 'Hamilton', 'Address1': '31 Clarendon Alley', 'Address2': '', 'City': 'Boston', 'State': 'MA', 'Zipcode': '2283', 'Phone': '1-(617)780-1065'}
+{'FirstName': 'Antonio', 'LastName': 'Hudson', 'Address1': '45194 Artisan Drive', 'Address2': '', 'City': 'Brockton', 'State': 'MA', 'Zipcode': '2405', 'Phone': '1-(508)157-4687'}
+{'FirstName': 'Clarence', 'LastName': 'Murray', 'Address1': '4778 Lien Park', 'Address2': '', 'City': 'Brockton', 'State': 'MA', 'Zipcode': '2405', 'Phone': '1-(508)406-9279'}
+{'FirstName': 'Denise', 'LastName': 'Peters', 'Address1': '2 Nancy Drive', 'Address2': '', 'City': 'Watertown', 'State': 'MA', 'Zipcode': '2472', 'Phone': '1-(978)425-7527'}
+{'FirstName': 'Gerald', 'LastName': 'Willis', 'Address1': '09 Brown Court', 'Address2': '', 'City': 'New Bedford', 'State': 'MA', 'Zipcode': '2745', 'Phone': '1-(508)706-9930'}
+{'FirstName': 'Jose', 'LastName': 'Cook', 'Address1': '57136 David Lane', 'Address2': '', 'City': 'Providence', 'State': 'RI', 'Zipcode': '2905', 'Phone': '1-(401)972-4030'}
+{'FirstName': 'Roy', 'LastName': 'Howell', 'Address1': '7 David Parkway', 'Address2': '', 'City': 'Providence', 'State': 'RI', 'Zipcode': '2912', 'Phone': '1-(401)105-1858'}
+{'FirstName': 'Harry', 'LastName': 'Snyder', 'Address1': '80597 Graceland Road', 'Address2': '', 'City': 'Providence', 'State': 'RI', 'Zipcode': '2912', 'Phone': '1-(401)683-0259'}
+{'FirstName': 'Norma', 'LastName': 'Morgan', 'Address1': '66 Fuller Plaza', 'Address2': '', 'City': 'Portland', 'State': 'ME', 'Zipcode': '4109', 'Phone': '1-(207)927-5049'}
+{'FirstName': 'Howard', 'LastName': 'Thompson', 'Address1': '58 North Circle', 'Address2': '', 'City': 'Montpelier', 'State': 'VT', 'Zipcode': '5609', 'Phone': '1-(802)468-9906'}
+{'FirstName': 'Randy', 'LastName': 'Carter', 'Address1': '4 John Wall Crossing', 'Address2': '', 'City': 'Hartford', 'State': 'CT', 'Zipcode': '6120', 'Phone': '1-(860)892-5343'}
+{'FirstName': 'Kathleen', 'LastName': 'Oliver', 'Address1': '1 Stuart Place', 'Address2': '', 'City': 'West Hartford', 'State': 'CT', 'Zipcode': '6127', 'Phone': '1-(860)943-3712'}
+{'FirstName': 'Betty', 'LastName': 'Reed', 'Address1': '0 Mosinee Park', 'Address2': '', 'City': 'Hartford', 'State': 'CT', 'Zipcode': '6140', 'Phone': '1-(860)491-4937'}
+{'FirstName': 'Judith', 'LastName': 'Clark', 'Address1': '3 Myrtle Terrace', 'Address2': '', 'City': 'Hartford', 'State': 'CT', 'Zipcode': '6183', 'Phone': '1-(860)665-0205'}
+{'FirstName': 'Peter', 'LastName': 'Gilbert', 'Address1': '790 Roxbury Avenue', 'Address2': '', 'City': 'New Haven', 'State': 'CT', 'Zipcode': '6505', 'Phone': '1-(203)191-2514'}
+{'FirstName': 'Sara', 'LastName': 'Jackson', 'Address1': '1634 Nelson Alley', 'Address2': '', 'City': 'New Haven', 'State': 'CT', 'Zipcode': '6510', 'Phone': '1-(203)936-3743'}
+{'FirstName': 'Carol', 'LastName': 'Rogers', 'Address1': '11 Valley Edge Road', 'Address2': '', 'City': 'New Haven', 'State': 'CT', 'Zipcode': '6510', 'Phone': '1-(203)618-7597'}
+{'FirstName': 'Chris', 'LastName': 'Hawkins', 'Address1': '23 Cambridge Pass', 'Address2': '', 'City': 'New Haven', 'State': 'CT', 'Zipcode': '6520', 'Phone': '1-(203)358-3634'}
+{'FirstName': 'Todd', 'LastName': 'Rose', 'Address1': '0892 Kropf Hill', 'Address2': '', 'City': 'New Haven', 'State': 'CT', 'Zipcode': '6520', 'Phone': '1-(203)546-9562'}
