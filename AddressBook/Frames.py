@@ -649,6 +649,7 @@ class StartPage(tk.Frame):
         avoidsRandomWindow = Tk();
         avoidsRandomWindow.withdraw(); 
         importFileName = tkinter.filedialog.askopenfilename()
+        avoidsRandomWindow.destroy()
         if importFileName!="":
              fileNameSplit = importFileName.strip().split("/")
              file = fileNameSplit[-1].strip().split(".");
@@ -658,18 +659,22 @@ class StartPage(tk.Frame):
  
              try:
                  self.controller.book.importFromFile(importFileName);
-                 avoidsRandomWindow.destroy();
+
 
                  print("im here")
-             except:            
-                 try_again=askokcancel("Warning", "This is not a standard .tsv file,\n do you still want to import that")
-                 if try_again:
+             except:   
+                avoidsRandomWindow = Tk();
+                avoidsRandomWindow.withdraw();      
+                try_again=askokcancel("Warning", "This is not a standard .tsv file,\n do you still want to import that")
+                avoidsRandomWindow.destroy()
+                if try_again:
                     try:
                         self.book.importFromFile(addrBook,True);
-                        avoidsRandomWindow.destroy();
 
                     except:
                         print("This is an invalid .tsv file")
+                        avoidsRandomWindow = Tk();
+                        avoidsRandomWindow.withdraw(); 
                         showerror("Error","This is an invalid .tsv file")
                         avoidsRandomWindow.destroy();
 
@@ -677,13 +682,11 @@ class StartPage(tk.Frame):
                          app2 = KabyAddrapp(importFileName, False);
                          app2.protocol("WM_DELETE_WINDOW", lambda: on_closing(app2));
                          app2.mainloop();
-                         avoidsRandomWindow.destroy();
 
              else:
                      app2 = KabyAddrapp(importFileName, False);
                      app2.protocol("WM_DELETE_WINDOW", lambda: on_closing(app2));
                      app2.mainloop();
-                     avoidsRandomWindow.destroy();
 
 
         
@@ -714,7 +717,9 @@ class StartPage(tk.Frame):
         exportFileName = tk.filedialog.asksaveasfilename(filetypes=[("text", ".tsv")])+".tsv"
         avoidsRandomWindow.destroy()
         self.controller.book.exportToFile(exportFileName);
-        
+        avoidsRandomWindow = Tk();
+        avoidsRandomWindow.withdraw(); 
+        avoidsRandomWindow.destroy()
 
 
     """
@@ -736,6 +741,8 @@ class StartPage(tk.Frame):
     """
     def openAddressBook(self):
         #to open an existing  .kab file\
+        avoidsRandomWindow = Tk();
+        avoidsRandomWindow.withdraw(); 
         AddressbookName = tkinter.filedialog.askopenfilename()
         if AddressbookName!="":
             try:
@@ -745,15 +752,18 @@ class StartPage(tk.Frame):
                 #app2.mainloop();
                 print('I tried here')
                 #print(AddressbookName)
+                avoidsRandomWindow.destroy()
             except:
                     #print("This is an invalid .tsv file")
                     showerror("Error","This is an invalid .kab file")
+                    avoidsRandomWindow.destroy()
 
             else:
                 app2 = KabyAddrapp(AddressbookName);
                 app2.protocol("WM_DELETE_WINDOW", lambda: self.exit_app(app2));
                 app2.mainloop();
                 print(AddressbookName)
+                #avoidsRandomWindow.destroy()
 
     """
     Method called when user clicks save option under file menu tab.
@@ -771,7 +781,7 @@ class StartPage(tk.Frame):
         # print("dosomething");
         # print("dosomething");
         #print("\n\nsaving to = {}\n\n".format(self.controller.book_name))
-        set_last_book(self.controller.book_name);
+        avoidsRandomWindow.withdraw(); 
         self.controller.book.saveToFile(self.controller.book_name);
         self.controller.refresh_frame(StartPage)
         self.controller.show_frame(StartPage)
@@ -799,7 +809,10 @@ class StartPage(tk.Frame):
     def saveAs(self):
 
         # print("dosomething");
+        avoidsRandomWindow = Tk();
+        avoidsRandomWindow.withdraw(); 
         FileName = tk.filedialog.asksaveasfilename(filetypes=[("text", ".kab")])+".kab"
+        avoidsRandomWindow.destroy()
         print(FileName)
         set_last_book(self.controller.book_name);
         self.controller.book.saveToFile(FileName);
@@ -828,6 +841,7 @@ class StartPage(tk.Frame):
         results = self.controller.book.searchByAllFields(name);
         self.controller.search_contacts=[];
 
+
         if(((len(results)) > 0) and name):
             print(len(results))
 
@@ -840,9 +854,13 @@ class StartPage(tk.Frame):
             self.controller.refresh_frame(SearchResultPage);
             self.controller.show_frame(SearchResultPage)
         else:
+            avoidsRandomWindow = Tk();
+            avoidsRandomWindow.withdraw(); 
             showerror("Error", "No contact matches\nRedisplaying all contacts");
+            avoidsRandomWindow.destroy()
             self.controller.refresh_frame(StartPage);
             self.controller.show_frame(StartPage)
+
 
         
 
@@ -974,7 +992,10 @@ class PageOne(tk.Frame):
 
         if not ((len_list[0]+len_list[1] > 0) and (sum(len_list[2:])+len(email)>0)):
             print("we don't have both a name and an additional field")
+            avoidsRandomWindow = Tk();
+            avoidsRandomWindow.withdraw(); 
             showerror("Error","Error: Please enter a name (at least first or last) AND one additional field.\nPlease fix this before saving.")
+            avoidsRandomWindow.destroy()
             return
 
 
@@ -988,7 +1009,10 @@ class PageOne(tk.Frame):
             print("phone number={} is valid: {}".format(temp_list[-1],str(valid_phone_number)));
 
             if not valid_phone_number:
+                avoidsRandomWindow = Tk();
+                avoidsRandomWindow.withdraw(); 
                 try_again=askokcancel("Warning", "Warning: The phone number you entered is not valid\nClick 'OK' to save anyway\nClick 'Cancel' to edit the phone number")
+                avoidsRandomWindow.destroy()
                 if not try_again:
                     return
 
@@ -1000,8 +1024,11 @@ class PageOne(tk.Frame):
             print("zip={} is valid: {}".format(temp_list[-2], str(valid_zip)));
 
             if not valid_zip:
+                avoidsRandomWindow = Tk();
+                avoidsRandomWindow.withdraw(); 
                 try_again = askokcancel("Warning",
                                         "Warning: The Zip Code you entered is not valid\nClick 'OK' to save anyway\nClick 'Cancel' to edit the Zip Code")
+                avoidsRandomWindow.destroy()
                 if not try_again:
                     return
 
@@ -1012,8 +1039,12 @@ class PageOne(tk.Frame):
             print("email={} is valid: {}".format(temp_list[-1], str(valid_email)));
 
             if not valid_email:
+                avoidsRandomWindow = Tk();
+                avoidsRandomWindow.withdraw(); 
                 try_again = askokcancel("Warning",
                                         "Warning: The email address you entered is not valid\nClick 'OK' to save anyway\nClick 'Cancel' to edit the email address")
+
+                avoidsRandomWindow.destroy()
                 if not try_again:
                     return
 
@@ -1026,7 +1057,10 @@ class PageOne(tk.Frame):
         new_contact = AddressBookEntry(*list_with_skips, email=email);
         #messagebox.showinfo("Contact added", "A new contact has been saved to your address book.")
         msg="New contact \n" + fname + " " + lname + "\nhas been saved to address book "+self.controller.book_name;
-        messagebox.showinfo("Contact added", msg)   
+        avoidsRandomWindow = Tk();
+        avoidsRandomWindow.withdraw(); 
+        messagebox.showinfo("Contact added", msg) 
+        avoidsRandomWindow.destroy()  
         self.controller.book.addEntry(new_contact);
         self.controller.refresh_frame(StartPage);
         self.controller.show_frame(StartPage);
@@ -1142,8 +1176,12 @@ Function defines how the first app ran in the main loop below will respond to hi
 """
 def on_closing(root):
     if(root.dirty):
+            avoidsRandomWindow = Tk();
+            avoidsRandomWindow.withdraw(); 
+
             if messagebox.askyesno("Save", "Want to save unsaved data?"):
                 root.book.saveToFile(root.book_name);
+            avoidsRandomWindow.destroy()
     root.destroy();
 
 
