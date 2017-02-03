@@ -61,7 +61,7 @@ class KabyAddrapp(tk.Tk):
         frame.grid(row=0, column=0, sticky="nsew");
 
         self.show_frame(StartPage);
-        self.container.update_idletasks();
+        #self.container.update_idletasks();
 
 
     #############################################################################
