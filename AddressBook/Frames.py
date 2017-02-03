@@ -784,6 +784,7 @@ class StartPage(tk.Frame):
         self.controller.book.saveToFile(self.controller.book_name);
         self.controller.refresh_frame(StartPage)
         self.controller.show_frame(StartPage)
+        set_last_book(self.controller.book_name);
 
 
 
@@ -812,9 +813,16 @@ class StartPage(tk.Frame):
         avoidsRandomWindow.withdraw(); 
         FileName = tk.filedialog.asksaveasfilename(filetypes=[("text", ".kab")])+".kab"
         avoidsRandomWindow.destroy()
-        print(FileName)
-        set_last_book(self.controller.book_name);
+        #rint(FileName)
         self.controller.book.saveToFile(FileName);
+        self.controller.book_name=FileName;
+
+        title_name=FileName.split("/");
+        app_name=title_name[len(title_name)-1]
+        self.controller.title(app_name);
+        self.controller.refresh_frame(StartPage)
+        self.controller.show_frame(StartPage)
+        set_last_book(FileName);
 
 
     """
