@@ -104,7 +104,7 @@ class VerticalScrolledFrame(tk.Frame):
         contact_attr = contact.getAttribute(attr);  # The contact attribute to be replaced
         # print(contact_attr);
         new_contact_data = entry.get("1.0", END).replace('\n','');  # The text that has been entered in the Text widget. The end-1c ignores newline charater
-        print(new_contact_data);
+        #print(new_contact_data);
         #entry = Text(self.interior, height=1, width=15);
         entry.delete("1.0", END);
         entry.delete("2.0", END);
@@ -129,12 +129,12 @@ class VerticalScrolledFrame(tk.Frame):
             cur_val=last_entry.get("1.0", END).replace('\n','');
             if(len(cur_val.strip())==0):
                 cur_val=skip;
-            print("not empty")
-            print("need to redraw")
+            #print("not empty")
+            #print("need to redraw")
             old_entry=self.parent.controller.book.getEntry(row).getAttribute(col_name[col])
-            print("old entry= {} | cur val= {}".format(old_entry, cur_val));
-            print("old entry type = {} | cur val type = {}".format(type(old_entry), type(cur_val)));
-            print("old_entry==cur_val={}".format(old_entry.strip()==cur_val.strip()));
+            #print("old entry= {} | cur val= {}".format(old_entry, cur_val));
+            #print("old entry type = {} | cur val type = {}".format(type(old_entry), type(cur_val)));
+            #print("old_entry==cur_val={}".format(old_entry.strip()==cur_val.strip()));
             if(not (old_entry.strip()==cur_val.strip())):
                 last_entry.delete("2.0", END);
                 #last_entry.delete("1.0", END);
@@ -147,9 +147,10 @@ class VerticalScrolledFrame(tk.Frame):
                 
 
         else:
-            print("empty")
+            pass
+            #print("empty")
 
-        print("Appending{}".format(val));
+        #print("Appending{}".format(val));
         self.parent.controller.checkit.append([entry,r,c]);
         
 
@@ -180,8 +181,8 @@ class VerticalScrolledFrame(tk.Frame):
             row +=1;
 
         endtime = datetime.datetime.now()
-        print (endtime - starttime)
-        print("print entry time")
+        #print (endtime - starttime)
+        #print("print entry time")
 
     def print_search_contacts(self, contacts):
         #For search result
@@ -212,8 +213,8 @@ class VerticalScrolledFrame(tk.Frame):
             row +=1;
 
         endtime = datetime.datetime.now()
-        print (endtime - starttime)
-        print("print entry time")
+        #print (endtime - starttime)
+        #print("print entry time")
 
 
 

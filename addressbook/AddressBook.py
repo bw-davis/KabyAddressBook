@@ -161,7 +161,7 @@ class AddressBook():
                 for line in f:
                     line = line.strip() + "\t" * 8 #in case last field is empty
                     line = line.split("\t")  
-                    print(line)
+                    #print(line)
                     city    = line[0]
                     state   = line[1]
                     zipcode = line[2]

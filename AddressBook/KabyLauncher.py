@@ -16,8 +16,6 @@ Function that executes when the KabyLauncer.py file is executed. This creates th
 """
 def main():
     lastbook = get_last_book();
-    print(lastbook);
-
 
     app = KabyAddrapp(lastbook);
     app.protocol("WM_DELETE_WINDOW", lambda: on_closing(app));
@@ -26,7 +24,6 @@ def main():
     app.mainloop();
     #set_last_book(lastbook);
     endtime = datetime.datetime.now()
-    print (endtime - starttime)
 
 """
 Executes main function when this file is executed.
