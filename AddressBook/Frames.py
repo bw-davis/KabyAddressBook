@@ -3,6 +3,7 @@ This module containes the KabyAddrapp class, when this class is executed a KabyA
 the last edited address book.
 """
 
+from pathlib import Path
 from tkinter import *
 import tkinter as tk
 from tkinter import ttk
@@ -12,7 +13,7 @@ from AddressBook import *
 from tkinter import messagebox
 import re
 import datetime
-from os import system
+import os
 from platform import system as platform
 #import Frames
 from DisplayContacts import *
@@ -231,7 +232,7 @@ class SearchResultPage(tk.Frame):
         results = self.controller.book.searchByAllFields(name);
         self.controller.search_contacts=[];
 
-        if(((len(results)) > 1) and name):
+        if(((len(results)) > 0) and name):
             print(len(results))
 
             for i in results:
@@ -245,7 +246,8 @@ class SearchResultPage(tk.Frame):
             self.controller.show_frame(SearchResultPage)
         else:
             #print("Going home");
-            showerror("Error", "No contact matches go to start page");
+            showerror("Error", "No contact matches\nRedisplaying all contacts");
+            self.controller.refresh_frame(StartPage)
             self.controller.show_frame(StartPage)
 
 
@@ -774,7 +776,7 @@ class StartPage(tk.Frame):
         results = self.controller.book.searchByAllFields(name);
         self.controller.search_contacts=[];
 
-        if(((len(results)) > 1) and name):
+        if(((len(results)) > 0) and name):
             print(len(results))
 
             for i in results:
@@ -783,9 +785,11 @@ class StartPage(tk.Frame):
             self.controller.refresh_frame(SearchResultPage);
             print("Im going to the search page")
             print("name = {}".format(name))
+            self.controller.refresh_frame(SearchResultPage);
             self.controller.show_frame(SearchResultPage)
         else:
-            showerror("Error", "No contact matches");
+            showerror("Error", "No contact matches\nRedisplaying all contacts");
+            self.controller.refresh_frame(StartPage);
             self.controller.show_frame(StartPage)
 
         
@@ -1113,6 +1117,11 @@ the file KabyAddressBook/AddressBook/SavedAddressBook.kab will be recreated.
     side affects: None
 """
 def get_last_book():
+    default_book = "SavedAddressBook.kab"
+    if(not os.path.isfile(default_book)):
+        #addressBook.saveNewFile(default_book);
+        f = open(default_book, "w");
+        f.close();
     try:#Makes sure the ini file has not been deleted
         with open('last_book.ini') as f:
             try:#This makes sure the contents of ini file have not been modified
@@ -1120,15 +1129,18 @@ def get_last_book():
                 lastbook = f.readline().split("=")[1].strip();
                 try:#Makes sure last book is of appropriate type, else defaults 
                     if(lastbook.split(".")[1]!="kab"):
-                        lastbook = "SavedAddressBook.kab"
+                        lastbook = default_book
                 except: 
-                    lastbook = "SavedAddressBook.kab" 
+                    lastbook = default_book
             except:
-                lastbook = "SavedAddressBook.kab"
+                lastbook = default_book
     except:
-        lastbook = "SavedAddressBook.kab"
-    
-    return lastbook;
+        lastbook = default_book
+
+    if(not os.path.isfile(lastbook)):
+        lastbook=default_book;
+
+    return lastbook; 
 
 """
 Function is called when an address book has been edited and exited to set the default address book to be opened the next time
@@ -1141,8 +1153,15 @@ the app runs.
     side affects: Changes the value of the lastbook in the inilitizer file for the app to the last edited addressbook.
 """
 def set_last_book(new_book):
-        print("\n\n new book ={}".format(new_book))
-        f = open('last_book.ini', "w")
+        #print("\n\n new book ={}".format(new_book))
+       # f = open(, "r")
+        lines=[];
         to_write="last_book={}".format(new_book);
-        f.write(to_write);
+        lines.append('#do no modify this page\n');
+        lines.append(to_write);
+
+
+        with open("last_book.ini", "w") as file:
+            for line in lines:
+                file.write(line)
         print(to_write)
