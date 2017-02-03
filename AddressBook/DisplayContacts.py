@@ -11,7 +11,6 @@ This module contains VerticalScrolledFrame with methods to display contacts in 3
 This page also contians methods to edit and delete contacts and display the scroll bar.
 
 """
-
 from tkinter import *
 import tkinter as tk
 from tkinter import ttk
@@ -25,15 +24,12 @@ from os import system
 from platform import system as platform
 from KabyLauncher import *
 
+#Array used to display atribute at top of contcts
 contacts = ["First name", "Last name", "Address1", "Address2", "City", "State", "Zip", "Phone Number", "Email" ];
+#Array of AddressBookEntry atributes to be displayed
 col_name = ["FirstName", "LastName", "Address1", "Address2", "City", "State", "Zipcode", "Phone", "email"];
-
-#states = []  # record index of the contacts that you want to delete
 edited = False;
 skip = "#skip"
-starttime = datetime.datetime.now()
-endtime = datetime.datetime.now()
-
 
 
 """
@@ -77,6 +73,7 @@ class VerticalScrolledFrame(tk.Frame):
                 canvas.config(width=interior.winfo_reqwidth())
         interior.bind('<Configure>', _configure_interior)
 
+
         """
         track changes to the canvas and frame width and sync them,
         also updating the scrollbar.
@@ -87,8 +84,20 @@ class VerticalScrolledFrame(tk.Frame):
                 canvas.itemconfigure(interior_id, width=canvas.winfo_width())
         canvas.bind('<Configure>', _configure_canvas)
 
+
+    """
+    Mehtod used to handle delete button click on DeletePage
+    ----------------------------------------------------------------------------
+        arguments: i=> index of contact in address book to delete
+
+        return: None
+
+        side affects: sefts the status array to 1 at index of each contact to delete
+                       this array is used to delete contacts.
+    """
     def onPress(self, i):
         self.parent.controller.status[i] = 1;
+
 
     """
     Method used to handle if the user clicks the enter button after editing a contact info.
@@ -115,6 +124,7 @@ class VerticalScrolledFrame(tk.Frame):
         contact.setAttribute(attr, new_contact_data);
         self.parent.controller.dirty=True;
         
+
     """
     Method used to check if contact info has been updated after a user clicks out of cell
     -------------------------------------------------------------------------------------
@@ -147,6 +157,15 @@ class VerticalScrolledFrame(tk.Frame):
         self.parent.controller.checkit.append([entry,r,c]);
         
 
+    """
+    Mehtod used to display conatacts on the home page
+    ----------------------------------------------------------
+        arguments: contacts => an array of AddressBookEnry objects
+
+        return: none
+
+        side affects: displays all contacts on screen.
+    """
     def print_contacts(self, contacts):
         starttime = datetime.datetime.now()
 
@@ -171,6 +190,8 @@ class VerticalScrolledFrame(tk.Frame):
 
             row +=1;
         endtime = datetime.datetime.now()
+
+
 
     """
     Method used to print the resultf of a search
@@ -255,4 +276,3 @@ class VerticalScrolledFrame(tk.Frame):
         for column in range(7):
             self.grid_columnconfigure(column, weight=1)
         index = 0;
-

@@ -17,6 +17,7 @@ import os
 from platform import system as platform
 from DisplayContacts import *
 
+
 skip = "#skip"
 """
 Mayin Tk wrapper and driver class, every window will be dispalyed in the this classes
@@ -513,8 +514,6 @@ class StartPage(tk.Frame):
                          all user input info.
     """
     def saveAs(self):
-
-        # print("dosomething");
         avoidsRandomWindow = Tk();
         avoidsRandomWindow.withdraw(); 
         FileName = tk.filedialog.asksaveasfilename(filetypes=[("text", ".kab")])+".kab"
@@ -912,11 +911,6 @@ class SearchResultPage(tk.Frame):
         self.parent.update_idletasks();
 
 
-        endtime = datetime.datetime.now()
-        print (endtime - starttime)
-        print("now im here")
-
-
 
     #########################################################################
                     ### Methods of the search page class ###
@@ -939,14 +933,11 @@ class SearchResultPage(tk.Frame):
                       displayed in a sorted manner.
     """
     def sort(self, var):
-        print("var is {}".format(var));
         if var == "Name":
-            print("sorting by name");
             self.controller.book.sortByNameArray(self.controller.search_contacts);
         else:
-            print("sorting by zip");
-
             self.controller.book.sortByZipcodeArray(self.controller.search_contacts);
+        
         self.controller.refresh_frame(SearchResultPage);
         self.controller.show_frame(SearchResultPage);
 
@@ -969,22 +960,21 @@ class SearchResultPage(tk.Frame):
                       no matches then the entire address book is displayed again.
     """
     def serach_page_search(self, name):
-        print(name);
         results = self.controller.book.searchByAllFields(name);
         self.controller.search_contacts=[];
 
         if(((len(results)) > 0) and name):
-            print(len(results))
 
             for i in results:
                 self.controller.search_contacts.append(self.controller.book.getEntry(i));
             
             self.controller.refresh_frame(SearchResultPage);
-            print("Im staying on search page")
-            print("name = {}".format(name))
             self.controller.show_frame(SearchResultPage)
         else:
+            avoidsRandomWindow = Tk();
+            avoidsRandomWindow.withdraw(); 
             showerror("Error", "No contact matches\nRedisplaying all contacts");
+            avoidsRandomWindow.destroy();
             self.controller.refresh_frame(StartPage)
             self.controller.show_frame(StartPage)
 
@@ -1051,11 +1041,8 @@ class DeletePage(tk.Frame):
         avoidsRandomWindow.withdraw(); 
 
         if askokcancel("Delete", "Are you sure to permanently Delete the selected Data?"):
-            print("yes")
             for i in self.controller.status:
                 if i != 0:
-                    print("should delete No.")
-                    print(index + 1)
                     self.controller.book.removeEntry(index - count);
                     count += 1
                 index += 1;
