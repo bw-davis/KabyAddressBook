@@ -263,9 +263,10 @@ class VerticalScrolledFrame(tk.Frame):
                     label = Text(self.interior, height=1, width=15);
                     if t == skip:
                         label.insert(INSERT, "");
-                        #label.config(state=DISABLED);
+                        label.config(state=DISABLED);
                     else:
                         label.insert(INSERT, t);
+                        label.config(state=DISABLED);
                     label.grid(row=row, column=column, sticky="nsew", padx=1, pady=1)
                     current_row.append(label)
 
