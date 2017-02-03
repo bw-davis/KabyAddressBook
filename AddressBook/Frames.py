@@ -190,7 +190,7 @@ class SearchResultPage(tk.Frame):
             f=VerticalScrolledFrame(self);
             f.grid(row=2, column=0, columnspan=8, padx=75);
             f.print_search_contacts(self.controller.search_contacts);
-            self.parent.update_idletasks();
+        self.parent.update_idletasks();
 
 
         endtime = datetime.datetime.now()
@@ -358,7 +358,6 @@ class DeletePage(tk.Frame):
         else:
             # if user cancels
             print("No")
-
         avoidsRandomWindow.destroy();
 
 
@@ -480,11 +479,15 @@ class StartPage(tk.Frame):
     def exit_app(self, root):
         #print("\n\nexiting app={}\n\n".format(self.controller.book_name))
         if(root.dirty):
+            avoidsRandomWindow = Tk();
+            avoidsRandomWindow.withdraw(); 
             if messagebox.askyesno("Save", "Want to save unsaved data?"):
                 root.book.saveToFile(root.book_name);
                 set_last_book(root.book_name);
+                avoidsRandomWindow.destroy();
                 root.destroy();
             else:
+                avoidsRandomWindow.destroy();
                 root.destroy();
         else:
             root.destroy();
@@ -511,11 +514,15 @@ class StartPage(tk.Frame):
     def exit_app_option(self):
         #print("\n\nexiting app={}\n\n".format(self.controller.book_name))
         if(self.controller.dirty):
+            avoidsRandomWindow = Tk();
+            avoidsRandomWindow.withdraw(); 
             if messagebox.askokcancel("Quit", "Want to save unsaved data?"):
                 self.controller.book.saveToFile(self.controller.book_name);
                 set_last_book(self.controller.book_name);
+                avoidsRandomWindow.destroy();
                 self.controller.destroy();
             else:
+                avoidsRandomWindow.destroy();
                 self.controller.destroy();
         else:
             self.controller.destroy();
@@ -541,9 +548,9 @@ class StartPage(tk.Frame):
     """
     def sort(self, var):
         #Sorting method 
-        print("var is {}".format(var));
+        #print("var is {}".format(var));
         if var == "Name":
-            print("sorting by name");
+            #print("sorting by name");
             self.controller.book.sortByName();
         else:
             print("sorting by zip");
@@ -596,6 +603,8 @@ class StartPage(tk.Frame):
     """
     def newBook(self):
         print("donothing");
+        avoidsRandomWindow = Tk();
+        avoidsRandomWindow.withdraw(); 
         FileName = tk.filedialog.asksaveasfilename(filetypes=[("text", ".kab")])
         if FileName!="":
             FileName +=".kab"
@@ -603,8 +612,11 @@ class StartPage(tk.Frame):
             newApp = KabyAddrapp(FileName);
             newApp.mainloop();
         print(FileName)
+        avoidsRandomWindow.destroy()
 
-
+        avoidsRandomWindow = Tk();
+        avoidsRandomWindow.withdraw(); 
+        avoidsRandomWindow.destroy()
 
     """
     Method called when user clicks import option under file menu tab.
@@ -637,7 +649,8 @@ class StartPage(tk.Frame):
     def importFile(self):
         # To import a .tsv file
         print("dosomething");
-
+        avoidsRandomWindow = Tk();
+        avoidsRandomWindow.withdraw(); 
         importFileName = tkinter.filedialog.askopenfilename()
         if importFileName!="":
              fileNameSplit = importFileName.strip().split("/")
@@ -648,24 +661,35 @@ class StartPage(tk.Frame):
  
              try:
                  self.controller.book.importFromFile(importFileName);
+                 avoidsRandomWindow.destroy();
+
                  print("im here")
              except:            
                  try_again=askokcancel("Warning", "This is not a standard .tsv file,\n do you still want to import that")
                  if try_again:
                     try:
                         self.book.importFromFile(addrBook,True);
+                        avoidsRandomWindow.destroy();
+
                     except:
                         print("This is an invalid .tsv file")
                         showerror("Error","This is an invalid .tsv file")
+                        avoidsRandomWindow.destroy();
+
                     else:
                          app2 = KabyAddrapp(importFileName, False);
                          app2.protocol("WM_DELETE_WINDOW", lambda: on_closing(app2));
                          app2.mainloop();
+                         avoidsRandomWindow.destroy();
+
              else:
                      app2 = KabyAddrapp(importFileName, False);
                      app2.protocol("WM_DELETE_WINDOW", lambda: on_closing(app2));
                      app2.mainloop();
+                     avoidsRandomWindow.destroy();
 
+
+        
 
 
     """

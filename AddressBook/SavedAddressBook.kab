@@ -3,9 +3,9 @@
 {'Zipcode': '3', 'State': 'MI', 'FirstName': 'John', 'LastName': 'Doe', 'City': 'Portville', 'Address1': '190 Sunny Lane', 'Address2': '', 'Phone': '5411234567'}
 {'Zipcode': '97401', 'State': 'OR', 'FirstName': 'Alex', 'LastName': 'Good bye', 'City': 'Porhtn', 'Address1': '190 W 22nd Ave', 'Address2': 'Apt 1', 'Phone': '6155696366'}
 {'Zipcode': '97401', 'State': 'OR', 'FirstName': 'Alex', 'LastName': 'Good bye', 'City': 'Porhtn', 'Address1': '190 W 22nd Ave', 'Address2': 'Apt 1', 'Phone': '6155696366'}
-{'Zipcode': '97401', 'State': 'OR', 'FirstName': 'Alex', 'LastName': 'Good bye', 'City': 'Porhtn', 'Address1': '190 W 22nd Ave', 'Address2': 'Apt 1', 'Phone': '6155696366'}
+{'Zipcode': '97401', 'State': 'OR', 'FirstName': 'Alex', 'LastName': 'Good bye', 'City': 'Porhtn', 'Address1': '190 W 22nd Ave', 'Address2': 'Apthbj1', 'Phone': '6155696366'}
 {'State': '#skip', 'City': '#skip', 'FirstName': 'andrew', 'LastName': 'joe', 'Phone': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Zipcode': '#skip', 'email': 'sure'}
-{'State': '#skip', 'City': '#skip', 'FirstName': 'andrew', 'LastName': 'joe', 'Phone': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Zipcode': '#skip', 'email': 'sure'}
+{'State': '#skip', 'City': '#skip', 'FirstName': 'andrew', 'LastName': 'john', 'Phone': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Zipcode': '#skip', 'email': 'sure'}
 {'State': '#skip', 'City': '#skip', 'FirstName': 'andrew', 'LastName': 'joe', 'Phone': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Zipcode': '#skip', 'email': 'sure'}
 {'State': '#skip', 'City': '#skip', 'FirstName': 'John', 'LastName': 'John', 'Phone': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Zipcode': '#skip', 'email': 'Nope@bla .com'}
 {'State': '#skip', 'City': '#skip', 'FirstName': 'John', 'LastName': 'John', 'Phone': '#skip', 'Address1': '#skip', 'Address2': '#skip', 'Zipcode': '#skip', 'email': 'John@John.jon'}
@@ -123,3 +123,4 @@
 {'State': '#skip', 'email': 'John@john.John', 'Phone': '#skip', 'Address2': '#skip', 'Zipcode': '#skip', 'FirstName': 'John', 'LastName': 'John', 'Address1': '#skip', 'City': '#skip'}
 {'State': 'a', 'email': 'a', 'Phone': 'a', 'Address2': 'a', 'Zipcode': 'a', 'FirstName': 'a', 'LastName': 'a', 'Address1': 'a', 'City': 'a'}
 {'FirstName': 'a', 'LastName': 'a', 'Address1': 'a', 'Address2': '#skip', 'City': '#skip', 'State': '#skip', 'Zipcode': '#skip', 'Phone': '#skip', 'email': ''}
+{'FirstName': 'sam', 'LastName': '#skip', 'Address1': 'idk', 'Address2': '#skip', 'City': '#skip', 'State': '#skip', 'Zipcode': '#skip', 'Phone': '#skip', 'email': ''}
