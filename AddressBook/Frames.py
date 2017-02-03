@@ -735,7 +735,7 @@ class StartPage(tk.Frame):
                          and closes pop up window.
     """
     def openAddressBook(self):
-        #to open an existing  .kab file
+        #to open an existing  .kab file\
         AddressbookName = tkinter.filedialog.askopenfilename()
         if AddressbookName!="":
             try:
