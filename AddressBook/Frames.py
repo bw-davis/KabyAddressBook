@@ -305,7 +305,7 @@ class DeletePage(tk.Frame):
             f=VerticalScrolledFrame(self);
             f.grid(row=2, column=0, columnspan=8, padx=20);
             f.print_delete_contact_page(contacts);
-            self.parent.update_idletasks();
+        self.parent.update_idletasks();
 
         ttk.Button(self, text="Delete", command=lambda: self.delete_confirm()).grid(row=3, column=2, stick='e');
         # ttk.Button(self, text="Cancel", command=).grid(row=3, column=2);
@@ -445,7 +445,7 @@ class StartPage(tk.Frame):
             f=VerticalScrolledFrame(self);
             f.grid(row=2, column=0, columnspan=8, padx=75);
             f.print_contacts(contacts);
-            self.parent.update_idletasks();
+        self.parent.update_idletasks();
 
 
         endtime = datetime.datetime.now()
@@ -614,9 +614,6 @@ class StartPage(tk.Frame):
         print(FileName)
         avoidsRandomWindow.destroy()
 
-        avoidsRandomWindow = Tk();
-        avoidsRandomWindow.withdraw(); 
-        avoidsRandomWindow.destroy()
 
     """
     Method called when user clicks import option under file menu tab.
@@ -712,7 +709,10 @@ class StartPage(tk.Frame):
                          user input.
     """
     def exportFile(self):
+        avoidsRandomWindow = Tk();
+        avoidsRandomWindow.withdraw(); 
         exportFileName = tk.filedialog.asksaveasfilename(filetypes=[("text", ".tsv")])+".tsv"
+        avoidsRandomWindow.destroy()
         self.controller.book.exportToFile(exportFileName);
         
 
