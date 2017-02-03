@@ -85,7 +85,7 @@ class KabyAddrapp(tk.Tk):
 
         starttime = datetime.datetime.now()
         self.show_frame(StartPage);
-
+        self.container.update_idletasks();
 
 
 
@@ -781,7 +781,6 @@ class StartPage(tk.Frame):
         # print("dosomething");
         # print("dosomething");
         #print("\n\nsaving to = {}\n\n".format(self.controller.book_name))
-        avoidsRandomWindow.withdraw(); 
         self.controller.book.saveToFile(self.controller.book_name);
         self.controller.refresh_frame(StartPage)
         self.controller.show_frame(StartPage)
